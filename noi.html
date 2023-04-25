@@ -16,7 +16,7 @@
   var b = +prompt("b")
   var c = +prompt("c")
   v = (a+b)/c
-  console.log(v.toFixed(0))
+  console.log(Math.floor(v))
 </script>
 
 <script id="ch0103/04" type="">
@@ -99,7 +99,7 @@
   var g = n%10
   var s = (n-g)/10%10
   var b = (n-n%100)/100%10
-  console.log(g*100 + s*10 + b)
+  console.log(g + "" + s + "" + b + "")
 </script>
 
 <script id="ch0103/14" type="">
