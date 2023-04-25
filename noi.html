@@ -1,3 +1,4 @@
+
 <script id="ch0103/01" type="">
   var a = +prompt("a")
   var b = +prompt("b")
@@ -162,4 +163,137 @@
   var n = +prompt("n")
   v = 2**n
   console.log(v)
+</script>
+
+
+<script id="ch0104/01" type="">
+  var n = +prompt("请输入整数N(-109 <= N <= 109)")
+  n > 0 ? console.log("positive") : (n == 0 ? console.log("zero") : console.log("negative"))
+</script> 
+
+<script id="ch0104/02" type="">
+  var n = +prompt("输入一个浮点数,绝对值不超过10000")
+  v = Math.abs(n)
+  console.log(v.toFixed(2))
+</script>
+
+<script id="ch0104/03" type="">
+  var n = +prompt("输入一个大于零的正整数n")
+  n%2 == 0 ? console.log("even") : console.log("odd")
+</script>
+
+<script id="ch0104/04" type="">
+  var n = prompt("输入一个字符")
+  n.charCodeAt()%2 == 0 ? console.log("NO") : console.log("YES")
+</script>
+
+<script id="ch0104/05" type="">
+  var x = +prompt("输入一个整数x")
+  var y = +prompt("输入一个整数y")
+  x>y ? console.log(">") : (x == y ? console.log("=") : console.log("<"))
+</script>
+
+<script id="ch0104/06" type="">
+  var x = +prompt("输入一个正整数,不超过1000")
+  x>=10 && x<=99 ? console.log("1") : console.log("0")
+</script>
+
+<script id="ch0104/07" type="">
+  var x = +prompt("输入'幸运'的瓶盖数")
+  var y = +prompt("输入'鼓励'的瓶盖数")
+  x>=10 || y>=20 ? console.log("1") : console.log("0")
+</script>
+
+<script id="ch0104/08" type="">
+  var n = +prompt("输入一个整数n")
+  n%3 == 0 && n%5 == 0 ? console.log("YES") : console.log("NO")
+</script>
+
+<script id="ch0104/09" type="">
+  var n = +prompt("输入一个整数")
+  n%3 == 0 ? console.log("3") : console.log("")
+  n%5 == 0 ? console.log("5") : console.log("")
+  n%7 == 0 ? console.log("7") : console.log("")
+  n%3 != 0 && n%5 != 0 && n%7 != 0 ? console.log("n") : console.log("")
+</script>
+
+<script id="ch0104/10" type="">
+  var a = +prompt("语文成绩")
+  var b = +prompt("数学成绩")
+  ;(a<60 && b>=60) || (a>=60 && b<=60) ? console.log("1") : console.log("0")
+</script>
+
+<script id="ch0104/11" type="">
+  var n = +prompt("输入星期几,整数n")
+  n == 1 || n == 3 || n == 5 ? console.log("NO") : console.log("YES")
+</script>
+
+<script id="ch0104/12" type="">
+  var n = +prompt("要行走的距离,单位为米")
+  ;(n/3 + 27 +23) > (n/1.2) ? console.log("Walk") : ((n/3 + 27 +23) == (n/1.2) ? console.log("ALL") : console.log("Bike"))
+</script>
+
+<script id="ch0104/13" type="">
+  var N = +prompt("输入一个浮点数N,0 <= N < 20")
+  N>=0 && N<5 ? y=2.5-N : (N>=5 && N<10 ? y=2-1.5*(N-3)*(N-3) : (N>=10 && N<20 ? y=N/2-1.5 : console.log("N的值不在范围内")))
+  console.log(y.toFixed(3))
+</script>
+
+<script id="ch0104/14" type="">
+  var g = +prompt("重量,单位为克")
+  var j = prompt("输入字符为y,选择加急,输入字符为n,不加急")
+  var m = 0
+  g<=1000 ? m += 8 : m = m + Math.ceil((g-1000)/500)*4 + 8
+  j == "y" ? m += 5 : (j == "n" ? m += 0 : console.log("是否加急的输入字符有误"))
+  console.log(m)
+</script>
+
+<script id="ch0104/15" type="">
+  var a = +prompt("整数a")
+  var b = +prompt("整数b")
+  var c = +prompt("整数c")
+  console.log(Math.max(a,b,c))
+</script>
+
+<script id="ch0104/16" type="">
+  var a = +prompt("边a")
+  var b = +prompt("边b")
+  var c = +prompt("边c")
+  a+b > c || a+c > b && b+c > a ? console.log("yes") : console.log("no")
+</script>
+
+<script id="ch0104/17" type="">
+  var a = +prompt("整数a")
+  ;(a%4 == 0 && a%100 != 0) || a%400 == 0 ? console.log("Y") : console.log("N")
+</script>
+
+<script id="ch0104/18" type="">
+  var x = +prompt("坐标x")
+  var y = +prompt("坐标y")
+  x<=1 && x>=-1 && y<=1 && y>=-1 ? console.log("yes") : console.log("no")
+</script>
+
+<script id="ch0104/19" type="">
+  var a = +prompt("整数a")
+  var b = +prompt("整数b")
+  var c = prompt("操作符c")
+  c == "/" && b == 0 ? console.log("Divided by zero!") : console.log("")
+  c == "+" ? console.log(a+b) : (c == "-" ? console.log(a-b) : (c == "*" ? console.log(a*b) : (c == "/"  ? console.log(a/b) : console.log("Invalid operator!"))))
+</script>
+
+<script id="ch0104/20" type="">
+  var a = +prompt("浮点数a")
+  var b = +prompt("浮点数b")
+  var c = +prompt("浮点数c")
+  b*b == 4*a*c ? console.log("x1=x2=" + ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)) : console.log("")
+  b*b > 4*a*c ? console.log("x1=" + ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5) + ";" + "x2=" + ((-b - Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)) : console.log("")
+  b*b < 4*a*c ? console.log("x1=" + (-b / (2*a)).toFixed(5) + "+" + (Math.sqrt(4*a*c-b*b)/(2*a)).toFixed(5) + "i" + ";" + "x2=" + (-b / (2*a)).toFixed(5) + "-" + (Math.sqrt(4*a*c-b*b)/(2*a)).toFixed(5) + "i") : console.log("")
+</script>
+
+<script id="ch0104/21" type="">
+  var n = +prompt("苹果数量n")
+  var x = +prompt("x")
+  var y = +prompt("y保证y <= n * x")
+  s = n - y/x
+  console.log(Math.floor(s))
 </script>
