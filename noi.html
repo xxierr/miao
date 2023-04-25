@@ -281,14 +281,14 @@
   c == "+" ? console.log(a+b) : (c == "-" ? console.log(a-b) : (c == "*" ? console.log(a*b) : (c == "/"  ? console.log(a/b) : console.log("Invalid operator!"))))
 </script>
 
-<script id="ch0104/20" type="">
+ <script id="ch0104/20" type="">
   var a = +prompt("浮点数a")
   var b = +prompt("浮点数b")
   var c = +prompt("浮点数c")
-  b*b == 4*a*c ? console.log("x1=x2=" + ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)) : ;
-  b*b > 4*a*c ? console.log("x1=" + ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5) + ";" + "x2=" + ((-b - Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)) : ;
-  b*b < 4*a*c ? console.log("x1=" + (-b / (2*a)).toFixed(5) + "+" + (Math.sqrt(4*a*c-b*b)/(2*a)).toFixed(5) + "i" + ";" + "x2=" + (-b / (2*a)).toFixed(5) + "-" + (Math.sqrt(4*a*c-b*b)/(2*a)).toFixed(5) + "i") : ;
-</script>
+  b*b == 4*a*c ? console.log("x1=x2=" + ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)) : console.log()
+  b*b > 4*a*c ? console.log("x1=" + ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5) + ";" + "x2=" + ((-b - Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)) : console.log()
+  b*b < 4*a*c ? console.log("x1=" + (-b / (2*a)).toFixed(5) + "+" + (Math.sqrt(4*a*c-b*b)/(2*a)).toFixed(5) + "i" + ";" + "x2=" + (-b / (2*a)).toFixed(5) + "-" + (Math.sqrt(4*a*c-b*b)/(2*a)).toFixed(5) + "i") : console.log()
+</script> 
 
 <script id="ch0104/21" type="">
   var n = +prompt("苹果数量n")
@@ -296,4 +296,4 @@
   var y = +prompt("y保证y <= n * x")
   s = n - y/x
   console.log(Math.floor(s))
-</script>
+</script> 
