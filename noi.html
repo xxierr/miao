@@ -15,7 +15,8 @@
   var a = +prompt("a")
   var b = +prompt("b")
   var c = +prompt("c")
-  console.log((a+b)/c)
+  v = (a+b)/c
+  console.log(v.toFixed(0))
 </script>
 
 <script id="ch0103/04" type="">
@@ -58,7 +59,7 @@
 <script id="ch0103/08" type="">
   var F = +prompt("华氏温度（f >= -459.67）")
   C = 5 * (F-32) / 9
-  console.log(C)
+  console.log(C.toFixed(5))
 </script>
 
 <script id="ch0103/09" type="">
@@ -67,7 +68,7 @@
   z = 2*F
   C = pi * z
   S = F*F*pi
-  console.log(z)
+  console.log(z.toFixed(4))
   console.log(C.toFixed(4))
   console.log(S.toFixed(4))
 </script>
@@ -98,9 +99,7 @@
   var g = n%10
   var s = (n-g)/10%10
   var b = (n-n%100)/100%10
-  console.log(g)
-  console.log(s)
-  console.log(b)
+  console.log(g*100 + s*10 + b)
 </script>
 
 <script id="ch0103/14" type="">
