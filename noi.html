@@ -1,0 +1,166 @@
+<script id="ch0103/01" type="">
+  var a = +prompt("a")
+  var b = +prompt("b")
+  console.log(a+b)
+</script>
+
+<script id="ch0103/02" type="">
+  var a = +prompt("a")
+  var b = +prompt("b")
+  var c = +prompt("c")
+  console.log((a+b)*c)
+</script>
+
+<script id="ch0103/03" type="">
+  var a = +prompt("a")
+  var b = +prompt("b")
+  var c = +prompt("c")
+  console.log((a+b)/c)
+</script>
+
+<script id="ch0103/04" type="">
+  var bcs = +prompt("被除数")
+  var cs = +prompt("除数")
+  sh = bcs/cs
+  s = sh.toFixed(0)
+  y = bcs%cs
+  console.log(s)
+  console.log(y)
+</script>
+
+<script id="ch0103/05" type="">
+  var a = +prompt("分子")
+  var b = +prompt("分母")
+  sh = a/b
+  s = sh.toFixed(9)
+  console.log(s)
+</script>
+
+<script id="ch0103/06" type="">
+  var a = +prompt("确诊数")
+  var b = +prompt("死亡率")
+  sh = b/a
+  s = sh.toFixed(5)
+  console.log(s*100 + "%")
+</script>
+
+<script id="ch0103/07" type="">
+  var x = +prompt("x绝对值不超过100")
+  var a = +prompt("a绝对值不超过100")
+  var b = +prompt("b绝对值不超过100")
+  var c = +prompt("c绝对值不超过100")
+  var d = +prompt("d绝对值不超过100")
+  fx = x**3*a + x**2*b + c*x + d
+  f = fx.toFixed(7)
+  console.log(f)
+</script>
+
+<script id="ch0103/08" type="">
+  var F = +prompt("华氏温度（f >= -459.67）")
+  C = 5 * (F-32) / 9
+  console.log(C)
+</script>
+
+<script id="ch0103/09" type="">
+  var F = +prompt("圆的半径")
+  var pi = 3.14159
+  z = 2*F
+  C = pi * z
+  S = F*F*pi
+  console.log(z)
+  console.log(C.toFixed(4))
+  console.log(S.toFixed(4))
+</script>
+
+<script id="ch0103/10" type="">
+  var r1 = +prompt("电阻1")
+  var r2 = +prompt("电阻2")
+  R = 1/(1/r1 + 1/r2)
+  console.log(R.toFixed(2))
+</script>
+
+<script id="ch0103/11" type="">
+  var a = +prompt("a")
+  var b = +prompt("b")
+  r = a%b
+  console.log(r.toFixed(4))
+</script>
+
+<script id="ch0103/12" type="">
+  var r = +prompt("球半径,不超过100的非负实数")
+  var pi = 3.14
+  V = 4/3*pi*r**3
+  console.log(V.toFixed(2))
+</script>
+
+<script id="ch0103/13" type="">
+  var n = +prompt("一个三位数n")
+  var g = n%10
+  var s = (n-g)/10%10
+  var b = (n-n%100)/100%10
+  console.log(g)
+  console.log(s)
+  console.log(b)
+</script>
+
+<script id="ch0103/14" type="">
+  var h = +prompt("小圆桶的深h,单位cm")
+  var r = +prompt("底面半径r,单位cm")
+  var pi = 3.14159
+  t = pi * r * r * h
+  n = 20/(t/1000)
+  console.log(Math.ceil(n))
+</script>
+
+<script id="ch0103/15" type="">
+  var n = +prompt("苹果数量n")
+  var x = +prompt("x")
+  var y = +prompt("y保证y <= n * x")
+  s = n - y/x
+  console.log(Math.floor(s))
+</script>
+
+<script id="ch0103/16" type="">
+  var xa = +prompt("Xa")
+  var ya = +prompt("Ya")
+  var xb = +prompt("Xb")
+  var yb = +prompt("Yb")
+  s = ((xb-xa)**2 + (yb-ya)**2)**(1/2)
+  console.log(s.toFixed(3))
+</script>
+
+<script id="ch0103/17" type="">
+  var x1 = +prompt("x1")
+  var y1 = +prompt("y1")
+  var x2 = +prompt("x2")
+  var y2 = +prompt("y2")
+  var x3 = +prompt("x3")
+  var y3 = +prompt("y3")
+  a = ((x2-x1)**2 + (y2-y1)**2)**(1/2)
+  b = ((x3-x2)**2 + (y3-y2)**2)**(1/2)
+  c = ((x3-x1)**2 + (y3-y1)**2)**(1/2)
+  p = (a+b+c)/2
+  S = (p*(p-a)*(p-b)*(p-c))**(1/2)
+  console.log(S.toFixed(2))
+</script>
+
+<script id="ch0103/18" type="">
+  var a1 = +prompt("a1")
+  var a2 = +prompt("a2")
+  var n = +prompt("第n项")
+  d = a2-a1
+  nv = a1 + (n-1)*d
+  console.log(nv)
+</script>
+
+<script id="ch0103/19" type="">
+  var A = +prompt("A")
+  var B = +prompt("B")
+  console.log(A*B)
+</script>
+
+<script id="ch0103/20" type="">
+  var n = +prompt("n")
+  v = 2**n
+  console.log(v)
+</script>
