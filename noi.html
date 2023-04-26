@@ -574,7 +574,7 @@
   }
  console.log(sumh.toFixed(4))
  console.log((th/2).toFixed(7))
-  </script>
+</script>
 
 <script id="ch0105/21" type="">
   var N = +prompt("输入一个正整数N(N <= 2,000,000)")
@@ -593,4 +593,41 @@
       if(re == 1) console.log("End")
     } 
   }
-  </script>
+</script>
+
+<script id="ch0105/22" type="">
+  var q = 0
+  var cun = 0
+  var flag =0
+  for(var i=1 ; i<=12 ; i++ ){
+    var m = +prompt(i + "月津津的预算,一个小于350的非负整数")
+    if(m > 300+q){
+      const yue = -i
+      console.log(yue)
+      flag++
+      continue
+    }else if(300+q-m >= 100){
+      cun += ((300+q-m)-(300+q-m)%100)
+      q = (300+q-m)%100
+    }else {
+      q = 300+q-m
+    }
+  }
+  if(flag == 0) console.log(q + cun + cun*0.2)
+</script>
+
+<script id="ch0105/23" type="">
+  var m = +prompt("每天开始时的药品总量m")
+  var n = +prompt("这一天取药的人数n(0 < n <= 100)")
+  var f = 0
+  var flag = 0
+  for(var i=1 ; i<=n ; i++ ){
+    var num = +prompt("第" + i + "个病人希望取走的药品数量")
+    f += num
+    if(f > m && flag == 0) {
+      flag++
+      console.log(n-i-1)
+      continue
+    }
+  }
+</script>
