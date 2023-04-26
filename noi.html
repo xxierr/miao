@@ -513,3 +513,84 @@
     console.log("Impossible")
   }
 </script>
+
+<script id="ch0105/17" type="">
+  var n = 0
+  var k = +prompt("输入K,(1 <= k <= 46)")
+  for(var i=1 ; i<=k ; i++ ){
+    if(i == 1 || i == 2){
+      var n1 = 1
+      var n2 = 1
+    }else{
+      n = n1 + n2 
+      n2 = n1
+      n1 = n
+    }
+  }
+  console.log(n)
+</script>
+
+<script id="ch0105/18" type="">
+  var x = 0
+  var n = +prompt("输入第一行为整数n(1 < n <= 20)")
+  for(var i=1 ; i<=n ; i++ ){
+    var z = +prompt("输入临床实验的总病例数z(小于等于10000)")
+    var you = +prompt("输入疗效有效的病例数y")
+    if(i == 1){
+      x = you/z
+    }else{
+      var y = you/z
+      if(y-x > 0.05){
+        console.log("better")
+      }else if(x-y > 0.05){
+        console.log("worse")
+      }else{
+        console.log("same")
+      }
+    }
+  }
+</script>
+
+<script id="ch0105/19" type="">
+  var t = 0
+  var n = +prompt("输入一个整数,表示屋顶数n")
+  for(var i=1 ; i<=n ; i++ ){
+    var x = +prompt("输入坐标x")
+    var y = +prompt("输入坐标y")
+    var p = +prompt("输入人数")
+    s = Math.sqrt(x*x+y*y)
+    t += s/50*2 + p*1.5  
+  }
+  console.log(Math.ceil(t))
+</script>
+
+<script id="ch0105/20" type="">
+  var h = +prompt("输入一个整数h,表示球的初始高度")
+  var sumh = h
+  var th = h
+  for(var i=1 ; i<=9 ; i++ ){
+    th = th/2
+    sumh += th*2 
+  }
+ console.log(sumh.toFixed(4))
+ console.log((th/2).toFixed(7))
+  </script>
+
+<script id="ch0105/21" type="">
+  var N = +prompt("输入一个正整数N(N <= 2,000,000)")
+  var re = N
+  if(N == 1){
+    console.log("End")
+  }else {
+    for(var i=1 ; re != 1 ; i++ ){
+      if(re%2 == 1){
+        console.log(re + "*3+1=" + (re*3+1))
+        re = re*3+1
+      }else if (re%2 == 0){
+        console.log(re + "/2=" + (re/2))
+        re = re/2
+      }
+      if(re == 1) console.log("End")
+    } 
+  }
+  </script>
