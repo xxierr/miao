@@ -296,3 +296,220 @@
   s = n - y/x
   console.log(Math.floor(s))
 </script> 
+
+<script id="ch0105/01" type="">
+  var sum = 0
+  var n = +prompt("整数n,学生人数")
+  for(var i=0 ; i<n ; i++ ){
+    var s = +prompt("学生分数")
+    sum += s
+  }
+  a = sum/n
+  console.log(a.toFixed(2))
+</script>
+
+<script id="ch0105/02" type="">
+  var sum = 0
+  var n = 12
+  for(var i=0 ; i<n ; i++ ){
+    var s = +prompt("每月结余")
+    sum += s
+  }
+  a = sum/n
+  console.log("$" + a.toFixed(2))
+</script>
+
+<script id="ch0105/03" type="">
+  var sum = 0
+  var n = +prompt("整数n,样本容量")
+  for(var i=0 ; i<n ; i++ ){
+    var s = +prompt("每个样本数据")
+    sum += s
+  }
+  a = sum/n
+  console.log(a.toFixed(4))
+</script>
+
+<script id="ch0105/04" type="">
+  var sum = 0
+  var n = +prompt("整数n,代表n个整数")
+  for(var i=0 ; i<n ; i++ ){
+    var s = +prompt("每个整数")
+    sum += s
+  }
+  a = sum/n
+  console.log(sum + " " + a.toFixed(5))
+</script>
+
+<script id="ch0105/05" type="">
+  var sum = 0
+  var n = +prompt("整数n,代表考试人数")
+  for(var i=0 ; i<n ; i++ ){
+    var s = +prompt("第" + (i+1) + "个学生成绩,所有成绩均为0到100之间的整数")
+    if (s > sum){
+      sum = s
+    }
+  }
+  console.log(sum)
+</script>
+
+<script id="ch0105/06" type="">
+  var max = 0
+  var min = 0
+  var n = +prompt("序列的个数n,(1 <= n <= 1000)")
+  for(var i=0 ; i<n ; i++ ){
+    var s = +prompt("每个不超过1000的非负整数")
+    if (s > max){
+      max = s
+    }
+    if(s < min){
+      min = s
+    }
+  }
+  console.log(max-min)
+</script>
+
+<script id="ch0105/07" type="">
+  var sj = 0
+  var sy = 0
+  var st = 0
+  var n = +prompt("A国参与决赛项目的天数n")
+  for(var i=0 ; i<n ; i++ ){
+    var j = +prompt("第" + (i+1) + "天金牌数")
+    var y = +prompt("第" + (i+1) + "天银牌数")
+    var t = +prompt("第" + (i+1) + "天铜牌数")
+    sj += j
+    sy += y 
+    st += t
+  }
+  sum = sj + sy + st
+  console.log(sj + " " + sy + " " + st + " " + sum)
+</script>
+
+<script id="ch0105/08" type="">
+  var ysum = 0
+  var n = +prompt("整数n,n边形")
+  for(var i=0 ; i<n-1 ; i++ ){
+    var j = +prompt("第" + (i+1) + "个已知内角的度数")
+    ysum += j
+  }
+  s = (n-2)*180 - ysum
+  console.log(s)
+</script>
+
+<script id="ch0105/09" type="">
+  var sum = 0
+  var m = +prompt("输入m, m 不大于 n , 0 <= m <= n <= 300")
+  var n = +prompt("输入n, m 不大于 n , 0 <= m <= n <= 300")
+  for(var i=m ; i<=n ; i+=2 ){
+    if(i%2 == 1){
+      sum += i
+    }else if(n>i){
+      i++
+      sum += i
+    }else{
+      break
+    }
+  }
+  console.log(sum)
+</script>
+
+<script id="ch0105/10" type="">
+  var sum = 0
+  var m = +prompt("输入m, 0 < m < n < 1000")
+  var n = +prompt("输入n, 0 < m < n < 1000")
+  for(var i=m ; i<=n ; i+=17 ){
+    if(i%17 == 0){
+      sum += i
+    }else if(n >= (i - (i%17) + 17)){
+      i = (i - (i%17) + 17)
+      sum += i
+    }else {
+      break
+    }
+  }
+  console.log(sum)
+</script>
+
+
+<script id="ch0105/11" type="">
+  var n1 = 0
+  var n5 = 0
+  var n10 = 0
+  var k = +prompt("输入正整数k, 1< k < 100")
+  for(var i=0 ; i<k ; i++ ){
+    var n = +prompt("第" + (i+1) + "个数,都是大于等于1,小于等于10的数")
+    if (n == 1) n1++
+    if (n == 5) n5++
+    if (n == 10) n10++ 
+  }
+  console.log(n1)
+  console.log(n5)
+  console.log(n10)
+</script>
+
+<script id="ch0105/12" type="">
+  var count = 0
+  var N = +prompt("输入整数序列的长度(N <= 100)")
+  var m = +prompt("输入指定的数字")
+  for(var i=0 ; i<N ; i++ ){
+    var n = +prompt("第" + (i+1) + "个数")
+    if (n == m) count++
+  }
+  console.log(count)
+</script>
+
+<script id="ch0105/13" type="">
+  var result = 0
+  var a = +prompt("输入整数a")
+  var n = +prompt("输入正整数n")
+  result = a**n
+  console.log(result)
+</script>
+
+<script id="ch0105/14" type="">
+  var count = 0
+  var x = +prompt("输入人口基数x,1 <= x <= 100")
+  var n = +prompt("输入年数n,1 <= n <= 100")
+  for(var i=1 ; i<=n ; i++ ){
+    x += (x*0.001)
+  }
+  console.log(x.toFixed(4))
+</script>
+
+<script id="ch0105/15" type="">
+  var count = 0
+  var R = +prompt("输入投资的复合年利率为R(0到20之间的整数)")
+  var M = +prompt("输入总值为M的钱(100到1,000,000之间的整数)")
+  var Y = +prompt("输入投资Y年(范围0到400)")
+  for(var i=0 ; i<=Y ; i++ ){
+    if(i == 0){
+      M += 0
+    }else{
+      M += (M*(R/100))
+    }
+  }
+  console.log(Math.trunc(M))
+</script>
+
+
+<script id="ch0105/16" type="">
+  var price = 200
+  var year = 0 
+  var N = +prompt("输入年薪N万,正整数N(10 <= N <= 50)")
+  var K = +prompt("输入K,房子价格以每年百分之K增长,(1 <= K <= 20)")
+  var Nn = N
+  for(year=0 ; Nn<price ; year++ ){
+    if(Nn < price){
+      Nn += N
+      price += (price*(K/100))
+    }else{
+      break
+    }
+  }
+  if(year<=20){
+    console.log(year+1)
+  }else {
+    console.log("Impossible")
+  }
+</script>
