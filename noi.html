@@ -264,7 +264,7 @@
 
 <script id="ch0104/17" type="">
   var a = +prompt("整数a")
-  ;(a%4 == 0 && a%100 != 0) || a%400 == 0 ? console.log("Y") : console.log("N")
+  ;(a%4 == 0 && a%100 != 0) || (a%400 == 0 && a % 3200 != 0) ? console.log("Y") : console.log("N")
 </script>
 
 <script id="ch0104/18" type="">
@@ -630,4 +630,121 @@
       continue
     }
   }
+</script>
+
+<script id="ch0105/24" type="">
+  var n = +prompt("输入一个正整数n,n < 100")
+  var flag = 0
+  for(var i=1 ; i<=n ; i++ ){
+    var shou = +prompt("第" + i + "次测量的收缩压")
+    var shu = +prompt("第" + i + "次测量的舒张压")
+    if((shou < 90 || shou >140 || shu < 60 || shu > 90) && flag == 0){
+      flag++
+      console.log(i)
+      continue
+    }
+  }
+</script>
+
+<script id="ch0105/25" type="">
+  //var abc7 = a*7*7 + b*7 + c = 49a + 7b + c
+  //var cba9 = c*9*9 + b*9 + a = 81c + 9b +a
+  // 49a+7b+c = 81c+9b+a  可得 b = 8(3a-5c) < 7  则 3a-5c=0=b   3a=5c
+  //得a=5 c=3 b= 0  ，则49a+7b+c = 248
+  for(var a=0 ; a<7 ; a++){  //百位
+	  for(var b=0 ; b<7 ; b++){  //十位
+      for(var c=0 ; c<7 ; c++){  //个位
+        if(a*7*7+b*7+c == c*9*9+b*9+a) {  //七进制和九进制相等
+          if(a==0 && b==0 && c==0) {  //除掉000的情况
+            continue
+          }else {
+					  var n=a*7*7+b*7+c  //将找到的数转换成十进制
+					  var abc7=a*100+b*10+c  //将找到的数转换成七进制
+					  var cba9=c*100+b*10+a  //将找到的数转换成九进制
+					  break
+				  }
+			  }
+		  }
+		}
+  }
+  console.log(n)
+  console.log(abc7)
+  console.log(cba9)
+</script>
+
+<script id="ch0105/26" type="">
+  var n = +prompt("输入一个正整数n,(n <= 100)")
+  var flag = 0
+  for(var i=1 ; i<=n ; i++ ){
+    var sn= +prompt("第" + i + "个四位数")
+    if(sn%10 - Math.trunc(sn/1000) - (sn-sn%100)/100%10 - (sn-sn%10)/10%10 > 0){
+      flag++
+    }
+  }
+  console.log(flag)
+</script>
+
+<script id="ch0105/27" type="">
+  var k = +prompt("输入一个整数K(1<=k<=15)")
+  var Sn = 0
+  var i = 1
+  while(Sn<=k){
+    Sn += 1/i
+    i++
+  }
+  console.log(i-1)
+</script>
+
+<script id="ch0105/28" type="">
+  var n = +prompt("输入一个整数,整数在1到100000000之间")
+  var length = n.toString().length
+  var str = ""
+  for(var i=1 ; i<=length ; i++){
+    if(i == length){
+      str += n%10 +""
+    }else {
+      str += n%10 + " "
+    }
+    n = (n - n%10)/10
+  }
+  console.log(str)
+</script>
+
+<script id="ch0105/29" type="">
+  var n = +prompt("输入一个整数N,-1,000,000,000 ≤ N≤ 1,000,000,000")
+  var fu = 0
+  var flag = 0
+  if(n < 0){
+    n = Math.abs(n)
+    fu++
+  }
+  var length = n.toString().length
+  var str = ""
+  for(var i=1 ; i<=length ; i++){
+    if(n%10 != 0  && flag == 0){
+      flag++
+      str = n%10 + ""
+    }else {
+      str += n%10 + ""
+    }
+    n = (n - n%10)/10
+  }
+  if(fu != 0 ){
+    console.log("-" + str)
+  }else console.log(str)
+</script>
+
+<script id="ch0105/30" type="">
+  var m = +prompt("输入一个正整数 m,1 < m < 100000")
+  var k = +prompt("输入一个正整数 k,1 < k < 5")
+  var length = m.toString().length
+  var flag = 0
+  var n = m
+  for(var i=1 ; i<=length ; i++){
+    if (n%10 == 3) flag++
+    n = (n-n%10)/10
+  }
+  if(m%19 == 0 && flag == k){
+    console.log("YES")
+  }else console.log("NO")
 </script>
