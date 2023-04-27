@@ -1,4 +1,4 @@
-
+ 
 <script id="ch0103/01" type="">
   var a = +prompt("a")
   var b = +prompt("b")
@@ -748,3 +748,217 @@
     console.log("YES")
   }else console.log("NO")
 </script>
+
+<script id="ch0105/31" type="">
+  var N = +prompt("输入一个正整数 N,N盏灯(N为不大于5000的正整数)")
+  var M = +prompt("输入一个正整数 M,M为不大于N的正整数")
+  var str0 = ""
+  var str1 = ""
+  var st = ""
+  var num0 = 0
+  var num1 = 0
+  for(var i=1 ; i<=M ; i++){
+    if (i == 1) {
+      for (var j=1 ; j<=N ; j++){
+        str0 += "0"
+        num0 = Number(1 + str0)
+      }
+    }else {
+      for (var k=1 ; k<=N ; k++) {
+        if(k%i == 0){
+          var mou = (num0-num0%(10**(N-k)))/(10**(N-k))%10
+          m = 1^mou
+          str1 += ("" + m)
+          num1 = Number(1 + str1)
+        }else {
+          var mou = (num0-num0%(10**(N-k)))/(10**(N-k))%10
+          str1 += ("" + mou)
+          num1 = Number(1 + str1)
+        }
+      }
+      num0 = num1
+      num1 = 0
+      str1 = ""
+    }
+  }
+  for(var z=1 ; z<=N ; z++){
+    var mou = (num0-num0%(10**(N-z)))/(10**(N-z))%10
+    if(mou == 0 && z!=1) {
+      st += ("," + z)
+    }else if(mou == 0 && z == 1){
+      st += z
+    }else st += ""
+  }
+  console.log(st)
+</script>
+
+<script id="ch0105/32" type="">
+  var n = +prompt("输入一个正整数n(n <= 30)")
+  var p = 1
+  var q = 2
+  var sum = 0
+  for(var i=1 ; i<=n ; i++){
+    sum += q/p
+    var q0 = q
+    q = q + p
+    p = q0
+  }
+  console.log(sum.toFixed(4))
+</script> 
+
+<script id="ch0105/33" type="">
+  var n = +prompt("输入一个正整数n,1 <= n <= 1000")
+  var sum = 0
+  for(var i=1 ; i<=n ; i++){
+    sum += (-1)**(i-1)*(1/i)
+  }
+  console.log(sum.toFixed(4))
+</script> 
+
+<script id="ch0105/34" type="">
+  var n = +prompt("输入一个正整数n(1 < n < 12)")
+  var sum = 0
+  for(var i=1 ; i<=n ; i++){
+    var num = 1
+    for(var j=1 ; j<=i ; j++){
+      num *= j
+    }
+    sum += num
+  }
+  console.log(sum)
+</script> 
+
+<script id="ch0105/35" type="">
+  var n = +prompt("输入一个整数n(2<=n<=15)")
+  var sum = 1
+  for(var i=1 ; i<=n ; i++){
+    var num = 1
+    for(var j=1 ; j<=i ; j++){
+      num *= j
+    }
+    sum += 1/num
+  }
+  console.log(sum.toFixed(10))
+</script> 
+
+<script id="ch0105/36" type="">
+  var x = +prompt("输入一个x,在float范围内")
+  var n = +prompt("输入一个n,n <= 1000000")
+  var sum = 1
+  for(var i=1 ; i<=n ; i++){
+    sum += x**i
+  }
+  console.log(sum.toFixed(2))
+</script> 
+
+<script id="ch0105/37" type="">
+  var M = +prompt("输入一个M,体力最大值为M,不超过10000的正整数")
+  var N = +prompt("输入一个N,战斗力为N,不超过10000的正整数")
+  var X = +prompt("输入一个X,拥有X个能量元素,不超过10000的正整数")
+  var n = N
+  var x = X
+  for(var i=1 ; n<=M ; i++){
+    if(X != 0){
+      var m = 0
+      for(var j=1 ; j<=x ; j++){ 
+        if (m>=M){
+          break
+        }else {
+          m = n*j
+          X--
+        }
+      }
+      n += Math.trunc(M/n)
+    }else break
+  }
+  console.log(n)
+</script> 
+
+<script id="ch0105/38" type="8">
+  var M = +prompt("输入一个整数n,0 <= n <= 100,表明多项式的最高次幂为n")
+  var N = +prompt("输入一个N,战斗力为N,不超过10000的正整数")
+  var X = +prompt("输入一个X,拥有X个能量元素,不超过10000的正整数")
+  var n = N
+  var x = X
+  for(var i=1 ; n<=M ; i++){
+    if(X != 0){
+      var m = 0
+      for(var j=1 ; j<=x ; j++){ 
+        if (m>=M){
+          break
+        }else {
+          m = n*j
+          X--
+        }
+      }
+      n += Math.trunc(M/n)
+    }else break
+  }
+  console.log(n)
+</script> 
+
+<script id="ch0105/39" type="">
+  var n = +prompt("输入一个正整数n(n < 100)")
+  var sum = 0
+  for(var i=1 ; i<=n ; i++){
+    if(i%7 == 0 || i%10 == 7 || Math.floor(i/10) == 7){
+      continue
+    }else{
+      sum += i**2
+    }
+  }
+  console.log(sum)
+</script> 
+
+<script id="ch0105/40" type="">
+  var n = +prompt("输入一个正整数n,1 <= n <= 10000")
+  var flag = 0 
+  for(var i=1 ; i<=n ; i++){
+    var length = i.toString().length
+    for(var j=1 ; j<=length ; j++){
+      var mou = (i-i%(10**(length-j)))/(10**(length-j))%10
+      if(mou == 1) {
+        flag++
+      }else continue
+    }
+  }
+  console.log(flag)
+</script> 
+
+<script id="ch0105/41" type="">
+  var L = +prompt("输入一个正整数L")
+  var R = +prompt("输入一个正整数R")
+  var flag = 0 
+  for(var i=L ; i<=R ; i++){
+    var length = i.toString().length
+    for(var j=1 ; j<=length ; j++){
+      var mou = (i-i%(10**(length-j)))/(10**(length-j))%10
+      if(mou == 2) {
+        flag++
+      }else continue
+    }
+  }
+  console.log(flag)
+</script> 
+
+<script id="ch0105/42" type="2">
+  var h = +prompt("输入一个矩形的高h,不少于3行不多于10行")
+  var w = +prompt("输入一个矩形的宽w,不少于5列不多于10列")
+  var char = prompt("输入一个字符,表示用来画图的矩形符号")
+  var a = +prompt("输入一个0或1,0代表空心,1代表实心") 
+  for(var i=1 ; i<=h ; i++){
+    if(i == 1 || i == h || a == 1){
+      for(var j=1 ; j<=w ; j++){
+        var str = ""
+        str += char
+      }
+    }else if(a == 0){
+      var str = char
+      for(var z=2 ; z<=w-1 ; z++){
+        str += " "
+      }
+      str += char
+    }else continue
+    console.log(str) 
+  }
+</script> 
