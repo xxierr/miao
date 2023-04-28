@@ -941,24 +941,16 @@
   console.log(flag)
 </script> 
 
-<script id="ch0105/42" type="2">
+<script id="ch0105/42" type="">
   var h = +prompt("输入一个矩形的高h,不少于3行不多于10行")
   var w = +prompt("输入一个矩形的宽w,不少于5列不多于10列")
   var char = prompt("输入一个字符,表示用来画图的矩形符号")
   var a = +prompt("输入一个0或1,0代表空心,1代表实心") 
   for(var i=1 ; i<=h ; i++){
     if(i == 1 || i == h || a == 1){
-      for(var j=1 ; j<=w ; j++){
-        var str = ""
-        str += char
-      }
+      console.log(char.repeat(w))
     }else if(a == 0){
-      var str = char
-      for(var z=2 ; z<=w-1 ; z++){
-        str += " "
-      }
-      str += char
+      console.log(char + " ".repeat(w-2) + char)
     }else continue
-    console.log(str) 
   }
-</script> 
+</script>
