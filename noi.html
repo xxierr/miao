@@ -1022,4 +1022,103 @@
       console.log(n)
     }
   }
+</script>
+
+<script id="palindrom" type=""> 
+  // 输入一个数，判断它数是否是回文数，如1223221
+  // 若将n的各位数字反向排列所得自然数n1与n相等，则称n为一回文数
+  var n = +prompt("输入一个数")
+  var length = n.toString().length
+  var str = ""
+  var wei = n
+  for(var i=1 ; i<=length ; i++){ 
+    str += wei%10 + ""
+    wei = (wei - wei%10)/10
+  }
+  console.log(str)
+  if (Number(str) == n){
+    console.log("YES")
+  }else console.log("NO")
+  </script>
+
+<script id="weekday" type=""> 
+  //输入年份与月份，输出这个月的第一天是周几（视具体设定，周一可以用1或0表示）
+  var y = +prompt("输入年份")
+  var m = +prompt("输入月份")
+  var x = new Date(`${y}-${m}-1`)
+  var day = x.getDay()
+  console.log(day)
+  </script>
+
+<script id="complete-number" type=""> 
+  //输入一个数，判断它是否是完全数
+  //各个小于它的约数（真约数，列出某数的约数，去掉该数本身，剩下的就是它的真约数）的和等于它本身的自然数叫做完全数
+  var n = +prompt("输入一个数")
+  var sum = 0
+  for(var i=1 ; i<=Math.sqrt(n) ; i++){ 
+    if(n%i == 0){
+      j = n/i
+      sum += (i+j)
+    }
+  }
+  if(sum-n == n){
+    console.log("YES")
+  }else console.log("NO")
+</script>
+
+<script id="complete-numbers" type=""> 
+  //输出1000以内的完全数
+  //各个小于它的约数（真约数，列出某数的约数，去掉该数本身，剩下的就是它的真约数）的和等于它本身的自然数叫做完全数
+  for(var num=1; num<=1000 ; num++){
+    var sum = 0
+    for(var i=1 ; i<=Math.sqrt(num) ; i++){ 
+      if(num%i == 0){
+        j = num/i
+        sum += (i+j)
+      }
+    }
+    if(sum-num == num) console.log(num)
+  } 
+</script>
+
+<script id="prime" type="">
+  var n = +prompt("输入一个正整数 n")
+  var flag = 0
+  for(var j=2 ; j<=Math.sqrt(n) ; j++){
+    if(n%j == 0 && n != j){
+      flag++
+      break
+    }
+  }
+  if(flag == 0){
+    console.log("YES")
+  }else console.log("NO")
+</script> 
+
+<script id="primes" type="">
+  for(var i=2 ; i<=100 ; i++){ 
+    var flag = 0
+    for(var j=2 ; j<=Math.sqrt(i) ; j++){
+      if(i%j == 0 && i != j){
+        flag++
+        break
+      }
+    }
+    if(flag == 0) console.log(i)
+  }
+</script> 
+
+<script id="itob" type="">
+  var n = +prompt("输入一个整数")
+  var str = "" + n
+  console.log(str)
+  // 以下是循环取数拼接法
+  // var n = +prompt("输入一个整数")
+  // var str = ""
+  // var length = n.toString().length
+  // for(var j=1 ; j<=length ; j++){
+  //   var mou = (n-n%(10**(length-j)))/(10**(length-j))%10
+  //   str = mou + str
+  // }
+  // console.log(str)
 </script> 
