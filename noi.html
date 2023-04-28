@@ -1084,7 +1084,7 @@
   //输入一个数，判断它是否是素数
   var n = +prompt("输入一个正整数 n")
   var flag = 0
-  if(n != 0 || n!=1){
+  if(n != 0 && n !=1 ){
     for(var j=2 ; j<=Math.sqrt(n) ; j++){
       if(n%j == 0 && n != j){
         flag++
