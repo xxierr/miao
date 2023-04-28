@@ -1,4 +1,4 @@
- 
+
 <script id="ch0103/01" type="">
   var a = +prompt("a")
   var b = +prompt("b")
@@ -954,3 +954,46 @@
     }else continue
   }
 </script>
+
+<script id="ch0105/43" type="">
+  var n = +prompt("输入一个正整数 n")
+  var max = 0
+  var j = 0
+  for(var i=2 ; i<=Math.sqrt(n) ; i++){  //找到一个数能够被n整除，这个数一定是质数
+    if(n%i == 0){
+      j = n/i
+      break
+    }
+  }
+  if(i > j){
+    max = i
+  }else max = j
+  console.log(max)
+</script> 
+
+<script id="ch0105/44" type="">
+  var n = +prompt("输入一个正整数 n")
+  var count = 1
+  for(var i=2 ; count<=n ; i++){ 
+    var flag = 0
+    for(var j=2 ; j<=Math.sqrt(i) ; j++){
+      if(i%j == 0 && i != j){
+        flag++
+        break
+      }
+    }
+    if(flag == 0) count++
+  }
+  console.log(i-1)
+</script> 
+
+<script id="ch0105/45" type="">
+  var n = +prompt("输入一个整数(范围1到10000),表示天数")
+  var sum = 0
+  var j = 0
+  for(var i=1 ; i+j-1<=n ; i+=j){
+    j++ 
+    sum += j*j
+  }
+  console.log(sum)
+</script> 
