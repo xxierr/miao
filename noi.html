@@ -1035,7 +1035,6 @@
     str += wei%10 + ""
     wei = (wei - wei%10)/10
   }
-  console.log(str)
   if (Number(str) == n){
     console.log("YES")
   }else console.log("NO")
@@ -1069,7 +1068,7 @@
 <script id="complete-numbers" type=""> 
   //输出1000以内的完全数
   //各个小于它的约数（真约数，列出某数的约数，去掉该数本身，剩下的就是它的真约数）的和等于它本身的自然数叫做完全数
-  for(var num=1; num<=1000 ; num++){
+  for(var num=2; num<=1000 ; num++){
     var sum = 0
     for(var i=1 ; i<=Math.sqrt(num) ; i++){ 
       if(num%i == 0){
@@ -1082,20 +1081,24 @@
 </script>
 
 <script id="prime" type="">
+  //输入一个数，判断它是否是素数
   var n = +prompt("输入一个正整数 n")
   var flag = 0
-  for(var j=2 ; j<=Math.sqrt(n) ; j++){
-    if(n%j == 0 && n != j){
-      flag++
-      break
+  if(n == 0 || n==1){
+    for(var j=2 ; j<=Math.sqrt(n) ; j++){
+      if(n%j == 0 && n != j){
+        flag++
+        break
+      }
     }
-  }
-  if(flag == 0){
-    console.log("YES")
-  }else console.log("NO")
+    if(flag == 0){
+      console.log("YES")
+    }else console.log("NO")
+  }else console.log("NO")  
 </script> 
 
 <script id="primes" type="">
+  //输出100以内的素数
   for(var i=2 ; i<=100 ; i++){ 
     var flag = 0
     for(var j=2 ; j<=Math.sqrt(i) ; j++){
