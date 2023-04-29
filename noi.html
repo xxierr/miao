@@ -1,4 +1,4 @@
-
+ 
 <script id="ch0103/01" type="">
   var a = +prompt("a")
   var b = +prompt("b")
@@ -1151,11 +1151,24 @@
 <script id="sqrt" type="">
   // 输入一个数，求它的平方根，精确到小数点后3位，不能使用Math.sqrt
   var n = +prompt("输入一个数")
-  var j = 0
-  for(var i=1 ; i<=n ; i++){
-    if(n%i == 0){
-      j = n/i
-      if(i == j) console.log(i.toFixed(3))
+  if(n!=0){
+    var left = 0
+    var right = n
+    var mid = 0
+    while(left <= right){
+      if(n == 0 || n == 1){
+        console.log(n)
+        break
+      }
+      mid = left + (right - left)/2
+      if(mid**2 ==  n){
+        break
+      }else if(mid**2 > n){
+        right = mid - 0.0001
+      }else left = mid + 0.0001
+    }
+    if(n !=0 && n != 1){
+      console.log(mid.toFixed(3))
     }
   }
 </script> 
