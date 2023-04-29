@@ -1,4 +1,4 @@
- 
+  
 <script id="ch0103/01" type="">
   var a = +prompt("a")
   var b = +prompt("b")
@@ -874,27 +874,28 @@
   console.log(n)
 </script> 
 
-<script id="ch0105/38" type="8">
-  var M = +prompt("输入一个整数n,0 <= n <= 100,表明多项式的最高次幂为n")
-  var N = +prompt("输入一个N,战斗力为N,不超过10000的正整数")
-  var X = +prompt("输入一个X,拥有X个能量元素,不超过10000的正整数")
-  var n = N
-  var x = X
-  for(var i=1 ; n<=M ; i++){
-    if(X != 0){
-      var m = 0
-      for(var j=1 ; j<=x ; j++){ 
-        if (m>=M){
-          break
-        }else {
-          m = n*j
-          X--
-        }
-      }
-      n += Math.trunc(M/n)
-    }else break
+<script id="ch0105/38" type="">
+  // 输入输出样例和题目提示有出入，样例第一行代表想要输入几组多项式数据（看了几遍才看出来）
+  var n = +prompt("输入一个整数n,0 <= n <= 100,代表想要输入几组多项式数据")
+  for(var g=1 ; g<=n ; g++){
+    var maxci = +prompt(`输入第${g}个多项式的最高次幂`)
+    var xic = maxci
+    var result = ""
+    var dao = 0
+    while(xic+1 >= 1){
+      var xi = +prompt(`输入第${g}个多项式的幂次为${xic}的项的系数`)
+      if(xic == 1){
+        result += xi*xic
+      }else if(xic == 0){
+        break
+      }else result += (xi*xic + " ")
+      dao += xi*xic
+      xic--
+    }
+    if(dao == 0){
+      console.log(dao)
+    }else console.log(result)
   }
-  console.log(n)
 </script> 
 
 <script id="ch0105/39" type="">
@@ -1171,4 +1172,4 @@
       console.log(mid.toFixed(3))
     }
   }
-</script> 
+</script>
