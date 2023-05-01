@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画图</title>
+  <style>
+    canvas {
+      border: 2px solid #f0f;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="3000" height="1250"></canvas>
+</body>
+<script>
+  var canvas = document.querySelector('canvas')
+  canvas.style.imageRendering = 'pixelated' //放大时的插帧方式：不插帧，直接放大像素
+  var ctx = canvas.getContext('2d')
+
+  function dot(x, y, color = 'black') {
+    x = Math.trunc(x)
+    y = Math.trunc(y)
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, 1, 1)
+  }
+  /**
+   * 你的任务：通过调用dot函数，实现：
+   * 需要注意，dot函数不能接收浮点数，如果参数为浮点数，会被转换为整数后绘制
+      * 在 坐标 (42, 42) 画出一个点
+      * 画一条水平实线，粗细为一个像素
+      * 画一条垂直实线，粗细为一个像素
+      * 画一条一个实点一个空点的虚线
+      * 画一条两个实点两个空点的虚线
+      * 画一条三个实点两个空点的虚线
+      * 画一条45度的斜线
+      * 画一条30度的斜线（与x轴的夹角呈30度）
+      * 画一条60度的斜线（与x轴的夹角呈60度）
+      * 画一条跨越画布左上角和右下角的对角线
+      * 画一个空心矩形
+      * 画一个实心矩形
+      * 画两个空心的圆，圆心在画布中心：
+        * 一个半径为50像素
+        * 一个半径为200像素
+      * 画一个实心的圆，半径至少为100像素
+      * 画一个【大小位置都合适】的sin(x)的图像
+
+      * 画出rgb色彩空间的某一面（尺寸要大于100x100）
+      * 如果做出上一题后，尝试将其每个点的坐标乘以一个矩阵（如(2,0,0,2)或(1,0.27得到新的位置，即绘制出被线性变换后的色彩空间某一面
+        可以考虑如下几种矩阵：
+           2 0
+           0 2
+           ------
+           1  0.27
+           0  1
+           ------
+           0.5    0.87
+           -0.87  0.5
+
+   */
+</script>
+<script>
+  // 不可更改上面的代码
+  // 你的代码写在这里
+  //1.
+  dot(42,42,color = 'red')
+  //2.
+  for(var x=0 ; x<=3000 ; x++){
+    dot(x,5)
+  }
+  //3.
+  for(var y=0 ; y<=1250 ; y++){
+    dot(5,y)
+  }
+  //4.
+  for(var x=0 ; x<=3000 ; x+=2){
+    dot(x,10)
+  }
+  //5.
+  for(var x=0 ; x<=3000 ; x+=4){
+    dot(x,15)
+    dot(x+1,15)
+  }
+  //6.
+  for(var x=0 ; x<=3000 ; x+=6){
+    dot(x,20)
+    dot(x+1,20)
+    dot(x+2,20)
+  }
+  //7.
+  for(var x=5,y=1250; x<=205 && y>=400 ; x++,y--){
+    dot(x,y)
+  }
+  //8.
+  for(var x=5,y=1250; x<=205 && y>=400 ; x+=3**(1/3),y--){
+    dot(x,y)
+  }
+  //9.
+  for(var x=5,y=1250; x<=205 && y>=400 ; x++,y-=3**(1/3)){
+    dot(x,y)
+  }
+  //10.
+  for(var x=0,y=0; x<=3000 && y<=1250 ; x+=2.4,y++){
+    dot(x,y,"red")
+  }
+  //11.
+  for(var x=11 ; x<=120 ; x++){
+    for(var y=300 ; y>=220 ; y--){
+      if(y==300 || y==220){
+        dot(x,y,"blue")
+      }else{
+        dot(11,y,"blue")
+        dot(120,y,"blue")
+      }
+    }
+  }
+  //12.
+  for(var x=11 ; x<=120 ; x++){
+    for(var y=400 ; y>=320 ; y--){
+      dot(x,y,"blue")
+    }
+  }
+  //13.
+  for(var x=3000/2-50 ; x<=3000/2+50 ; x++){
+    for(var y=1250/2-50 ; y<=1250/2+50 ; y++){
+      if((x-3000/2)**2 + (y-1250/2)**2 > 49.5**2 && (x-3000/2)**2 + (y-1250/2)**2 < 50.5**2){
+        dot(x,y,"green")
+      }
+    }
+  }
+  //14.
+  ctx.arc(3000/2,1250/2,200,0,2*Math.PI)
+  ctx.stroke()
+  //15.
+  for(var x=650-100 ; x<=650+100 ; x++){
+    for(var y=125-100 ; y<=125+100 ; y++){
+      if((x-650)**2 + (y-125)**2 <= 100**2){
+        dot(x,y,"orange")
+      }
+    }
+  }
+  
+  //15.
+  for(var x=80 ; x<=280 ; x++){
+    dot(x,450)
+  } 
+  for(var y=320 ; y<=500 ; y++){
+    dot(140,y)
+  }
+  for(var x=280,y=450; x>=270 && y>=440 ; x-=3**(1/3),y--){
+    dot(x,y)
+  }
+  for(var x=280,y=450; x>=270 && y<=460 ; x-=3**(1/3),y++){
+    dot(x,y)
+  }
+  for(var x=140,y=320; x<=150 && y<=330 ; x++,y+=3**(1/3)){
+    dot(x,y)
+  }
+  for(var x=140,y=320; x>=130 && y<=330 ; x--,y+=3**(1/3)){
+    dot(x,y)
+  }
+  for(var x=290,y=470; x>=275 && y>=460 ; x--,y--){
+    dot(x,y)
+  }
+  for(var x=290,y=460; x>=275 && y<=470 ; x--,y++){
+    dot(x,y)
+  }
+  for(var x=150,y=300; x<=160 && y<=310 ; x++,y++){
+    dot(x,y)
+  }
+  for(var x=170,y=300; x>=160 && y<=310 ; x--,y++){
+    dot(x,y)
+  }
+  for(var y=310 ; y<=327 ; y++){
+    dot(160,y)
+  }
+  for(var x=0 ; x<=4*Math.PI ; x+=2*Math.PI/360){
+    y=-10*Math.sin(x)
+    dot(10*x+140,y+450)
+  } 
+  //16.
+  for(var x=1000 ; x<=1255 ; x++){
+    for(var y=25 ; y<=280 ; y++){
+      var rgb = `rgb(255,${x-1000},${y-25})`
+      dot(x,y,rgb)
+    }
+  }
+  for(var x=1000 ; x<=1255 ; x++){
+    for(var y=25 ; y<=280 ; y++){
+      var rgb = `rgb(255,${x-1000},${y-25})`
+      var x1 = x*2 + y*0
+      var y1 = x*0 + y*2
+      dot(x1,y1,rgb)
+    }
+  }
+  for(var x=1000 ; x<=1255 ; x++){
+    for(var y=25 ; y<=280 ; y++){
+      var rgb = `rgb(255,${x-1000},${y-25})`
+      var x2 = x*1 + y*0
+      var y2 = x*0.27 + y*1
+      dot(x2,y2,rgb)
+    }
+  }
+  for(var x=1000 ; x<=1255 ; x++){
+    for(var y=25 ; y<=280 ; y++){
+      var rgb = `rgb(255,${x-1000},${y-25})`
+      var x3 = x*0.5 + y*(-0.87)
+      var y3 = x*0.87 + y*0.5
+      dot(x3,y3,rgb)
+    }
+  }
+</script>
+</html>
