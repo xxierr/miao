@@ -189,9 +189,9 @@
   for(var y=310 ; y<=327 ; y++){
     dot(160,y)
   }
-  for(var x=0 ; x<=4*Math.PI ; x+=2*Math.PI/360){
-    y=-10*Math.sin(x)
-    dot(10*x+140,y+450)
+  for(var x=0 ; x<=4*Math.PI*10 ; x++){
+    y=-10*Math.sin(x/10)
+    dot(x+140,y+450)
   } 
   //16.
   for(var x=1000 ; x<=1255 ; x++){
