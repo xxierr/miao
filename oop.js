@@ -81,3 +81,4 @@ class Vactor{
     return Math.sqrt(this.re ** 2 + this.im ** 2)
   }
 }
+
