@@ -59,22 +59,22 @@ class MyMap{
   }
 }
 
-class Vactor{
+class Vector{
   constructor(re,im){
     this.re = re
     this.im = im
   }
 
-  plus(vac){
-    var re = this.re + vac.re
-    var im = this.im + vac.im
-    return new Vactor(re,im)
+  plus(vec){
+    var re = this.re + vec.re
+    var im = this.im + vec.im
+    return new Vector(re,im)
   }
 
-  minus(vac){
-    var re = this.re - vac.re
-    var im = this.im - vac.im
-    return new Vactor(re,im)
+  minus(vec){
+    var re = this.re - vec.re
+    var im = this.im - vec.im
+    return new Vector(re,im)
   }
 
   length(){
