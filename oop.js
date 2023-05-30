@@ -58,3 +58,26 @@ class MyMap{
     return this.#key.length
   }
 }
+
+class Vactor{
+  constructor(re,im){
+    this.re = re
+    this.im = im
+  }
+
+  plus(vac){
+    var re = this.re + vac.re
+    var im = this.im + vac.im
+    return new Vactor(re,im)
+  }
+
+  minus(vac){
+    var re = this.re - vac.re
+    var im = this.im - vac.im
+    return new Vactor(re,im)
+  }
+
+  length(){
+    return Math.sqrt(this.re ** 2 + this.im ** 2)
+  }
+}
