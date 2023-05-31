@@ -59,7 +59,7 @@ class MyMap{
   }
 }
 
-function Vector(re,im){
+function Vector(){
   class Vector{
     constructor(re,im){
       this.re = re
@@ -90,11 +90,11 @@ function Vector(re,im){
   var b = new Vector(2,2)
   var c = a.plus(b)
   var d = a.minus(b)
-  assert(c.x == 3, 'a+b的x应该为3')
-  // assert(c.y == 4, 'a+b的y应该为4')
-  // assert(d.x == -1, 'a-b的x应为-1')
-  // assert(d.y == 0, 'a-b的y应为0')
-  // assert(c.length == 5,'a+b的长度应为5')
+  assert(c.re == 3, 'a+b的x应该为3')
+  assert(c.im == 4, 'a+b的y应该为4')
+  assert(d.re == -1, 'a-b的x应为-1')
+  assert(d.im == 0, 'a-b的y应为0')
+  assert(c.length == 5,'a+b的长度应为5')
 }
 
 class Complex{
