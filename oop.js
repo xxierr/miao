@@ -1,6 +1,3 @@
-function assert(b,string){
-  if(!b) throw string
-}
 class MySet{
   ele = []
 
@@ -210,6 +207,9 @@ class LinkedList{
   }
 }
 
+function assert(b,string){
+  if(!b) throw string
+}
 // 测试vector
 var a = new Vector(1,2)
 var b = new Vector(2,2)
