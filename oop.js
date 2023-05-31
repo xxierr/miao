@@ -59,27 +59,42 @@ class MyMap{
   }
 }
 
-class Vector{
-  constructor(re,im){
-    this.re = re
-    this.im = im
-  }
+function Vector(re,im){
+  class Vector{
+    constructor(re,im){
+      this.re = re
+      this.im = im
+    }
 
-  plus(vec){
-    var re = this.re + vec.re
-    var im = this.im + vec.im
-    return new Vector(re,im)
-  }
+    plus(vec){
+      var re = this.re + vec.re
+      var im = this.im + vec.im
+      return new Vector(re,im)
+    }
 
-  minus(vec){
-    var re = this.re - vec.re
-    var im = this.im - vec.im
-    return new Vector(re,im)
-  }
+    minus(vec){
+      var re = this.re - vec.re
+      var im = this.im - vec.im
+      return new Vector(re,im)
+    }
 
-  length(){
-    return Math.sqrt(this.re ** 2 + this.im ** 2)
+    length(){
+      return Math.sqrt(this.re ** 2 + this.im ** 2)
+    }
   }
+  function assert(b,string){
+    if(!b) throw new Error()
+  }
+  // 测试vector
+  var a = new Vector(1,2)
+  var b = new Vector(2,2)
+  var c = a.plus(b)
+  var d = a.minus(b)
+  assert(c.x == 3, 'a+b的x应该为3')
+  assert(c.y == 4, 'a+b的y应该为4')
+  assert(d.x == -1, 'a-b的x应为-1')
+  assert(d.y == 0, 'a-b的y应为0')
+  assert(c.length == 5,'a+b的长度应为5')
 }
 
 class Complex{
@@ -206,17 +221,3 @@ class LinkedList{
     return len
   }
 }
-
-function assert(b,string){
-  if(!b) throw string
-}
-// 测试vector
-var a = new Vector(1,2)
-var b = new Vector(2,2)
-var c = a.plus(b)
-var d = a.minus(b)
-assert(c.x == 3, 'a+b的x应该为3')
-assert(c.y == 4, 'a+b的y应该为4')
-assert(d.x == -1, 'a-b的x应为-1')
-assert(d.y == 0, 'a-b的y应为0')
-assert(c.length == 5,'a+b的长度应为5')
