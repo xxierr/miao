@@ -59,7 +59,7 @@ class MyMap{
   }
 }
 
-function Vector(){
+function Vector(re,im){
   class Vector{
     constructor(re,im){
       this.re = re
