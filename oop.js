@@ -79,7 +79,7 @@ function Vector(){
     }
 
     length(){
-      return Math.sqrt(this.re * this.re+ this.im * this.im)
+      return Math.sqrt(this.re * this.re + this.im * this.im)
     }
   }
   function assert(b,string){
