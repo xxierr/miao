@@ -93,7 +93,6 @@ function Vector(){
   assert(d.im == 0, 'a-b的y应为0')
   assert(c.length == 5,'a+b的长度应为5')
 }
-Vector()
 
 class Complex{
   constructor(re,im){
