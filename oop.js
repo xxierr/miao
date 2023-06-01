@@ -112,7 +112,7 @@ class Complex{
 
 class Stack{
   constructor(){
-    this.size = this.len
+    this.size = len
   }
   head = null
   len = 0
