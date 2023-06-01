@@ -111,6 +111,9 @@ class Complex{
 }
 
 class Stack{
+  constructor(){
+    this.size = this.len
+  }
   head = null
   len = 0
   push(val){
@@ -133,10 +136,6 @@ class Stack{
     var res = this.head.val
     this.head = this.head.next
     return res
-  }
-
-  size(){
-    return this.len
   }
 }
 
