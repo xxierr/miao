@@ -151,9 +151,11 @@ class Queue{
 class LinkedList{
   head = null
   tail = null
+  size = 0
 
   append(val){
     var node = {val, next: null}
+    this.size++
     if(this.head == null){
       this.head = this.tail = node
       return
@@ -166,6 +168,7 @@ class LinkedList{
 
   prepend(val){
     var node = {val, next: null}
+    this.size++
     if(this.head == null){
       this.head = this.tail = node
       return
@@ -184,16 +187,6 @@ class LinkedList{
       c++
     }
     return p
-  }
-
-  size = () => {
-    var p = this.head
-    var len = 0
-    while(p){
-      len++
-      p = p.next
-    }
-    return len
   }
 }
 
