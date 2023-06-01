@@ -22,43 +22,41 @@ class MySet{
 }
 
 class MyMap{
-  #key = []
-  #value = []
+  key = []
+  value = []
+  size = 0
 
   set(k,v){
-    var kidx = this.#key.indexOf(k)
-    if(kidx >= 0) this.#value[kidx] = v
+    var kidx = this.key.indexOf(k)
+    if(kidx >= 0) this.value[kidx] = v
     else {
-      this.#key.push(k)
-      this.#value.push(v)
+      this.key.push(k)
+      this.value.push(v)
+      this.size++
     }
   }
 
   get(k){
-    var kidx = this.#key.indexOf(k)
-    if(kidx >= 0) return this.#value[kidx]
+    var kidx = this.key.indexOf(k)
+    if(kidx >= 0) return this.value[kidx]
   }
 
   has(v){
-    if(this.#key.includes(k)) return true
+    if(this.key.includes(k)) return true
     else return false
   }
 
   delete(k){
-    var kidx = this.#key.indexOf(k)
+    var kidx = this.key.indexOf(k)
     if(kidx >= 0){
-      this.#key.splice(kidx,1)
-      this.#value.splice(kidx,1)
+      this.key.splice(kidx,1)
+      this.value.splice(kidx,1)
+      this.size--
       return true
     }
     return false
   }
-
-  size(){
-    return this.#key.length
-  }
 }
-
 
 class Vector{
   constructor(re,im){
