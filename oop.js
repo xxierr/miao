@@ -64,6 +64,7 @@ function Vector(){
     constructor(re,im){
       this.re = re
       this.im = im
+      this.length = Math.sqrt(this.re * this.re + this.im * this.im)
     }
 
     plus(vec){
@@ -77,10 +78,6 @@ function Vector(){
       var im = this.im - vec.im
       return new Vector(re,im)
     }
-
-    length(){
-      return Math.sqrt(this.re * this.re + this.im * this.im)
-    }
   }
   function assert(b,string){
     if(!b) throw new Error(string)
@@ -90,12 +87,14 @@ function Vector(){
   var b = new Vector(2,2)
   var c = a.plus(b)
   var d = a.minus(b)
+  console.log(c.length)
   assert(c.re == 3, 'a+b的x应该为3')
   assert(c.im == 4, 'a+b的y应该为4')
   assert(d.re == -1, 'a-b的x应为-1')
   assert(d.im == 0, 'a-b的y应为0')
   assert(c.length == 5,'a+b的长度应为5')
 }
+Vector()
 
 class Complex{
   constructor(re,im){
