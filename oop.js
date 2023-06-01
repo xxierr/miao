@@ -111,14 +111,11 @@ class Complex{
 }
 
 class Stack{
-  constructor(){
-    this.size = len
-  }
   head = null
-  len = 0
+  size = 0
   push(val){
     var node = {val, next: null}
-    len++
+    size++
     if(this.head == null){
       this.head = node
       return
@@ -132,7 +129,7 @@ class Stack{
   pop(){
     var node = {val, next: null}
     if(this.head == null) return undefined
-    len--
+    size--
     var res = this.head.val
     this.head = this.head.next
     return res
