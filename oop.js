@@ -190,4 +190,3 @@ class LinkedList{
     return p.val
   }
 }
-
