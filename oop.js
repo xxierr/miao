@@ -188,7 +188,7 @@ class LinkedList{
     return p
   }
 
-  size(){
+  size = () => {
     var p = this.head
     var len = 0
     while(p){
