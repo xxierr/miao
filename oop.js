@@ -1,23 +1,24 @@
 class MySet{
   ele = []
+  size = 0
 
   add(val){
-    if(!this.has(val)) this.ele.push(val)
+    if(!this.has(val)) {
+      this.ele.push(val)
+      this.size++
+    }
   }
 
   remove(val){
     if(this.has(val)){
       var idx = this.ele.indexOf(val)
       this.ele.splice(idx,1)
+      this.size--
     }
   }
 
   has(val){
     return this.ele.includes(val)
-  }
-
-  size(val){
-    return this.ele.length
   }
 }
 
