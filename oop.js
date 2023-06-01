@@ -127,7 +127,6 @@ class Stack{
   }
 
   pop(){
-    var node = {val: val, next: null}
     if(this.head == null) return undefined
     this.size--
     var res = this.head.val
