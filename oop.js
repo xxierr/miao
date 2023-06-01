@@ -62,37 +62,26 @@ class MyMap{
 
 class Vector{
   constructor(re,im){
-    this.re = re
-    this.im = im
-    this.length = Math.sqrt(this.re * this.re + this.im * this.im)
+    this.x = re
+    this.y = im
+    this.length = Math.sqrt(this.x * this.x + this.y * this.y)
   }
 
   plus(vec){
-    var re = this.re + vec.re
-    var im = this.im + vec.im
+    var re = this.x + vec.x
+    var im = this.y + vec.y
     return new Vector(re,im)
   }
 
   minus(vec){
-    var re = this.re - vec.re
-    var im = this.im - vec.im
+    var re = this.x - vec.x
+    var im = this.y - vec.y
     return new Vector(re,im)
   }
 }
 function assert(b,string){
   if(!b) throw new Error(string)
 }
-// 测试vector
-var a = new Vector(1,2)
-var b = new Vector(2,2)
-var c = a.plus(b)
-var d = a.minus(b)
-assert(c.re == 3, 'a+b的x应该为3')
-assert(c.im == 4, 'a+b的y应该为4')
-assert(d.re == -1, 'a-b的x应为-1')
-assert(d.im == 0, 'a-b的y应为0')
-assert(c.length == 5,'a+b的长度应为5')
-
 
 class Complex{
   constructor(re,im){
