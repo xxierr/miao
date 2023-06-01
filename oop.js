@@ -87,7 +87,6 @@ function Vector(){
   var b = new Vector(2,2)
   var c = a.plus(b)
   var d = a.minus(b)
-  console.log(c.length)
   assert(c.re == 3, 'a+b的x应该为3')
   assert(c.im == 4, 'a+b的y应该为4')
   assert(d.re == -1, 'a-b的x应为-1')
