@@ -115,7 +115,7 @@ class Stack{
   size = 0
   push(val){
     var node = {val, next: null}
-    size++
+    this.size++
     if(this.head == null){
       this.head = node
       return
@@ -129,7 +129,7 @@ class Stack{
   pop(){
     var node = {val, next: null}
     if(this.head == null) return undefined
-    size--
+    this.size--
     var res = this.head.val
     this.head = this.head.next
     return res
@@ -139,7 +139,7 @@ class Stack{
 class Queue{
   vals = []
   size = this.vals.length
-  
+
   add(val){
     this.vals.push(val)
   }
