@@ -187,7 +187,7 @@ class LinkedList{
       p = p.next
       c++
     }
-    return p
+    return p.val
   }
 }
 
