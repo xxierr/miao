@@ -137,13 +137,15 @@ class Stack{
 
 class Queue{
   vals = []
-  size = this.vals.length
+  size = 0
 
   add(val){
     this.vals.push(val)
+    this.size++
   }
 
   pop(){
+    this.size--
     return this.vals.shift()
   }
 }
