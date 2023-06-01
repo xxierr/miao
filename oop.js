@@ -79,36 +79,33 @@ class Vector{
     return new Vector(re,im)
   }
 }
-function assert(b,string){
-  if(!b) throw new Error(string)
-}
 
 class Complex{
   constructor(re,im){
-    this.re = re
-    this.im = im
+    this.real = re
+    this.imag = im
   }
 
   plus(c){
-    return new Complex(this.re + c.re , this.im + c.im)
+    return new Complex(this.real + c.reL , this.imag + c.imag)
   }
 
   minus(c){
-    return new Complex(this.re - c.re , this.im - c.im)
+    return new Complex(this.real - c.real , this.imag - c.imag)
   }
 
   mul(c){
-    var re = this.re * c.re - this.im * c.im
-    var im = this.re * c.im + this.im * c.re
+    var re = this.real * c.real - this.imag * c.imag
+    var im = this.real * c.imag + this.imag * c.real
     return new Complex(re,im)
   }
   
   div(c){
-    var hper = new Complex(this.re, -this.im)
+    var hper = new Complex(this.real, -this.imag)
     var fenzi = this.mul(hper)
     var fenmu = c.mul(hper)
-    var re = fenzi.re / fenmu.re
-    var im = fenmu.im / fenmu.re
+    var re = fenzi.real / fenmu.real
+    var im = fenmu.imag / fenmu.real
     return new Complex(re,im)
   }
 }
