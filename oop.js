@@ -252,26 +252,3 @@ class PriorityQueue{
     return this._heap.length
   }
 }
-
-// function assert(b,s){
-//   if(!b) throw s
-// }
-
-// var pq = new PriorityQueue()
-// pq.push(5)
-// pq.push(1)
-// pq.push(2)
-// pq.push(8)
-// assert(pq.peek() == 8, '堆顶应为8')
-// assert(pq.pop() == 8, '应pop出堆顶元素')
-// assert(pq.size == 3, '此时堆大小应该为3')
-// pq.push(0)
-// pq.push(11)
-// pq.push(6)
-// pq.push(9)
-// assert(pq.peek() == 11, '堆顶应该为11')
-// var ary = []
-// while(pq.size) {
-//   ary.push( pq.pop() )
-// }
-// assert(ary.toString() == '11,9,6,5,2,1,0', 'pop出的顺序应从大到小')
