@@ -190,3 +190,88 @@ class LinkedList{
     return p.val
   }
 }
+
+
+class PriorityQueue{
+  constructor(){
+    this._heap = []
+  }
+
+  _swap(i,j){
+    var t = this._heap[i]
+    this._heap[i] = this._heap[j]
+    this._heap[j] = t
+  }
+
+  _heapUp(pos){
+    if(pos == 0) return
+    var parent_pos = (pos-1) >> 1 //pos位置的结点元素的父节点位置
+    if(this._heap[pos] > this._heap[parent_pos]){
+      this._swap(pos,parent_pos)
+      this._heapUp(parent_pos)
+    }
+  }
+
+  _heapDown(pos){
+    var leftpos = 2*pos + 1
+    var rightpos = 2*pos + 2
+    var maxidx = pos
+    if(leftpos < this._heap.length && this._heap[leftpos] > this._heap[maxidx]){
+      maxidx = leftpos
+    }
+    if(rightpos < this._heap.length && this._heap[rightpos] > this._heap[maxidx]){
+      maxidx = rightpos
+    }
+    if(maxidx != pos){
+      this._swap(maxidx,pos)
+      this._heapDown(maxidx)
+    }
+  }
+
+  push(val){
+    this._heap.push(val)
+    this._heapUp(this._heap.length - 1)
+    return this
+  }
+
+  pop(){
+    if(this._heap.length == 0) return undefined
+    if(this._heap.length == 1) return this._heap.pop()
+    var res = this._heap[0]
+    var last = this._heap.pop()
+    this._heap[0] = last
+    this._heapDown(0)
+    return res
+  }
+
+  peek(){
+    return this._heap[0]
+  }
+
+  get size(){
+    return this._heap.length
+  }
+}
+
+// function assert(b,s){
+//   if(!b) throw s
+// }
+
+// var pq = new PriorityQueue()
+// pq.push(5)
+// pq.push(1)
+// pq.push(2)
+// pq.push(8)
+// assert(pq.peek() == 8, '堆顶应为8')
+// assert(pq.pop() == 8, '应pop出堆顶元素')
+// assert(pq.size == 3, '此时堆大小应该为3')
+// pq.push(0)
+// pq.push(11)
+// pq.push(6)
+// pq.push(9)
+// assert(pq.peek() == 11, '堆顶应该为11')
+// var ary = []
+// while(pq.size) {
+//   ary.push( pq.pop() )
+// }
+// assert(ary.toString() == '11,9,6,5,2,1,0', 'pop出的顺序应从大到小')
