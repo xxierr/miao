@@ -42,9 +42,25 @@ var xxierr = {
       }
     }
     return -1
+  },
+
+  findLastIndex: function(array,target){
+    for(var i=array.length-1 ; i>=0 ; i--){
+      var item = array[i]
+      if(typeof item === 'object' && !Array.isArray(item)){
+        if(typeof target === 'function'){
+          if(target(item)) return i
+        }
+        else if(typeof target === 'object' && Object.keys(item).join('') == Object.keys(target).join('') && Object.values(item).join('') == Object.values(target).join('')) return i
+        else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) return i
+        else if(typeof target === 'string' && item[target]) return i
+      }
+      if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
+        if(item == target) return i
+      }
+    }
+    return -1
   }
-
-
 }
 // var users = [
 //   { 'user': 'barney',  'active': false },
