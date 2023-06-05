@@ -26,7 +26,7 @@ var xxierr = {
     return array.slice(n)
   },
 
-  findindex: function(array,target){
+  findIndex: function(array,target){
     for(var i=0 ; i<array.length ; i++){
       var item = array[i]
       if(typeof item === 'object' && !Array.isArray(item)){
@@ -44,7 +44,7 @@ var xxierr = {
     return -1
   }
 
-  
+
 }
 // var users = [
 //   { 'user': 'barney',  'active': false },
