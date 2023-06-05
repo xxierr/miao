@@ -1,7 +1,7 @@
 var xxierr = {
   compact: function(array){
-    return array.map(it => {
+    return array.filter(it => {
       if(it) return it
-    }).join("").split("")
+    })
   }
 }
