@@ -158,10 +158,28 @@ var xxierr = {
       }
     }
     return true
-  }
+  },
+
+  some: function(set,target){
+    for(var i=0 ; i<set.length ; i++){
+      var item = set[i]
+      if(typeof item === 'object' && !Array.isArray(item)){
+        if(typeof target === 'function'){
+          if(target(item)) return true
+        }
+        else if(typeof target === 'object' && !Array.isArray(target)){
+          if(Object.keys(item).join('') == Object.keys(target).join('') && Object.values(item).join('') == Object.values(target).join('')) return true
+        }
+        else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) return true
+        else if(typeof target === 'string' && item[target] != null) return true
+      }
+      if(typeof item === 'string' || typeof item === 'boolean'){
+        if(item == target) return true
+      }
+    }
+    return false
+  },
+
+
 }
-// var users = [
-//   { 'user': 'barney', 'age': 36, 'active': false },
-//   { 'user': 'fred',   'age': 40, 'active': false }
-// ];
-// console.log(xxierr.every(users, 'active'))
+// console.log(xxierr.some(users, { 'user': 'barney', 'active': false }))
