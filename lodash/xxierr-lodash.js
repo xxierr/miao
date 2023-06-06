@@ -84,6 +84,13 @@ var xxierr = {
       res[kv[0]] = kv[1]
     }
     return res
-  }
+  },
+
+  toPair: function(object){
+    if(typeof object === 'map' || typeof object === 'set') return object
+    else if(typeof object === 'object' && !Array.isArray(object)) return Object.entries(object)
+  },
+
+
 }
-//console.log(xxierr.fromPairs([['fred', 30], ['barney', 40]]))
+//console.log(xxierr.toPair())
