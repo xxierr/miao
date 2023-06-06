@@ -154,7 +154,10 @@ var xxierr = {
         else if(typeof target === 'string' && !item[target]) return false
       }
       if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
-        if(item != target) return false
+        if(typeof target === 'function'){
+          if(!target(item)) return false
+        }
+        else if(item != target) return false
       }
     }
     return true
@@ -174,7 +177,10 @@ var xxierr = {
         else if(typeof target === 'string' && item[target] != null) return true
       }
       if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
-        if(item == target) return true
+        if(typeof target === 'function'){
+          if(target(item)) return true
+        }
+        else if(item == target) return true
       }
     }
     return false
@@ -182,4 +188,4 @@ var xxierr = {
 
 
 }
-// console.log(xxierr.some(users, { 'user': 'barney', 'active': false }))
+//console.log(xxierr.some([null, 0, 'yes', false], Boolean))
