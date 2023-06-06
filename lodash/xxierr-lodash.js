@@ -86,11 +86,27 @@ var xxierr = {
     return res
   },
 
-  toPair: function(object){
+  toPairs: function(object){
     if(typeof object === 'map' || typeof object === 'set') return object
     else if(typeof object === 'object' && !Array.isArray(object)) return Object.entries(object)
   },
 
+  head: function(array){
+    return array[0]
+  },
 
+  indexOf: function(array,value,fromIndex = 0){
+    var len = array.length
+    var idx = array.slice(fromIndex).indexOf(value)
+    if(idx != -1 && fromIndex >= 0) return idx + fromIndex
+    else if(idx != -1 && fromIndex < 0) return idx + fromIndex + len
+    else return -1
+  },
+
+  lastIndexOf: function(array,value,fromIndex = array.length){
+    var idx = array.slice(0,fromIndex+1).lastIndexOf(value)
+    if(idx != -1) return idx
+    else return -1
+  },
 }
-//console.log(xxierr.toPair())
+//console.log(xxierr.lastIndexOf([1, 2, 1, 2], 3,-2))
