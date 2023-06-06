@@ -63,7 +63,7 @@ var xxierr = {
   },
 
   flatten: function(array){
-    return [...array]
+    return array.flat()
   },
 
   flattenDeep: function(array){
@@ -76,6 +76,14 @@ var xxierr = {
 
   flattenDepth: function(array,depth){
     return array.flat(depth)
+  },
+
+  fromPairs: function(pairs){
+    var res = {}
+    for(var kv of pairs){
+      res[kv[0]] = kv[1]
+    }
+    return res
   }
 }
-//console.log(xxierr.flattenDepth([1, [2, [3, [4]], 5]],2))
+//console.log(xxierr.fromPairs([['fred', 30], ['barney', 40]]))
