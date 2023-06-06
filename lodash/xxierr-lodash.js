@@ -33,7 +33,9 @@ var xxierr = {
         if(typeof target === 'function'){
           if(target(item)) return i
         }
-        else if(typeof target === 'object' && Object.keys(item).join('') == Object.keys(target).join('') && Object.values(item).join('') == Object.values(target).join('')) return i
+        else if(typeof target === 'object' && !Array.isArray(target)){
+          if(Object.keys(item).join('') == Object.keys(target).join('') && Object.values(item).join('') == Object.values(target).join('')) return i
+        }
         else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) return i
         else if(typeof target === 'string' && item[target]) return i
       }
@@ -51,7 +53,9 @@ var xxierr = {
         if(typeof target === 'function'){
           if(target(item)) return i
         }
-        else if(typeof target === 'object' && Object.keys(item).join('') == Object.keys(target).join('') && Object.values(item).join('') == Object.values(target).join('')) return i
+        else if(typeof target === 'object' && !Array.isArray(target)){
+          if(Object.keys(item).join('') == Object.keys(target).join('') && Object.values(item).join('') == Object.values(target).join('')) return i
+        }
         else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) return i
         else if(typeof target === 'string' && item[target]) return i
       }
@@ -110,10 +114,54 @@ var xxierr = {
     else return -1
   },
 
-  // inital: function(){
+  inital: function(array){
+    var arr = array
+    arr.pop()
+    return arr
+  },
 
-  // },
+  join: function(array,char){
+    return array.join(char)
+  },
 
+  last: function(array){
+    return array.at(-1)
+  },
 
+  pull: function(array,...value){
+    var values = new Set([...value])
+    return array.filter(it => {
+      if(!values.has(it)) return it
+    })
+  },
+
+  reverse: function(array){
+    return array.reverse()
+  },
+
+  every: function(set,target){
+    if(set == null) return true
+    for(var i=0 ; i<set.length ; i++){
+      var item = set[i]
+      if(typeof item === 'object' && !Array.isArray(item)){
+        if(typeof target === 'function'){
+          if(!target(item)) return false
+        }
+        else if(typeof target === 'object' && !Array.isArray(target)){
+          if(Object.keys(item).join('') != Object.keys(target).join('') || Object.values(item).join('') != Object.values(target).join('')) return false
+        }
+        else if(Array.isArray(target) && target.length == 2 && item[target[0]] != target[1]) return false
+        else if(typeof target === 'string' && !item[target]) return false
+      }
+      if(typeof item === 'string' || typeof item === 'boolean'){
+        if(item != target) return false
+      }
+    }
+    return true
+  }
 }
-//console.log(xxierr.indexOf([1, 2, 1, 2], 2,-10))
+// var users = [
+//   { 'user': 'barney', 'age': 36, 'active': false },
+//   { 'user': 'fred',   'age': 40, 'active': false }
+// ];
+// console.log(xxierr.every(users, 'active'))
