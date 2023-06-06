@@ -60,11 +60,22 @@ var xxierr = {
       }
     }
     return -1
+  },
+
+  flatten: function(array){
+    return [...array]
+  },
+
+  flattenDeep: function(array){
+    var res = array
+    while(res.join('') != res.flat().join('')){
+      res = res.flat()
+    }
+    return res.flat()
+  },
+
+  flattenDepth: function(array,depth){
+    return array.flat(depth)
   }
 }
-// var users = [
-//   { 'user': 'barney',  'active': false },
-//   { 'user': 'fred',    'active': false },
-//   { 'user': 'pebbles', 'active': true }
-// ];
-// console.log(xxierr.findindex(users, 'active'))
+//console.log(xxierr.flattenDepth([1, [2, [3, [4]], 5]],2))
