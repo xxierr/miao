@@ -114,7 +114,7 @@ var xxierr = {
     else return -1
   },
 
-  inital: function(array){
+  initial: function(array){
     var arr = array
     arr.pop()
     return arr
