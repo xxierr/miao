@@ -98,8 +98,9 @@ var xxierr = {
   indexOf: function(array, value, fromIndex = 0){
     var len = array.length
     var idx = array.slice(fromIndex).indexOf(value)
+    if(fromIndex<-len) fromIndex = fromIndex%len
     if(idx != -1 && fromIndex >= 0) return idx + fromIndex
-    else if(idx != -1 && fromIndex < 0) return idx + fromIndex%len + len
+    else if(idx != -1 && fromIndex < 0) return idx + fromIndex + len
     else return -1
   },
 
