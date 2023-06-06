@@ -95,18 +95,24 @@ var xxierr = {
     return array[0]
   },
 
-  indexOf: function(array,value,fromIndex = 0){
+  indexOf: function(array, value, fromIndex = 0){
     var len = array.length
     var idx = array.slice(fromIndex).indexOf(value)
     if(idx != -1 && fromIndex >= 0) return idx + fromIndex
-    else if(idx != -1 && fromIndex < 0) return idx + fromIndex + len
+    else if(idx != -1 && fromIndex < 0) return idx + fromIndex%len + len
     else return -1
   },
 
-  lastIndexOf: function(array,value,fromIndex = array.length){
+  lastIndexOf: function(array, value, fromIndex = array.length){
     var idx = array.slice(0,fromIndex+1).lastIndexOf(value)
     if(idx != -1) return idx
     else return -1
   },
+
+  // inital: function(){
+
+  // },
+
+
 }
-//console.log(xxierr.lastIndexOf([1, 2, 1, 2], 3,-2))
+//console.log(xxierr.indexOf([1, 2, 1, 2], 2,-10))
