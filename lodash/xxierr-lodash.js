@@ -186,9 +186,9 @@ var xxierr = {
     return false
   },
 
-  countBy: function(set, iteratee = _.identity){
+  countBy: function(sets, iteratee = _.identity){
     var res = new Map()
-    for(var item of set){
+    for(var item of sets){
       var c = 0
       var key = ""
       if(typeof iteratee === 'string') key = item[iteratee]
@@ -203,9 +203,9 @@ var xxierr = {
     return res
   },
 
-  groupBy: function(set, iteratee = _.identity){
+  groupBy: function(sets, iteratee = _.identity){
     var res = new Map()
-    for(var item of set){
+    for(var item of sets){
       var c = []
       var key = ""
       if(typeof iteratee === 'string') key = item[iteratee]
