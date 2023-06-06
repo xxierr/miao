@@ -153,7 +153,7 @@ var xxierr = {
         else if(Array.isArray(target) && target.length == 2 && item[target[0]] != target[1]) return false
         else if(typeof target === 'string' && !item[target]) return false
       }
-      if(typeof item === 'string' || typeof item === 'boolean'){
+      if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
         if(item != target) return false
       }
     }
@@ -173,7 +173,7 @@ var xxierr = {
         else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) return true
         else if(typeof target === 'string' && item[target] != null) return true
       }
-      if(typeof item === 'string' || typeof item === 'boolean'){
+      if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
         if(item == target) return true
       }
     }
