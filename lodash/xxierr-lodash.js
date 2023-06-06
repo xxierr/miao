@@ -200,7 +200,7 @@ var xxierr = {
       }
       res.set(key,++c)
     }
-    return res
+    return Object.fromEntries(res)
   },
 
   groupBy: function(sets, iteratee = _.identity){
@@ -218,7 +218,7 @@ var xxierr = {
       c.push(item)
       res.set(key,c)
     }
-    return res
+    return Object.fromEntries(res)
   },
 
   keyBy: function(array, iteratee){
