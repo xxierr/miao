@@ -186,6 +186,92 @@ var xxierr = {
     return false
   },
 
+  countBy: function(set, iteratee = _.identity){
+    var res = new Map()
+    for(var item of set){
+      var c = 0
+      var key = ""
+      if(typeof iteratee === 'string') key = item[iteratee]
+      else if(typeof iteratee === 'function') key = iteratee(item)
+      var value = res.get(key)
+      if(value) {
+        c = value
+        res.delete(key)
+      }
+      res.set(key,++c)
+    }
+    return res
+  },
 
+  groupBy: function(set, iteratee = _.identity){
+    var res = new Map()
+    for(var item of set){
+      var c = []
+      var key = ""
+      if(typeof iteratee === 'string') key = item[iteratee]
+      else if(typeof iteratee === 'function') key = iteratee(item)
+      var value = res.get(key)
+      if(value) {
+        c = value
+        res.delete(key)
+      }
+      c.push(item)
+      res.set(key,c)
+    }
+    return res
+  },
+
+  keyBy: function(array, iteratee){
+    var res = {}
+    for(var item of array){
+      if(typeof iteratee === 'string') res[item[iteratee]] = item
+      else if(typeof iteratee === 'function') res[iteratee(item)] = item
+    }
+    return res
+  },
+
+  forEach: function(set, iteratee){
+    var res = null
+    if(Array.isArray(set)) {
+      res = []
+      set.forEach(it => {
+        iteratee(it)
+        res.push(it)
+      })
+      return res
+    }
+    else if(typeof set === 'object') {
+      res = {}
+      Object.entries(set).forEach(it => {
+        var kv = [...it]
+        iteratee(...it)
+        res[kv[0]] = kv[1]
+      })
+      return res
+    }
+  },
+
+  map: function(set, iteratee){
+    var res = []
+    if(Array.isArray(set)) {
+      if(typeof iteratee === 'function' && typeof set[0] != 'object') return set.map(it => iteratee(it,set.indexOf(it),set))
+      if(typeof set[0] === 'object' && !Array.isArray(set[0]) && typeof iteratee === 'string'){
+        set.forEach(it => {
+          res.push(it[iteratee])
+        })
+        return res
+      }
+    }else if(typeof set === 'object' && !Array.isArray(set)) {
+      var values = Object.values(set)
+      return values.map(it => iteratee(it,values.indexOf(it),values))
+    }
+  }
 }
-//console.log(xxierr.some([null, 0, 'yes', false], Boolean))
+function square(n) {
+  return n * n;
+}
+// var users = [
+//   { 'user': 'barney' },
+//   { 'user': 'fred' }
+// ];
+// console.log(xxierr.map(users, 'user'))
