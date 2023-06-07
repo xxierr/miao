@@ -276,26 +276,25 @@ var xxierr = {
     var res = []
     for(var i=0 ; i<set.length ; i++){
       var item = set[i]
-      var firstele = item[Object.keys(item)[0]]
       if(typeof item === 'object' && !Array.isArray(item)){
         if(typeof target === 'function'){
-          if(target(item)) res.push(firstele)
+          if(target(item)) res.push(item)
         }
         else if(typeof target === 'object' && !Array.isArray(target)){
           var tkeys = Object.keys(target)
           for(var tk of tkeys){
             if(item[tk] != target[tk]) return res
           }
-          res.push(firstele)
+          res.push(item)
         }
         else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) res.push(firstele)
         else if(typeof target === 'string' && item[target]) res.push(firstele)
       }
       if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
         if(typeof target === 'function'){
-          if(target(item)) res.push(firstele)
+          if(target(item)) res.push(item)
         }
-        else if(item == target) res.push(firstele)
+        else if(item == target) res.push(item)
       }
     }
     return res
