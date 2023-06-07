@@ -484,6 +484,7 @@ var xxierr = {
   },
 
   has: function(object, path){
+    if(Object.keys(object).length == 0) return false
     if(typeof path === 'string') {
       try{
         eval('object' + '.' + path)
@@ -533,6 +534,4 @@ var xxierr = {
 //   'fred':    { 'user': 'fred',    'age': 40 },
 //   'pebbles': { 'user': 'pebbles', 'age': 1 }
 // };
-// console.log(xxierr.mapValues({ 'a': 1, 'b': 2 }, function(value, key) {
-//   return key + value;
-// }))
+// console.log(xxierr.has({}, 'a'))
