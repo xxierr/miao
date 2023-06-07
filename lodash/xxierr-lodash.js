@@ -363,6 +363,8 @@ var xxierr = {
     }
   },
 
+  // isUndefined: function(){
 
+  // }
 }
 //console.log(xxierr.sample([1, 2, 3, 4]))
