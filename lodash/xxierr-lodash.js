@@ -288,7 +288,7 @@ var xxierr = {
           res.push(item)
         }
         else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) res.push(item)
-        else if(typeof target === 'string' && item[target]) res.push(firstele)
+        else if(typeof target === 'string' && item[target]) res.push(item)
       }
       if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
         if(typeof target === 'function'){
@@ -300,13 +300,16 @@ var xxierr = {
     return res
   },
 
-
+  reduce: function(set, iteratee , init = 0){
+    if(Array.isArray(set)) return set.reduce(eval(iteratee), init)
+    else if(typeof set === 'object') {
+      var kvs = Object.entries(set)
+      kvs.forEach(kv => {iteratee(init, kv[1], kv[0])} )
+      return init
+    }
+  }
 }
-function square(n) {
-  return n * n;
-}
-var users = [
-  { 'user': 'barney' },
-  { 'user': 'fred' }
-];
-//console.log(xxierr.map([{"user":"barney"},{"user":"fred"}],"user"))
+// console.log(xxierr.reduce({"a":1,"b":2,"c":1},function(result,  value,  key)  {  
+//   (result[value]  ||  (result[value]  =   [])).push(key);  
+//   return  result;
+// },{}))
