@@ -307,9 +307,62 @@ var xxierr = {
       kvs.forEach(kv => {iteratee(init, kv[1], kv[0])} )
       return init
     }
-  }
+  },
+
+  reduceRight: function(set, iteratee , init = 0){
+    if(Array.isArray(set)) return set.reduceRight(eval(iteratee), init)
+    else if(typeof set === 'object') {
+      var kvs = Object.entries(set).reverse()
+      kvs.forEach(kv => {iteratee(init, kv[1], kv[0])} )
+      return init
+    }
+  },
+
+  size: function(set){
+    if(typeof set === 'object' && !Array.isArray(set) ) return Object.keys(set).length
+    else return set.length
+  },
+
+  sortBy: function(set, ...iteratees){
+    var iteratees = [...iteratees]
+    if(Array.isArray(iteratees.flat())) iteratees = iteratees.flat()
+    if(Array.isArray(set)){
+      if(typeof set[0] === 'object' && !Array.isArray(set[0])){
+        var sortby = null
+        for(var item of iteratees){
+          if(typeof item === 'function'){
+            sortby = (it) => {
+              return function(a,b){
+                var a1 = it(a)
+                var b1 = it(b)
+                return a1 < b1 ? -1 : 1
+              }
+            }
+          }
+          if(typeof item === 'string'){
+            sortby = (it) => {
+              return function(a,b){
+                var a1 = a[it]
+                var b1 = b[it]
+                return a1 < b1 ? -1 : 1
+              }
+            }
+          }
+          if(sortby) set.sort(sortby(item))
+          sortby = null
+        }    
+      }
+    }
+    return set
+  },
+
+  sample: function(set){
+    if(Array.isArray(set)){
+      var idx = Math.floor(Math.random() * set.length)
+      return set[idx]
+    }
+  },
+
+
 }
-// console.log(xxierr.reduce({"a":1,"b":2,"c":1},function(result,  value,  key)  {  
-//   (result[value]  ||  (result[value]  =   [])).push(key);  
-//   return  result;
-// },{}))
+//console.log(xxierr.sample([1, 2, 3, 4]))
