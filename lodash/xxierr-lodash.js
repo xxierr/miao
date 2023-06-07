@@ -309,4 +309,4 @@ var users = [
   { 'user': 'barney' },
   { 'user': 'fred' }
 ];
-console.log(xxierr.map([{"user":"barney"},{"user":"fred"}],"user"))
+//console.log(xxierr.map([{"user":"barney"},{"user":"fred"}],"user"))
