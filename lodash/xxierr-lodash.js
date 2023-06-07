@@ -435,6 +435,104 @@ var xxierr = {
     }
   },
 
+  flatMap: function(set, iteratee){
+    var res = []
+    if(Array.isArray(set)){
+      if(typeof iteratee === 'function'){
+        res = set.map(it => iteratee(it, set.indexOf(it) , set))
+      }
+    }
+    return res.flat()
+  },
+
+  flatMapDepth: function(set, iteratee, depth = 1){
+    var res = []
+    if(Array.isArray(set)){
+      if(typeof iteratee === 'function'){
+        res = set.map(it => iteratee(it, set.indexOf(it) , set))
+      }
+    }
+    return res.flat(depth)
+  },
+
+  get: function(object, path, defaultValue){
+    var res = null
+    if(typeof path === 'string') {
+      try{
+        res = eval('object' + '.' + path)
+      }catch(e){
+        res = undefined
+      }
+    }else if(Array.isArray(path)) {
+      var p = ""
+      var ob = object
+      for(var key of path){
+        if(ob[key]) {
+          if(Array.isArray(ob)) p += '[' + key + ']'
+          else p += '.' + key
+          ob = ob[key]
+        }
+      }
+      try{
+        res = eval('object' + p)
+      }catch(e){
+        res = undefined
+      }
+    }
+    if(res === undefined) return defaultValue
+    else if(res) return res
+  },
+
+  has: function(object, path){
+    if(typeof path === 'string') {
+      try{
+        eval('object' + '.' + path)
+      }catch(e){
+        return false
+      }
+    }else if(Array.isArray(path)) {
+      var p = ""
+      var ob = object
+      for(var key of path){
+        if(ob[key]) {
+          if(Array.isArray(ob)) p += '[' + key + ']'
+          else p += '.' + key
+          ob = ob[key]
+        }
+      }
+      try{
+        eval('object' + p)
+      }catch(e){
+        return false
+      }
+    }
+    return true
+  },
+
+  mapKeys: function(object, iteratee){
+    var res = {}
+    var kvs = Object.entries(object)
+    for(var kv of kvs){
+      res[iteratee(kv[1], kv[0])] = kv[1]
+    }
+    return res
+  },
+
+  mapValues: function(object, iteratee){
+    // var res = {}
+    // var kvs = Object.entries(object)
+    // for(var kv of kvs){
+    //   res[iteratee(kv[1], kv[0])] = kv[1]
+    // }
+    // return res
+  },
+
 
 }
-//console.log(xxierr.sumBy(objects, 'n'))
+// var users = {
+//   'fred':    { 'user': 'fred',    'age': 40 },
+//   'pebbles': { 'user': 'pebbles', 'age': 1 }
+// };
+// console.log(xxierr.mapValues({ 'a': 1, 'b': 2 }, function(value, key) {
+//   return key + value;
+// }))
