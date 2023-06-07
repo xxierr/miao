@@ -254,24 +254,60 @@ var xxierr = {
   map: function(set, iteratee){
     var res = []
     if(Array.isArray(set)) {
-      if(typeof iteratee === 'function' && typeof set[0] != 'object') return set.map(it => iteratee(it,set.indexOf(it),set))
-      if(typeof set[0] === 'object' && !Array.isArray(set[0]) && typeof iteratee === 'string'){
-        set.forEach(it => {
-          res.push(it[iteratee])
-        })
-        return res
+      if(typeof iteratee === 'function' && (typeof set[0] != 'object' || Array.isArray(set[0]))) return set.map(it => iteratee(it,set.indexOf(it),set))
+      if(typeof set[0] === 'object' && !Array.isArray(set[0]) ){
+        if(typeof iteratee === 'string'){
+          set.forEach(it => {
+            res.push(it[iteratee])
+          })
+          return res
+        }
+        if(typeof iteratee === 'function'){
+          return set.map(it => iteratee(it,set.indexOf(it),set))
+        }
       }
     }else if(typeof set === 'object' && !Array.isArray(set)) {
       var values = Object.values(set)
       return values.map(it => iteratee(it,values.indexOf(it),values))
     }
-  }
+  },
+
+  filter: function(set,target){
+    var res = []
+    for(var i=0 ; i<set.length ; i++){
+      var item = set[i]
+      var firstele = item[Object.keys(item)[0]]
+      if(typeof item === 'object' && !Array.isArray(item)){
+        if(typeof target === 'function'){
+          if(target(item)) res.push(firstele)
+        }
+        else if(typeof target === 'object' && !Array.isArray(target)){
+          var tkeys = Object.keys(target)
+          for(var tk of tkeys){
+            if(item[tk] != target[tk]) return res
+          }
+          res.push(firstele)
+        }
+        else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) res.push(firstele)
+        else if(typeof target === 'string' && item[target]) res.push(firstele)
+      }
+      if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
+        if(typeof target === 'function'){
+          if(target(item)) res.push(firstele)
+        }
+        else if(item == target) res.push(firstele)
+      }
+    }
+    return res
+  },
+
+
 }
 function square(n) {
   return n * n;
 }
-// var users = [
-//   { 'user': 'barney' },
-//   { 'user': 'fred' }
-// ];
-// console.log(xxierr.map(users, 'user'))
+var users = [
+  { 'user': 'barney' },
+  { 'user': 'fred' }
+];
+//console.log(xxierr.map(["a[2]","c[0]"],function(t){return null==n?F:Rt(n,t)}))
