@@ -258,7 +258,7 @@ var xxierr = {
       if(typeof set[0] === 'object' && !Array.isArray(set[0]) ){
         if(typeof iteratee === 'string'){
           set.forEach(it => {
-            res.push(it[iteratee])
+            res.push(eval('it' + '.' + iteratee))
           })
           return res
         }
@@ -287,7 +287,7 @@ var xxierr = {
           }
           res.push(item)
         }
-        else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) res.push(firstele)
+        else if(Array.isArray(target) && target.length == 2 && item[target[0]] == target[1]) res.push(item)
         else if(typeof target === 'string' && item[target]) res.push(firstele)
       }
       if(typeof item === 'string' || typeof item === 'boolean' || typeof item === 'number'){
@@ -309,4 +309,4 @@ var users = [
   { 'user': 'barney' },
   { 'user': 'fred' }
 ];
-//console.log(xxierr.map(["a[2]","c[0]"],function(t){return null==n?F:Rt(n,t)}))
+console.log(xxierr.map([{"user":"barney"},{"user":"fred"}],"user"))
