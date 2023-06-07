@@ -363,8 +363,78 @@ var xxierr = {
     }
   },
 
-  // isUndefined: function(){
+  isUndefined: function(value){
+    return value === undefined
+  },
 
-  // }
+  isNull: function(value){
+    return value === null
+  },
+
+  isNil: function(value){
+    return (value === undefined || value === null)
+  },
+
+  max: function(array){
+    if(!array || array.length == 0) return undefined
+    else return Math.max.apply(null,array)
+  },
+
+  min: function(array){
+    if(!array || array.length == 0) return undefined
+    else return Math.min.apply(null,array)
+  },
+
+  maxBy: function(array, iteratee){
+    if(typeof array[0] === 'object' && !Array.isArray(array[0])){
+      var arr = []
+      var itetype = typeof iteratee
+      if(itetype === 'function') arr = array.map(it => iteratee(it))
+      if(itetype === 'string') arr = array.map(it => it[iteratee])
+      if(!arr || arr.length == 0) return undefined
+      else {
+        var maxv = Math.max.apply(null,arr)
+        var idx = arr.indexOf(maxv)
+        return array[idx]
+      }
+    }
+  },
+
+  minBy: function(array, iteratee){
+    if(typeof array[0] === 'object' && !Array.isArray(array[0])){
+      var arr = []
+      var itetype = typeof iteratee
+      if(itetype === 'function') arr = array.map(it => iteratee(it))
+      if(itetype === 'string') arr = array.map(it => it[iteratee])
+      if(!arr || arr.length == 0) return undefined
+      else {
+        var maxv = Math.min.apply(null,arr)
+        var idx = arr.indexOf(maxv)
+        return array[idx]
+      }
+    }
+  },
+
+  round: function(num, precision = 0){
+    var zhuan = 10**Math.abs(precision)
+    if(precision > 0) return Math.round(num*zhuan)/zhuan
+    else if(precision == 0) return Math.round(num)
+    else if(precision < 0) return Math.round(num/zhuan)*zhuan
+  },
+
+  sumBy: function(array, iteratee){
+    if(typeof array[0] === 'object' && !Array.isArray(array[0])){
+      var arr = []
+      var itetype = typeof iteratee
+      if(itetype === 'function') arr = array.map(it => iteratee(it))
+      if(itetype === 'string') arr = array.map(it => it[iteratee])
+      if(!arr || arr.length == 0) return undefined
+      else {
+        return arr.reduce((a,b) => a+b)
+      }
+    }
+  },
+
+
 }
-//console.log(xxierr.sample([1, 2, 3, 4]))
+//console.log(xxierr.sumBy(objects, 'n'))
