@@ -539,10 +539,95 @@ var xxierr = {
     return res
   },
 
-  
+  range: function(start=0, end, step){
+    var res = []
+    if(end === undefined){
+      if(start<0) step = -1
+      else step = 1
+      end = Math.abs(start)
+      start = 0
+    }else if(end<start){
+      if(step === undefined) return res
+      else if(end<0) end = -end
+    }else if(start<end && step === undefined) step = 1
+    var num = start
+    while(Math.abs(num)<end){
+      if(step == 0 && res.length == end - Math.abs(num)) break
+      res.push(num)
+      num += step
+    }    
+    return res
+  },
+
+  stringifyJSON: function(set){
+    return JSON.stringify(set)
+  },
+
+  concat: function(array, ...value){
+    return array.concat(...value)
+  },
+
+  isEqual: function adeq(o1, o2) {
+    if(o1 === o2) return true
+    if(o1 && o2 && typeof o1 === 'object' && typeof o2 === 'object'){
+        if(Array.isArray(o1) === Array.isArray(o2)){
+            if(!Array.isArray(o1)){
+                var size = 0
+                for(var key in o1){
+                    size++
+                }
+                for(var key in o2){
+                    size--
+                }
+                if(size != 0) return false
+            }else {
+                if(o1.length != o2.length) return false
+            }
+            for (var key in o1){
+                if(!adeq(o1[key],o2[key])) return false
+            }
+            return true
+        }else return false
+    }
+    return o1 === o2
+  },
+
+  repeat: function(str,n){
+    return str.repeat(n)
+  },
+
+  padStart: function(str, len, chars=' '){
+    var l = str.length
+    if(l>len) return str.slice(0,len)
+    else{
+      var bu = chars.repeat(len - l)
+      return bu.slice(0,len-l) + str
+    }
+  },
+
+  padEnd: function(str, len, chars=' '){
+    var l = str.length
+    if(l>len) return str.slice(0,len)
+    else{
+      var bu = chars.repeat(len - l)
+      return str + bu.slice(0,len-l)
+    }
+  },
+
+  pad: function(str, len, chars=' '){
+    var l = str.length
+    if(l>len) return str.slice(0,len)
+    else{
+      var bu = chars.repeat(len - l)
+      var pstart = Math.floor((len-l)/2)
+      return bu.slice(0,pstart) + str + bu.slice(pstart,len-l)
+    }
+  },
+
+  // keys: function(){
+
+  // },
+
+
 }
-// var users = {
-//   'fred':    { 'user': 'fred',    'age': 40 },
-//   'pebbles': { 'user': 'pebbles', 'age': 1 }
-// };
-// console.log(xxierr.mapValues(users, 'age'))
+//console.log(xxierr.keys('abc', 3))
