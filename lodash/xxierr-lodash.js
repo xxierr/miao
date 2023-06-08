@@ -720,19 +720,23 @@ var xxierr = {
     return Object.assign(...objects)
   },
 
-  merge:function(...objects){
-    var a = Object.assign(...objects)
-    
-    console.log(Object.entries(a)[0])
+  merge: function(object, other){ 
+    for(var key of Object.keys(other)) { 
+      if(other[key] instanceof Object){ 
+        Object.assign(other[key], this.merge(object[key], other[key])) 
+      } 
+    } 
+    return Object.assign(object || {}, other) 
   },
-
+  
 
 }
-// var object = {
-//   'a': [{ 'b': 2 }, { 'd': 4 }]
-// };
+var object = {
+  'a': [{ 'b': 2 }, { 'd': 4 }]
+};
  
-// var other = {
-//   'a': [{ 'c': 3 }, { 'e': 5 }]
-// };
-//console.log(xxierr.cloneDeep(/foo/i))
+var other = {
+  'a': [{ 'c': 3 }, { 'e': 5 }]
+};
+//console.log( merge(object, other) )
+//console.log(xxierr.merge(object, other))
