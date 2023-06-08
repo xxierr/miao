@@ -671,10 +671,66 @@ var xxierr = {
     else if(precision < 0) return Math.floor(num/zhuan)*zhuan
   },
 
-  cloneDeep: function(){
+  cloneDeep: function(value){
+    return JSON.parse(JSON.stringify(value))
+  },
 
+
+  trim: function(str, chars){
+    var res = str
+    if(chars !== undefined) {
+      var chararr = Array.from(new Set(chars))
+      chararr.forEach(char => {
+        var reg = new RegExp("\\"+char,'g')
+        res = res.replace(reg, ' ')
+      })
+    }
+    return res.trim()
+  },
+
+  trimStart: function(str, chars){
+    var res = str
+    var i = 0
+    if(chars !== undefined) {
+      var charset = new Set(chars)
+      var chararr = Array.from(charset)
+      while(i<str.length){
+        if(!charset.has(str[i])) return res.slice(i)
+        i++
+      }
+    }else return res.trimStart()
+  },
+
+  trimEnd: function(str, chars){
+    var res = str
+    var i = str.length-1
+    if(chars !== undefined) {
+      var charset = new Set(chars)
+      var chararr = Array.from(charset)
+      while(i>=0){
+        if(!charset.has(str[i])) return res.slice(0,i+1)
+        i--
+      }
+    }else return res.trimEnd()
+  },
+
+  assign: function(...objects){
+    return Object.assign(...objects)
+  },
+
+  merge:function(...objects){
+    var a = Object.assign(...objects)
+    
+    console.log(Object.entries(a)[0])
   },
 
 
 }
-//console.log(xxierr.cloneDeep(4.006))
+// var object = {
+//   'a': [{ 'b': 2 }, { 'd': 4 }]
+// };
+ 
+// var other = {
+//   'a': [{ 'c': 3 }, { 'e': 5 }]
+// };
+// console.log(xxierr.merge())
