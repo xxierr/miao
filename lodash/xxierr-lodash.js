@@ -673,7 +673,7 @@ var xxierr = {
 
   cloneDeep: function(value){
     var res = JSON.parse(JSON.stringify(value))
-    if(Object.keys(res).length == 0) return Array.from([value]).join('')
+    if(Object.entries(res).length == 0) return eval(Array.from([value]).join(''))
     else return res
   },
 
