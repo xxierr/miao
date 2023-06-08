@@ -672,7 +672,9 @@ var xxierr = {
   },
 
   cloneDeep: function(value){
-    return JSON.parse(JSON.stringify(value))
+    var res = JSON.parse(JSON.stringify(value))
+    if(Object.keys(res).length == 0) return Array.from([value]).join('')
+    else return res
   },
 
 
@@ -733,4 +735,4 @@ var xxierr = {
 // var other = {
 //   'a': [{ 'c': 3 }, { 'e': 5 }]
 // };
-// console.log(xxierr.merge())
+//console.log(xxierr.cloneDeep(/foo/i))
