@@ -520,18 +520,29 @@ var xxierr = {
   },
 
   mapValues: function(object, iteratee){
-    // var res = {}
-    // var kvs = Object.entries(object)
-    // for(var kv of kvs){
-    //   res[iteratee(kv[1], kv[0])] = kv[1]
-    // }
-    // return res
+    var s = typeof iteratee
+    var res = {}
+    var keys = Object.keys(object)
+    if(s === 'function'){
+      for(var k of keys){
+        if(typeof object[k] === 'object' && !Array.isArray(object[k])) res[k] = iteratee(object[k], k , object) 
+      }
+    }
+    if(s === 'string'){
+      for(var k  of keys){
+        if(typeof object[k] === 'object' && !Array.isArray(object[k])) {
+          var v = object[k][iteratee]
+          if(v != null) res[k] = v
+        }
+      }
+    }
+    return res
   },
 
-
+  
 }
 // var users = {
 //   'fred':    { 'user': 'fred',    'age': 40 },
 //   'pebbles': { 'user': 'pebbles', 'age': 1 }
 // };
-// console.log(xxierr.has({}, 'a'))
+// console.log(xxierr.mapValues(users, 'age'))
