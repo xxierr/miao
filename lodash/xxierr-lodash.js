@@ -731,12 +731,3 @@ var xxierr = {
   
 
 }
-var object = {
-  'a': [{ 'b': 2 }, { 'd': 4 }]
-};
- 
-var other = {
-  'a': [{ 'c': 3 }, { 'e': 5 }]
-};
-//console.log( merge(object, other) )
-//console.log(xxierr.merge(object, other))
