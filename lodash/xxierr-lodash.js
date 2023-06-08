@@ -624,10 +624,57 @@ var xxierr = {
     }
   },
 
-  // keys: function(){
+  keys: function(object){
+    var res = []
+    var idx = 0
+    if(typeof object === 'object' && !Array.isArray(object)) return Object.keys(object)
+    else if(typeof object === 'string'){
+      while(idx < object.length){
+        res.push(idx + '')
+        idx++
+      }
+      return res
+    }
+  },
 
-  // },
+  values: function(object){
+    if(typeof object === 'object' && !Array.isArray(object)) return Object.values(object)
+    else if(typeof object === 'string') return object.split('')
+  },
+
+  random: function(lower, upper, floating){
+    if(upper === true){
+      floating = upper
+      upper = lower
+      lower = 0
+    }
+    if(upper === undefined) {
+      upper = lower
+      lower = 0
+    }
+    if(lower%1 != 0 || upper%1 != 0 || floating == true){
+      return Math.random() * (upper-lower) + lower
+    }else return Math.floor(Math.random() * (upper-lower) + lower)
+  },
+
+  ceil: function(num, precision=0){
+    var zhuan = 10**Math.abs(precision)
+    if(precision > 0) return Math.ceil(num*zhuan)/zhuan
+    else if(precision == 0) return Math.ceil(num)
+    else if(precision < 0) return Math.ceil(num/zhuan)*zhuan
+  },
+
+  floor: function(num, precision=0){
+    var zhuan = 10**Math.abs(precision)
+    if(precision > 0) return Math.floor(num*zhuan)/zhuan
+    else if(precision == 0) return Math.floor(num)
+    else if(precision < 0) return Math.floor(num/zhuan)*zhuan
+  },
+
+  cloneDeep: function(){
+
+  },
 
 
 }
-//console.log(xxierr.keys('abc', 3))
+//console.log(xxierr.cloneDeep(4.006))
