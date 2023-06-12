@@ -252,3 +252,93 @@ class PriorityQueue{
     return this._heap.length
   }
 }
+
+
+RegExp.prototype.mytest = function(str){
+  if(this.exec(str)) return true
+  else return false
+}
+
+String.prototype.mysearch = function(target){
+  if(typeof target === 'string') return this.indexOf(target)
+  else {
+    var m = target.exec(this)
+    if(m) return m.indexOf
+    else return -1
+  }
+}
+
+String.prototype.mymatch = function(reg){
+  if(reg.gloal){
+    reg.lastIndex = 0
+    var res = []
+    var m
+    while(m = reg.exec(this)){
+      res.push(m[0])
+    }
+    return res
+  }else return reg.exec(this)
+}
+
+String.prototype.mymatchAll = function(reg){
+  if(reg instanceof RegExp){
+    if(!reg.global) throw new Error()
+  }
+  if(typeof reg === 'string') reg = new RegExp(reg, 'g')
+  reg.lastIndex = 0
+  var res = []
+  var m
+  while(m = reg.exec(this)){
+    res.push(m)
+  }
+  return res
+}
+
+String.prototype.myreplace = function(reg, replacer){
+  reg.lastIndex = 0
+  var res = ""
+  var m
+  var lastLastIndex = 0
+  while(m = reg.exec(this)){
+    res += this.slice(lastLastIndex, m.index)
+    if(typeof replacer === 'function'){
+      res += replacer(...m, m.index, m.input)
+    }else{
+      var rep = replacer.myreplace(/\$([1-9\&])/g, (_,idx) => {
+        if(idx == '&') return m[0]
+        else return m[idx]
+      })
+      res += rep
+    }
+    lastLastIndex = reg.lastIndex
+    if(!reg.gloal){
+      lastLastIndex = m.index + m[0].length
+      break
+    }
+  }
+  res += this.slice(lastLastIndex)
+  return res
+}
+
+String.prototype.myreplaceAll = function(reg, replacer){
+  if(!reg.global) throw new Error()
+  else return this.myreplace(reg, replacer)
+}
+
+String.prototype.mysplit = function (reg) {
+  var res = []
+  if (!reg.global) {
+    if(typeof reg == 'string') reg = new RegExp(reg, 'g')
+    else reg = new RegExp(reg.source, 'g' + reg.flags)
+  }
+  reg.lastIndex = 0
+  var match
+  var lastLastIndex = 0
+  while (match = reg.exec(this)) {
+    res.push(this.slice(lastLastIndex, match.index))
+    if(typeof reg !== 'string') res.push(...match.slice(1))
+    lastLastIndex = reg.lastIndex
+  }
+  res.push(this.slice(lastLastIndex))
+  return res 
+}
