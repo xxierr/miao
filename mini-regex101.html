@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<style>
+  input,textarea,label,pre {
+    font-family: consolas;
+  }
+  pre > b:nth-child(odd){
+    background-color: #d5ebff;
+  }
+  pre > b:nth-child(even){
+    background-color: #9fcfff;
+  }
+  .result{
+    width: 400px;
+    height: 300px;
+    position: relative;
+  }
+  .result > textarea, .result > pree{
+    box-sizing: border-box;
+    position: absolute;
+    font-size: 24px;
+    padding: 5px;
+    margin: 0;
+    border: 2px solid;
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    word-break: break-all;
+    white-space: break-spaces;
+    
+  }
+</style>
+
+<h1>regex101</h1>
+<br>
+输入正则表达式：<br><input type="text" id="reinput" value="xie." oninput="run()"> <button onclick="run()">run</button>
+<br>
+<label><input id="flagi" type="checkbox" onclick="run()">i</label>
+<label><input id="flagg" type="checkbox" onclick="run()">g</label>
+<label><input id="flagm" type="checkbox" onclick="run()">m</label>
+<label><input id="flags" type="checkbox" onclick="run()">s</label>
+<label><input id="flagu" type="checkbox" onclick="run()">u</label>
+<label><input id="flagy" type="checkbox" onclick="run()">y</label>
+<br>
+输入字符串：<br>
+<div class="result">
+  <pre id="output"></pre>
+  <textarea id="strInput" cols="45" rows="20" oninput="run()">xxierrafafaxieddvvadfdfaasfafasfasfaasfxiefsdgsdgsd</textarea>
+</div>
+
+<script>
+  function getflag(){
+    var flags = ''
+    if(flagi.checked){
+      flags = 'i'
+    }
+    if(flagg.checked){
+      flags = 'g'
+    }
+    if(flagm.checked){
+      flags = 'm'
+    }
+    if(flags.checked){
+      flags = 's'
+    }
+    if(flagu.checked){
+      flags = 'u'
+    }
+    if(flagy.checked){
+      flags = 'y'
+    }
+    return flags
+  }
+
+  function run(){
+    var resource = reinput.value
+    var flags = getflag()
+    var re = new RegExp(resource, flags)
+    var str = strInput.value
+    var match
+    var html = ""
+    var lastLastIndex = 0
+
+    while(match = re.exec(str)){
+      html += str.slice(lastLastIndex,match.index) + `<b>${match[0]}</b>`
+      lastLastIndex = re.lastIndex
+      if(!re.global){//因为当正则没有g标记的时候，不会自动更新其lastIndex属性
+        lastLastIndex = match.index + match[0].length
+        break
+      }
+    }
+    html += str.slice(lastLastIndex)
+    output.innerHTML = html
+  }
+  run()
+</script>
