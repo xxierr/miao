@@ -269,7 +269,7 @@ String.prototype.mysearch = function(target){
 }
 
 String.prototype.mymatch = function(reg){
-  if(reg.gloal){
+  if(reg.global){
     reg.lastIndex = 0
     var res = []
     var m
@@ -311,7 +311,7 @@ String.prototype.myreplace = function(reg, replacer){
       res += rep
     }
     lastLastIndex = reg.lastIndex
-    if(!reg.gloal){
+    if(!reg.global){
       lastLastIndex = m.index + m[0].length
       break
     }
