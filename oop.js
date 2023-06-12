@@ -191,66 +191,64 @@ class LinkedList{
   }
 }
 
-function PriorityQueue(){
-  class PriorityQueue{
-    constructor(){
-      this._heap = []
-    }
+class PriorityQueue{
+  constructor(){
+    this._heap = []
+  }
 
-    _swap(i,j){
-      var t = this._heap[i]
-      this._heap[i] = this._heap[j]
-      this._heap[j] = t
-    }
+  _swap(i,j){
+    var t = this._heap[i]
+    this._heap[i] = this._heap[j]
+    this._heap[j] = t
+  }
 
-    _heapUp(pos){
-      if(pos == 0) return
-      var parent_pos = (pos-1) >> 1 //pos位置的结点元素的父节点位置
-      if(this._heap[pos] > this._heap[parent_pos]){
-        this._swap(pos,parent_pos)
-        this._heapUp(parent_pos)
-      }
+  _heapUp(pos){
+    if(pos == 0) return
+    var parent_pos = (pos-1) >> 1 //pos位置的结点元素的父节点位置
+    if(this._heap[pos] > this._heap[parent_pos]){
+      this._swap(pos,parent_pos)
+      this._heapUp(parent_pos)
     }
+  }
 
-    _heapDown(pos){
-      var leftpos = 2*pos + 1
-      var rightpos = 2*pos + 2
-      var maxidx = pos
-      if(leftpos < this._heap.length && this._heap[leftpos] > this._heap[maxidx]){
-        maxidx = leftpos
-      }
-      if(rightpos < this._heap.length && this._heap[rightpos] > this._heap[maxidx]){
-        maxidx = rightpos
-      }
-      if(maxidx != pos){
-        this._swap(maxidx,pos)
-        this._heapDown(maxidx)
-      }
+  _heapDown(pos){
+    var leftpos = 2*pos + 1
+    var rightpos = 2*pos + 2
+    var maxidx = pos
+    if(leftpos < this._heap.length && this._heap[leftpos] > this._heap[maxidx]){
+      maxidx = leftpos
     }
+    if(rightpos < this._heap.length && this._heap[rightpos] > this._heap[maxidx]){
+      maxidx = rightpos
+    }
+    if(maxidx != pos){
+      this._swap(maxidx,pos)
+      this._heapDown(maxidx)
+    }
+  }
 
-    push(val){
-      this._heap.push(val)
-      this._heapUp(this._heap.length - 1)
-      return this
-    }
+  push(val){
+    this._heap.push(val)
+    this._heapUp(this._heap.length - 1)
+    return this
+  }
 
-    pop(){
-      if(this._heap.length == 0) return undefined
-      if(this._heap.length == 1) return this._heap.pop()
-      var res = this._heap[0]
-      var last = this._heap.pop()
-      this._heap[0] = last
-      this._heapDown(0)
-      return res
-    }
+  pop(){
+    if(this._heap.length == 0) return undefined
+    if(this._heap.length == 1) return this._heap.pop()
+    var res = this._heap[0]
+    var last = this._heap.pop()
+    this._heap[0] = last
+    this._heapDown(0)
+    return res
+  }
 
-    peek(){
-      return this._heap[0]
-    }
+  peek(){
+    return this._heap[0]
+  }
 
-    get size(){
-      return this._heap.length
-    }
+  get size(){
+    return this._heap.length
   }
 }
 
