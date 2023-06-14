@@ -1,97 +1,202 @@
 <!DOCTYPE html>
-<style>
-  input,textarea,label,pre {
-    font-family: consolas;
-  }
-  pre > b:nth-child(odd){
-    background-color: #d5ebff;
-  }
-  pre > b:nth-child(even){
-    background-color: #9fcfff;
-  }
-  .result{
-    width: 400px;
-    height: 300px;
-    position: relative;
-  }
-  .result > textarea, .result > pre{
-    box-sizing: border-box;
-    position: absolute;
-    font-size: 24px;
-    padding: 5px;
-    margin: 0;
-    border: 2px solid;
-    border-radius: 2px;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    word-break: break-all;
-    white-space: break-spaces;
-    
-  }
-</style>
-
-<h1>regex101</h1>
-<br>
-输入正则表达式：<br><input type="text" id="reinput" value="xie." oninput="run()"> <button onclick="run()">run</button>
-<br>
-<label><input id="flagi" type="checkbox" onclick="run()">i</label>
-<label><input id="flagg" type="checkbox" onclick="run()">g</label>
-<label><input id="flagm" type="checkbox" onclick="run()">m</label>
-<label><input id="flags" type="checkbox" onclick="run()">s</label>
-<label><input id="flagu" type="checkbox" onclick="run()">u</label>
-<label><input id="flagy" type="checkbox" onclick="run()">y</label>
-<br>
-输入字符串：<br>
-<div class="result">
-  <pre id="output"></pre>
-  <textarea id="strInput" cols="45" rows="20" oninput="run()">xxierrafafaxieddvvadfdfaasfafasfasfaasfxiefsdgsdgsd</textarea>
-</div>
-
-<script>
-  function getflag(){
-    var flags = ''
-    if(flagi.checked){
-      flags = 'i'
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    input,textarea,label,pre {
+      font-family: consolas;
     }
-    if(flagg.checked){
-      flags = 'g'
-    }
-    if(flagm.checked){
-      flags = 'm'
-    }
-    if(flags.checked){
-      flags = 's'
-    }
-    if(flagu.checked){
-      flags = 'u'
-    }
-    if(flagy.checked){
-      flags = 'y'
-    }
-    return flags
-  }
-
-  function run(){
-    var resource = reinput.value
-    var flags = getflag()
-    var re = new RegExp(resource, flags)
-    var str = strInput.value
-    var match
-    var html = ""
-    var lastLastIndex = 0
-
-    while(match = re.exec(str)){
-      html += str.slice(lastLastIndex,match.index) + `<b>${match[0]}</b>`
-      lastLastIndex = re.lastIndex
-      if(!re.global){//因为当正则没有g标记的时候，不会自动更新其lastIndex属性
-        lastLastIndex = match.index + match[0].length
-        break
+    pre > em {
+      border-left: 4px dotted violet;
+      margin-left: -2px;
+      margin-right: -2px;
+      filter: blur(0.4px);
+      position: relative;
+      z-index: 2;
+      /* display: inline-block;  */
+      pointer-events: none;
+      height: 1em;
+      vertical-align: bottom;
+      transition: .5s;
+      &:hover {
+        border-color: magenta;
+        box-shadow: 0 0 5px grey;
       }
     }
-    html += str.slice(lastLastIndex)
-    output.innerHTML = html
-  }
-  run()
+    pre > b:nth-of-type(odd){
+      background-color: #d5ebff;
+    }
+    pre > b:nth-of-type(even){
+      background-color: #9fcfff;
+    }
+    pre > b {
+      [data-group="1"] {
+        --group-color: #9fcba1;
+      }
+      [data-group="2"] {
+        --group-color: #e0bf8b;
+      }
+      [data-group="3"] {
+        --group-color: #acadfc;
+      }
+      [data-group="4"] {
+        --group-color: #e1abf5;
+      }
+      [data-group="5"] {
+        --group-color: #ef9b95;
+      }
+    }
+    pre > b:nth-of-type(odd) b {
+      background-color: color-mix(in srgb, var(--group-color) 60%, white);
+    }
+    pre > b:nth-of-type(even) b {
+      background-color: var(--group-color);
+    }
+    b:hover:not(:has(:hover)) {
+      z-index: 8;
+      position: relative;
+      box-shadow: 0 0 2px grey, 0 0 2px gray, 0 0 2px gray, 0 0 2px gray,
+                  inset 0 0 2px gray, inset 0 0 2px gray, inset 0 0 2px gray, inset 0 0 2px gray;
+    }
+    b:hover:not(:has(:hover)) b {
+      background-color: transparent;
+    }
+    pre b:hover:not(:has(:hover))::before {
+      content: 'Match ' attr(data-match) '\A-------\AGroup' attr(data-group) ': ' attr(data-group-content) '\A' 'Pos: ' attr(data-group-start-index) '-' attr(data-group-end-index);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translate(-50%);
+      white-space: pre;
+      background-color: black;
+      border-radius: 5px;
+      color: white;
+      font-size: 12px;
+      padding: 0.5em;
+    }
   
-</script>
+    .result{
+      width: 400px;
+      height: 300px;
+      position: relative;
+    }
+    .result > textarea, .result > pre{
+      box-sizing: border-box;
+      /* position: absolute; */
+      font-size: 24px;
+      padding: 5px;
+      margin: 0;
+      border: 2px solid;
+      border-radius: 2px;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      word-break: break-all;
+      white-space: break-spaces;
+      
+    }
+  </style>
+</head>
+<body>
+  <h1>regex101</h1>
+  <br>
+  输入正则表达式：<br><input type="text" id="reinput" value="(x).(.(.(..)(..)))" oninput="run()"> <button onclick="run()">run</button>
+  <br>
+  <p id="reInputError"></p>
+  <label><input id="flagi" type="checkbox" onclick="run()">i</label>
+  <label><input id="flagg" type="checkbox" onclick="run()">g</label>
+  <label><input id="flagm" type="checkbox" onclick="run()">m</label>
+  <label><input id="flags" type="checkbox" onclick="run()">s</label>
+  <label><input id="flagu" type="checkbox" onclick="run()">u</label>
+  <label><input id="flagy" type="checkbox" onclick="run()">y</label>
+  <br>
+  输入字符串：<br>
+  <div class="result">
+    <pre id="output"></pre>
+    <textarea id="strInput" cols="45" rows="20" oninput="run()">xierrafafa xieddvvadfdfaas xiefsdgsdgsd</textarea>
+  </div>
+
+  <script>
+    function getflag(){
+      var flags = ''
+      if(flagi.checked){
+        flags = 'i'
+      }
+      if(flagg.checked){
+        flags = 'g'
+      }
+      if(flagm.checked){
+        flags = 'm'
+      }
+      if(flags.checked){
+        flags = 's'
+      }
+      if(flagu.checked){
+        flags = 'u'
+      }
+      if(flagy.checked){
+        flags = 'y'
+      }
+      return flags
+    }
+
+    function run(){
+      output.innerHTML = ""
+      var resource = reinput.value
+      if(resource == "") return
+      var flags = getflag()
+      try{
+        var re = new RegExp(resource, flags + 'd')
+      }catch(e){
+        reInputError.innerHTML = e
+        return
+      }
+      var str = strInput.value
+      var match
+      var html = ""
+      var lastLastIndex = 0
+      var matchidx = 1
+
+      while(match = re.exec(str)){
+        html += str.slice(lastLastIndex,match.index)
+        if(match[0] == "") html += "<em></em>"
+        else html += wrapOneMatch(match, matchidx++)
+        lastLastIndex = re.lastIndex
+        if(match[0] == "") re.lastIndex++  //匹配长度为0时，lastIndex是不变的
+        if(!re.global){//因为当正则没有g标记的时候，不会自动更新其lastIndex属性
+          lastLastIndex = match.index + match[0].length
+          break
+        }
+      }
+      html += str.slice(lastLastIndex)
+      output.innerHTML = html
+    }
+
+    //捕获的分组用标签包起来高亮
+    function wrapOneMatch(match, matchidx){
+      //转换分组范围
+      var indices = match.indices.map(([start,end]) => [start - match.index, end - match.index])
+      var fullMatch = match[0]
+      var chars = fullMatch.split('')
+      var tags = Array(chars.length + 1).fill('')
+
+      for(var i=1 ; i<indices.length ; i++){
+        var [start,end] = indices[i]
+        tags[start] += `<b data-match="${matchidx}" data-group="${i}" data-group-content="${match[i]}" data-group-start-index="${match.indices[i][0]}" data-group-end-index="${match.indices[i][1]}">`
+        tags[end] += "</b>"    
+      }
+      var res = ""
+      for(var i=0 ; i<chars.length ; i++){
+        res += tags[i] + chars[i]
+      }
+      res += tags[i]
+      return `<b data-match="${matchidx}" data-group="0" data-group-content="${match[0]}" data-group-start-index="${match.indices[0][0]}" data-group-end-index="${match.indices[0][1]}">` + res + "</b>"
+    }
+
+    run()
+
+  </script>
+</body>
+</html>
