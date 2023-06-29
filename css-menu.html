@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css-menu</title>
+  <style>
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+    .menu {
+      font-size: 0;
+      background-color: aliceblue;
+    }
+    .menu > li {
+      font-size: 16px;
+      margin-left: 15px;
+      display: inline-block;
+    }
+    .menu li:hover {
+      background-color: rgb(216, 215, 206);
+    }
+
+    .menu li {
+      position: relative;/*让其子菜单相对于它定位*/
+      white-space: nowrap;/*所有的文字不折行*/
+    }
+    .menu ul li {
+      font-size: 13px;
+      min-width: 250px;
+      margin-top: 5px;
+      margin-left: 10px;
+    }
+
+    .menu ul {
+      display: none;/*让子菜单先隐藏*/
+      position: absolute;
+      /*以上两行希望是对第二层及以内生效*/
+      box-shadow: 0px 0px 10px silver;
+      
+      left: 0; /* 只希望对第二层生效 */
+      top: 100%; /* 只希望对第二层生效 */
+    }
+    /*第三层及以内的ul才能匹配这个选择器*/
+    .menu ul ul {
+      top: 0; /*希望对第三层及以内生效 */
+      left: 100%; /*希望对第三层及以内生效 */
+    }
+
+    /* li被hover时，其子菜单显示，所以是 li:hover > ul */
+    .menu li:hover > ul {
+      display: block;
+    }
+
+    .menu li[data-shortcut]::after {
+      content: attr(data-shortcut);
+      position: absolute;
+      right: 15px;
+    }
+
+    .menu ul li:has(> ul)::after{
+      content: ">";
+      position: absolute;
+      right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <ul class="menu">
+    <li>文件
+      <ul>
+        <li data-shortcut="Ctrl+N">新建文本文件</li>
+        <li data-shortcut="Ctrl+Alt+Windows+N">新建文件...</li>
+        <li data-shortcut="Ctrl+Shift+N">新建窗口</li>
+        <hr>
+        <li data-shortcut="Ctrl+O">打开文件...</li>
+        <li data-shortcut="Ctrl+K Ctrl+O">打开文件夹...</li>
+        <li>从文件打开工作区...</li>
+        <li>打开最近的文件
+          <ul>
+            <li data-shortcut="Ctrl+Shift+T">重新打开已关闭的编辑器</li>
+            <li>（文件路径）</li>
+            <li data-shortcut="Ctrl+R">更多...</li>
+            <li>清除最近打开记录</li>
+          </ul>
+        </li>
+        <hr>
+        <li>将文件夹添加到工作区...</li>
+        <li>将工作区另存为...</li>
+        <li>复制工作区</li>
+        <hr>
+        <li data-shortcut="Ctrl+S">保存</li>
+        <li data-shortcut="Ctrl+Shift+S">另存为...</li>
+        <li>共享
+          <ul>
+            <li>Copy vscode.dev Link</li>
+            <hr>
+            <li>导出配置文件(默认)...</li>
+            <li>导入配置文件...</li>
+          </ul>
+        </li>
+        <li>首选项
+          <ul>
+            <li>配置文件(默认)
+              <ul>
+                <li>默认</li>
+                <hr>
+                <li>显示内容</li>
+                <hr>
+                <li>创建配置文件...</li>
+                <li>删除配置文件...</li>
+                <li>导出配置文件...</li>
+                <li>导入配置文件...</li>
+              </ul>
+            </li>
+            <li>打开设置同步...</li>
+            <hr>
+            <li data-shortcut="Ctrl+,">设置</li>
+            <li data-shortcut="Ctrl+Shift+X">扩展</li>
+            <li data-shortcut="Ctrl+K Ctrl+S">键盘快捷方式</li>
+            <li>配置用户代码片段</li>
+            <li>主题
+              <ul>
+                <li data-shortcut="Ctrl+K Ctrl+T">颜色主题</li>
+                <li>文件图标主题</li>
+                <li>产品图标主题</li>
+              </ul>
+            </li>
+            <hr>
+            <li>联机服务设置</li>
+          </ul>
+        </li>
+        <li>还原文件</li>
+        <li data-shortcut="Ctrl+F4">关闭编辑器</li>
+        <li data-shortcut="Ctrl+K F">关闭文件夹</li>
+        <li data-shortcut="Alt+F4">关闭窗口</li>
+        <hr>
+        <li>退出</li>
+      </ul>
+    </li>
+    <li>编辑
+      <ul>
+        <li data-shortcut="Ctrl+Z">撤销</li>
+        <li data-shortcut="Ctrl+Y">恢复</li>
+        <hr>
+        <li data-shortcut="Ctrl+X">剪切</li>
+        <li data-shortcut="Ctrl+C">复制</li>
+        <li data-shortcut="Ctrl+V">粘贴</li>
+        <hr>
+        <li data-shortcut="Ctrl+F">查找</li>
+        <li data-shortcut="Ctrl+H">替换</li>
+        <hr>
+        <li data-shortcut="Ctrl+Shift+F">在文件中查找</li>
+        <li data-shortcut="Ctrl+Shift+H">在文件中替换</li>
+        <hr>
+        <li data-shortcut="Ctrl+/">切换行注释</li>
+        <li data-shortcut="Shift+Alt+A">切换块注释</li>
+        <li data-shortcut="Tab">Emmet:展开缩写</li>
+      </ul>
+    </li>
+    <li>选择
+      <ul>
+        <li>略</li>
+      </ul>
+    </li>
+    <li>查看
+      <ul>
+        <li>略略</li>
+      </ul>
+    </li>
+    <li>转到
+      <ul>
+        <li>略略略</li>
+      </ul>
+    </li>
+    <li>运行
+      <ul>
+        <li>略略略略</li>
+      </ul>
+    </li>
+    <li>终端
+      <ul>
+        <li>略略略略略</li>
+      </ul>
+    </li>
+    <li>帮助
+      <ul>
+        <li>略略略略略略</li>
+      </ul>
+    </li>
+  </ul>
+</body>
+</html>
