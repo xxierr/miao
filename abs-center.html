@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>居中方案</title>
+  <style>
+    div {
+      border: 1px solid red;
+      margin-bottom: 50px;
+    }
+    /* 方案一
+    内外元素都要写宽高
+    里面元素必须要比外面元素小
+    */
+    .c1 {
+      position: relative;
+      width: 200px;
+      height: 100px;
+      left: calc(50% - 100px);
+    }
+    .c1 section {
+      background-color: red;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      width: 50px;
+      height: 50px;
+    }
+    /*
+    里外都不用写宽高
+    里面的元素可以比外面元素大
+    里面要有内容
+    */
+    .c2 {
+      position: relative;
+    }
+    .c2 section {
+      background-color: blue;
+      position: absolute;
+      left: 50%; /*包含块的50%*/
+      top: 50%;
+      height: 100px;
+      transform: translate(-50%, -50%);/*自身宽度的50%*/
+    }
+    /*
+    里面不能放其他元素
+    里面元素要比外面元素小
+    也可以说成是多行文本垂直居中，利用伪元素
+    */
+    .c3 {
+      height: 160px;
+      font-size: 0;
+      text-align: center;
+    }
+
+    .c3::before {
+      content: '::before';
+      background-color: rgb(9, 255, 0);
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    .c3 section {
+      background-color: beige;
+      line-height: normal;
+      font-size: 16px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .c4 {
+      display: table-cell;
+      height: 200px;
+      width: 10000px;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .c4 section {
+      background-color: aquamarine;
+      width: 70%;
+      margin: auto;
+    }
+    /*
+    只需要设置父元素
+    常规流
+    里面元素可以比外面大
+    */
+    .c5 {
+      margin-top: 50px;
+      height: 100px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .c5 section {
+      background-color: azure;
+    }
+  </style>
+</head>
+<body>
+  <div class="c1">
+    absolute; margin:auto;
+    <section></section>
+  </div>
+
+  <div class="c2">
+    absolute; translate;
+    <section>
+      left: 50%; top: 50%;
+      <br>
+      transform: translate(-50%, -50%);
+    </section>
+  </div>
+
+  <div class="c3">
+    <section>
+      vertical-align: middle;<br>
+      inline-block;
+    </section>
+  </div>
+
+  <div class="c4">
+    <section>
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    </section>
+  </div>
+
+  <div class="c5">
+    <section>
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    </section>
+  </div>
+</body>
+</html>
