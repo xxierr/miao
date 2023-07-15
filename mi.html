@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mi-index</title>
+  <link rel="stylesheet" href="mi-font.css">
+  <style>
+    * {
+      xbackground-color: #0001;
+      xbox-shadow: inset 0 0 1px aqua;
+    }
+    html {
+      min-width: 1300px;
+    }
+    body {
+      margin: 0;
+      font: 14px/1.5 Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;
+      overflow: auto;
+    }
+    a {
+      text-decoration: none;
+    }
+    ul, ol {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .top-nav {
+      min-width: 1226px;
+      background-color: rgb(51,51,51);
+      height: 40px;
+
+      .top-nav-inner {
+        width: 1226px;
+        margin: auto;
+        font-size: 12px;
+        color: silver;
+        display: flex;
+        justify-content: space-between;
+        line-height: 40px;
+
+        .top-nav-links {
+          xfloat: left;
+        }
+        :is(a) {
+          color: silver;
+          &:hover {
+            color: white;
+          }
+        }
+        :is(span) {
+          margin: 0 .3em;
+        }
+        .top-nav-cart {
+          xfloat: right;
+          .shopping-cart {
+            margin-left: 10px;
+            display: inline-block;
+            padding-left: 2em;
+            padding-right: 2em;
+            background-color: rgb(66,66,66);
+            position: relative;
+
+            .icon {
+              vertical-align: bottom;
+              font-size: 1.5em;
+            }
+            &:hover {
+              background-color: white;
+              color: #ff6700;
+              .shopping-cart-items {
+                height: 100px;
+                opacity: 1;
+                background-color: white;
+                box-shadow: 0 2px 10px silver;
+                z-index: 11;
+              }
+            }
+            .shopping-cart-items {
+              transition: .6s;
+              opacity: 0;
+              text-align: center;
+              line-height: 8;
+              position: absolute;
+              top: 100%;
+              right: 0;
+              width: 320px;
+              height: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .products-nav-full {
+      position: relative;
+
+      .products-nav {
+        display: flex;
+        height: 100px;
+        width: 1226px;
+        margin: auto;
+        align-items: center;
+
+        > .brand {
+          width: 50px;
+          height: 50px;
+          margin-right: auto;
+
+          &:active {
+            transform: scale(0.8);
+          }
+
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        > .products-nav-inner {
+          display: flex;
+          height: 100px;
+          font-size: 16px;
+          text-align: center;
+
+          :is(a) {
+            color: black;
+          }
+          > .nav-inner-item:hover > :is(a) {
+            color: #ff6700;
+          }
+
+          &:hover > .nav-inner-item > .nav-inner-item-submenu {
+            height: 230px;
+            margin-top: 1px solid silver;
+            box-shadow: 0 2px 3px  silver;
+          }
+          > .nav-inner-item{
+            line-height: 100px;
+            padding: 0 10px;
+
+            &:hover > .nav-inner-item-submenu {
+              padding-top: 45px;
+              z-index: 11;
+            }
+
+            > .nav-inner-item-submenu {
+              position: absolute;
+              width: 100%;
+              line-height: 0;
+              left: 0;
+              padding-left: calc(50% - 1226px / 2);
+              height: 0;
+              overflow: hidden;
+              transition: .8s;
+              background-color: white;
+              box-sizing: border-box;
+              z-index: 0;
+
+              > a {
+                display: inline-block;
+              }
+              > .fline {
+                position: relative;
+                display: inline-block;
+                font-size: 0;
+                width: 1px;
+                height: 110px;
+                top: -45px;
+                border: 1px solid silver;
+                margin: 0 20px 0 20px;
+                box-sizing: border-box;
+              }
+
+              > a > .title, .price {
+                width: 160px;
+                font-size: 12px;
+                margin-top: 20px;
+                text-align: center;
+              }
+              > a > .price {
+                font-size: 14px;
+                color: #ff6700;
+              }
+            }
+          }
+        }
+        > .products-nav-search {
+          display: flex;
+          margin-left: 90px;
+
+          .search-field {
+            position: relative;
+
+            > input {
+              outline: none;
+              border: 1px solid #ff6700;
+              box-sizing: border-box;
+              height: 50px;
+              width: 230px;
+              &:focus ~ ul {
+                display: block;
+                border: 1px solid #ff6700;
+                background-color: white;
+                z-index: 10;
+              }
+            }
+            > ul {
+            position: absolute;
+            display: none;
+            width: 100%;
+            top: 100%;
+            left: 0;
+            }
+          }
+          > button {
+            border: 1px solid #ff6700;
+            box-sizing: border-box;
+            height: 50px;
+            width: 50px;
+
+            &:hover {
+              background-color: #ff6700;
+              color: white;
+            }
+
+            > .search {
+              margin-left: -5px;
+              font-size: 30px;
+            }
+          }
+        }
+      }
+    }
+
+    .hero {
+      width: 1226px;
+      margin: auto;
+      font-size: 0;
+
+      .products-slides {
+        font-size: 16px;
+        height: 460px;
+        width: 235px;
+        display: inline-block;
+        
+        .products-slides-menu {
+          padding-top: 20px;
+          padding-bottom: 20px;
+          background-color: rgb(165, 165, 165);
+          height: 100%;
+          box-sizing: border-box;
+          position: relative;
+          width: 235px;
+
+          > li:hover {
+            background-color: #ff6700;
+          }
+
+          > li {
+            box-sizing: border-box;
+            padding-left: 30px;
+            padding-right: 10px;
+            height: 42px;
+            line-height: 42px;
+            font-weight: 500;
+            color: white;
+
+            > a {
+              padding-left: 20px;
+            }
+            
+
+            &::after {
+              content: ">";
+              font-size: large;
+              float: right;
+              padding-right: 15px;
+            }
+            &:hover > .products-slides-submenu {
+              display: grid;
+              z-index: 11;
+            }
+
+            > .products-slides-submenu {
+              display: none;
+              background-color: aliceblue;
+              position: absolute;
+              left: 100%;
+              top: 0;
+              height: 100%;
+              grid-template-rows: repeat(6, 1fr);
+              grid-auto-columns: 247px;
+              grid-auto-flow: column;
+              
+              > li > a {
+                color: black;
+                padding: 40px 0 10px 20px;
+
+                &:hover {
+                  color: #ff6700;
+                }
+
+                > img {
+                  padding-top: 20px;
+                  padding-right: 10px;
+                }
+                > .text {
+                  vertical-align: text-bottom;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .photo-sliders {
+        display: inline-block;
+        margin: 0;
+        vertical-align: bottom;
+        
+        .slider {
+          width: 991px;
+          height: 460px;
+          position: relative;
+          overflow: hidden;
+          box-sizing: border-box;
+
+          .photo > img {
+            position: absolute;
+            transition: 1s;
+            width: 991px;
+            height: 460px;
+            opacity: 0;
+          }
+    
+          & input {
+            display: none;
+          }
+          
+          .indicators {
+            position: relative;
+            left: 90%;
+            top: 90%;
+            white-space: nowrap;
+            z-index: 9;
+          }
+
+          .indicators > label {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            margin-right: 9px;
+            border: 1px solid;
+            border-radius: 333px;
+            text-indent: -99999px;
+            cursor: pointer;
+            box-sizing: border-box;
+          }
+    
+          .indicators > label:hover {
+            background-color: silver;
+          }
+
+          .pre1, .pre2, .pre3, .pre4 {
+            float: left;
+            position: relative;
+            top: 42%;
+            box-sizing: border-box;
+            z-index: 10;
+            opacity: 0;
+            color: rgb(108, 108, 108);
+          }
+          .next1, .next2, .next3, .next4{
+            float: right;
+            position: relative;
+            top: 42%;
+            box-sizing: border-box;
+            z-index: 10;
+            opacity: 0;
+            color: rgb(108, 108, 108);
+          }
+        }
+      }
+
+      .photo-sliders .slider input:nth-of-type(1):checked ~ .photo img:nth-child(1),
+      .photo-sliders .slider input:nth-of-type(2):checked ~ .photo img:nth-child(2),
+      .photo-sliders .slider input:nth-of-type(3):checked ~ .photo img:nth-child(3),
+      .photo-sliders .slider input:nth-of-type(4):checked ~ .photo img:nth-child(4) {
+        opacity: 1;
+      }
+
+      .photo-sliders .slider input:nth-of-type(1):checked ~ .indicators label:nth-child(1),
+      .photo-sliders .slider input:nth-of-type(2):checked ~ .indicators label:nth-child(2),
+      .photo-sliders .slider input:nth-of-type(3):checked ~ .indicators label:nth-child(3),
+      .photo-sliders .slider input:nth-of-type(4):checked ~ .indicators label:nth-child(4) {
+        background-color: silver;
+      }
+
+      .photo-sliders .slider:has(input:nth-of-type(1):checked) :is(.pre1, .next1),
+      .photo-sliders .slider:has(input:nth-of-type(2):checked) :is(.pre2, .next2),
+      .photo-sliders .slider:has(input:nth-of-type(3):checked) :is(.pre3, .next3),
+      .photo-sliders .slider:has(input:nth-of-type(4):checked) :is(.pre4, .next4) {
+        opacity: 1;
+      }
+
+      .photo-sliders .slider:has(input:nth-of-type(1):checked) .pre1::before,
+      .photo-sliders .slider:has(input:nth-of-type(2):checked) .pre2::before,
+      .photo-sliders .slider:has(input:nth-of-type(3):checked) .pre3::before,
+      .photo-sliders .slider:has(input:nth-of-type(4):checked) .pre4::before {
+        content: "<";
+        font-size: 50px;
+        opacity: 0.3;
+        margin-right: -50px;
+        box-sizing: border-box;
+      }
+      .photo-sliders .slider:has(input:nth-of-type(1):checked) .next1::after,
+      .photo-sliders .slider:has(input:nth-of-type(2):checked) .next2::after,
+      .photo-sliders .slider:has(input:nth-of-type(3):checked) .next3::after,
+      .photo-sliders .slider:has(input:nth-of-type(4):checked) .next4::after {
+        content: ">";
+        font-size: 50px;
+        opacity: 0.3;
+        box-sizing: border-box;
+      }
+      
+      .photo-sliders .slider:has(input:nth-of-type(1):checked) .pre1:hover::before,
+      .photo-sliders .slider:has(input:nth-of-type(2):checked) .pre2:hover::before,
+      .photo-sliders .slider:has(input:nth-of-type(3):checked) .pre3:hover::before,
+      .photo-sliders .slider:has(input:nth-of-type(4):checked) .pre4:hover::before {
+        color: white;
+        opacity: 1;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.456);
+      }
+      .photo-sliders .slider:has(input:nth-of-type(1):checked) .next1:hover::after,
+      .photo-sliders .slider:has(input:nth-of-type(2):checked) .next2:hover::after,
+      .photo-sliders .slider:has(input:nth-of-type(3):checked) .next3:hover::after,
+      .photo-sliders .slider:has(input:nth-of-type(4):checked) .next4:hover::after {
+        color: white;
+        opacity: 1;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.456);
+      }
+    }
+
+    .sticky-side-tools {
+      position: fixed;
+      right: 0;
+      bottom: 50px;
+      width: 90px;
+
+      > .tool-item {
+        height: 80px;
+        line-height: 80px;
+        color: gray;
+        background-color: white;
+        border-top: 1px solid rgb(230, 230, 230);
+        border-left: 1px solid rgb(230, 230, 230);
+        box-sizing: border-box;
+        text-align: center;
+
+        @media (width < 1460px) {
+          height: 30px;
+          line-height: 30px;
+          font-size: 0;
+          border-right: 1px solid rgb(230, 230, 230);
+          &::before {
+            content: "@";
+            font-size: 5px;
+          }
+        }
+
+        &:hover {
+          color: #ff6700;
+        }
+
+        &:nth-last-child(1) {
+          border-bottom: 1px solid rgb(230, 230, 230);
+        }
+      }
+      @media (1226px < width < 1460px) {
+        left: 50%;
+        right: auto;
+        width: 20px;
+        margin-left: calc(1226px / 2);
+      }
+      @media (width < 1250px) {
+        position: fixed;
+        right: 0;
+        bottom: 50px;
+        width: 20px;
+        z-index: 11;
+      }
+    }
+
+    .ad1, .ad2 {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    main {
+      background-color: #f5f5f5;
+      padding-bottom: 30px;
+    }
+
+    .main {
+      width: 1226px;
+      margin: auto;
+
+      > * {
+        margin-top: 40px;
+      }
+
+      .sort-title {
+        font-size: 25px;
+        color: rgb(100, 100, 100);
+        
+        & + .tip {
+          position: relative;
+          font-size:16px;
+          float: right;
+          line-height: 3;
+          color: rgb(100, 100, 100);
+
+          &:hover {
+            color: #ff6700;
+            cursor: pointer;
+          }   
+        }
+      }
+
+      .cards {
+        display: flex;
+        margin-top: 10px;
+        flex-flow: column wrap;
+        height: 615px;
+        gap: 14px;
+
+        .item {
+          height: 300px;
+          width: 235px;
+          background-color: white;
+          transition: 1s;
+          box-shadow: 0 0px 0px rgba(0,0,0,.1);
+
+          &:hover {
+            transition: translate(0, -2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,.1);
+          }
+          &:first-child {
+            height: 100%;
+          }
+
+          &:nth-child(1) img {
+            width: 235px;
+            height: 615px;
+          }
+          &:nth-child(n+2) img {
+            width: 235px;
+            height: 235px;
+          }
+          &:last-child {
+            text-align: start;
+            line-height: 2;
+
+            .more {
+              display: inline-block;
+              color: black;
+              font-size: 18px;
+              white-space: nowrap;
+              line-height: 1.5;
+              margin: 0 60px 0 30px;
+            
+              > small {
+                font-size: 13px;
+                line-height: 0;
+              }
+            }
+
+            .imore {
+              line-height: 3;
+              font-size: 50px;
+              color: #ff6700;
+              font-style: normal;
+            }
+          }
+        }
+      }
+
+      > :not(.phones) .cards .item:nth-last-child(-n+2) {
+        height: 143px;
+
+        > img {
+          width: 118px;
+          height: 118px;
+        }
+      }
+
+      .wearable-smart {
+        height: 700px;
+        position: relative;
+
+        & span.tip-title {
+          font-size: 16px;
+          transition: 0s 999999s;
+          float: right;
+          margin-top: 0.5em;
+          margin-left: 1.5em;
+          border-bottom: none;
+          color: rgb(100, 100, 100);
+
+          &:last-child section {
+            visibility: visible;
+
+
+          }
+        }
+        & span.tip-title section {
+          visibility: hidden;
+          transition: 0s 999999s;  /*~-duration和~-delay*/
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          top: 2.5em;
+          left: 0;
+          right: 0;
+        }
+
+        &:has(span.tip-title:hover) span.tip-title:not(:hover) {
+          color: black;
+          border-bottom: none;
+          transition: none;
+        }
+        & span.tip-title:hover {
+          color: #ff6700;
+          border-bottom: 2px solid #ff6700;
+          transition: none;
+          cursor: pointer;
+        }
+        & span.tip-title:last-child {
+          color: #ff6700;
+          border-bottom: 2px solid #ff6700;
+        }
+
+        &:has(span.tip-title:hover) span.tip-title:not(:hover) section {
+          visibility: hidden;
+          transition: none;
+        }
+        & span.tip-title:hover section {
+          visibility: visible;
+          transition: none;
+        }
+      }
+    }
+
+    .after-sales {
+      width: 1226px;
+      margin: auto;
+
+      .sure {
+        font-size: 18px;
+        border-bottom: 1px solid #e0e0e0;
+        
+        > .sure-item {
+          margin: 20px 41px 20px 41px;
+          line-height: 3;
+          color: #616161;
+  
+          &:hover {
+            color: #ff6700;
+          }
+          
+          > i {
+            font-size: 30px;
+            font-style: normal;
+          }
+        }
+  
+        > span {
+          color: #e0e0e0;
+        }
+      }
+
+      .sure-detail {
+        text-align: center;
+
+        & h4 {
+          display: inline-block;
+          color: #424242;
+          line-height: 3;
+          vertical-align: top;
+          margin: 40px 50px 0 50px;
+
+          &:nth-of-type(1) {
+            margin-left: 60px;
+          }
+
+          > p {
+            font-size:x-small;
+            color: #757575;
+            line-height: normal;
+          }
+        }
+
+        .contact-way {
+          display: inline-block;
+          margin: 50px -20px 0 20px;
+          padding-left: 50px;
+          line-height: 0.5;
+          border-left: 1px solid #e0e0e0;;
+
+          > strong {
+            font-size: 30px;
+            color: #ff6700;
+            white-space: pre;
+          }
+
+          > .artificial {
+            margin: auto;
+            width: 60%;
+            font-size: 13px;
+            line-height: 2;
+            cursor: pointer;
+            color: #ff6700;
+            border: 1px solid #ff6700;
+
+            .message {
+              font-style: normal;
+            }
+          }
+        }
+      }
+
+    }
+    
+    .tail {
+      background-color: #f5f5f5;
+      
+      > section {
+        width: 1226px;
+        margin: auto;
+        font-size: 8px;
+
+        > .brand {
+          display: inline-block;
+          width: 50px;
+          height: 50px;
+          margin: 20px 0 0 20px;
+          vertical-align: top;
+
+          &:active {
+            transform: scale(0.8);
+          }
+
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        
+        > p {
+          display: inline-block;
+          white-space: break-spaces;
+          color: #a0a0a0;
+          margin: 0;
+
+          > a {
+            white-space: nowrap;
+
+            > img {
+              height: 28px;
+              width: auto;
+            }
+          }
+        }
+
+        > .conclusion {
+          text-align: center;
+          margin: auto;
+          color: #b0b0b0;
+          font-size: 18px;
+          font-style: oblique;
+          line-height: 4;
+          letter-spacing: 3px;
+        }
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div>
+    <div class="sticky-side-tools">
+      <div class="tool-item">手机app</div>
+      <div class="tool-item">个人中心</div>
+      <div class="tool-item">售后服务</div>
+      <div class="tool-item">人工客服</div>
+      <div class="tool-item">购物车</div>
+      <div class="tool-item">回顶部</div>
+    </div>
+
+    <div class="top-nav">
+      <div class="top-nav-inner">
+        <div class="top-nav-links">
+          <a class="link" href="//www.mi.com/">小米官网</a>
+          <span>|</span>
+          <a class="link" href="//www.mi.com/shop">小米商城</a>
+          <span>|</span>
+          <a class="link" href="//www.miui.com/" target="_blank">MIUI</a>
+          <span>|</span>
+          <a class="link" href="//iot.mi.com" target="_blank">IoT</a>
+          <span>|</span>
+          <a class="link" href="//i.mi.com/" target="_blank">云服务</a>
+          <span>|</span>
+          <a class="link" href="//airstar.com/home" target="_blank">天星数科</a>
+          <span>|</span>
+          <a class="link" href="//youpin.mi.com/" target="_blank">有品</a>
+          <span>|</span>
+          <a class="link" href="//xiaoai.mi.com/" target="_blank">小爱开放平台</a>
+          <span>|</span>
+          <a class="link" href="//qiye.mi.com/" target="_blank">企业团购</a>
+          <span>|</span>
+          <a class="link" href="//www.mi.com/aptitude/list/?id=88" target="_blank">资质证照</a>
+          <span>|</span>
+          <a class="link" href="//www.mi.com/aptitude/list/" target="_blank">协议规则</a>
+          <span>|</span>
+          <a class="link" href="//www.mi.com/appdownload/" target="_blank">下载app</a>
+          <span>|</span>
+          <a class="link" href="">Select Location</a>
+        </div>
+        <div class="top-nav-cart">
+          <a class="link" href="//order.mi.com/site/login?redirectUrl=https://www.mi.com/shop">登录</a>
+          <span>|</span>
+          <a class="link" href="//account.xiaomi.com/pass/register?sid=mi_eshop">注册</a>
+          <span>|</span>
+          <a href="//www.mi.com/shop/user/message">消息通知</a>
+          <div class="shopping-cart">
+            <i class="icon cart"></i>
+            购物车 (0)
+            <div class="shopping-cart-items">
+              购物车中还没有商品，赶紧选购吧！
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="products-nav-full">
+      <div class="products-nav">
+        <a href="//www.mi.com" class="brand">
+          <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi.com-assets/shop/img/logo-mi2.png" alt="">
+        </a>
+        <div class="products-nav-inner">
+          <div class="nav-inner-item">
+            <a href="">Xiaomi手机</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18482" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/b4846501f1e9be04d6d2e859deb0d80e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi Civi 3" width="160" height="110">
+                <div class="title">Xiaomi Civi 3</div>
+                <p class="price">2499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/mi12s-pro" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2874cb04f16cdca6e3f2a542b6bc5e8a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 12S Pro" width="160" height="110">
+                <div class="title">Xiaomi 12S Pro</div>
+                <p class="price">3199元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18363" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3c130b71f2edfafbc61c38f1325cd60e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Ultra" width="160" height="110">
+                <div class="title">Xiaomi 13 Ultra</div>
+                <p class="price">5999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17971" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c758eb7e0dce4307c62c47155519bc80.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13" width="160" height="110">
+                <div class="title">Xiaomi 13</div>
+                <p class="price">3999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17969" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11e28a0a7c6a2ca07f0dc2044d3858c2.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Pro" width="160" height="110">
+                <div class="title">Xiaomi 13 Pro</div>
+                <p class="price">4999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/xiaomimixfold2" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/581f3a690e6803add02e4c9fde98cb78.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi MIX Fold 2" width="160" height="110">
+                <div class="title">Xiaomi MIX Fold 2</div>
+                <p class="price">8999元起</p>
+              </a>
+            </div>
+          </div>
+          <div class="nav-inner-item">
+            <a href="">Redmi手机</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18542" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/db20078b0c1a5f07dcf85000b17b7322.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Redmi Note 12T Pro" width="160" height="110">
+                <div class="title">Redmi Note 12T Pro</div>
+                <p class="price">1499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18268" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c98a369cd511f4bab30e6f4d73438f5d.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Redmi Note 12 Turbo" width="160" height="110">
+                <div class="title">Redmi Note 12 Turbo</div>
+                <p class="price">1799元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18119" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/8d5c2622cf50cf3d1a00c3753a2bf070.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Redmi 12C" width="160" height="110">
+                <div class="title">Redmi 12C</div>
+                <p class="price">619元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18077" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/482a5df88357219be7f8f6a1a06ce20a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Redmi K60 Pro" width="160" height="110">
+                <div class="title">Redmi K60 Pro</div>
+                <p class="price">2599元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18075" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/040746283de6bbdf554fe879f842747c.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Redmi K60" width="160" height="110">
+                <div class="title">Redmi K60</div>
+                <p class="price">2099元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18092" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2c6cf6ba252d5db186016c3b044f600f.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Redmi Note 12 Pro 极速版" width="160" height="110">
+                <div class="title">Redmi Note 12 Pro 极速版</div>
+                <p class="price">1499元起</p>
+              </a>
+            </div>
+          </div>
+          <div class="nav-inner-item">
+            <a href="">电视</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18482" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/b4846501f1e9be04d6d2e859deb0d80e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi Civi 3" width="160" height="110">
+                <div class="title">Xiaomi Civi 3</div>
+                <p class="price">2499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/mi12s-pro" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2874cb04f16cdca6e3f2a542b6bc5e8a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 12S Pro" width="160" height="110">
+                <div class="title">Xiaomi 12S Pro</div>
+                <p class="price">3199元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18363" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3c130b71f2edfafbc61c38f1325cd60e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Ultra" width="160" height="110">
+                <div class="title">Xiaomi 13 Ultra</div>
+                <p class="price">5999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17971" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c758eb7e0dce4307c62c47155519bc80.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13" width="160" height="110">
+                <div class="title">Xiaomi 13</div>
+                <p class="price">3999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17969" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11e28a0a7c6a2ca07f0dc2044d3858c2.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Pro" width="160" height="110">
+                <div class="title">Xiaomi 13 Pro</div>
+                <p class="price">4999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/xiaomimixfold2" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/581f3a690e6803add02e4c9fde98cb78.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi MIX Fold 2" width="160" height="110">
+                <div class="title">Xiaomi MIX Fold 2</div>
+                <p class="price">8999元起</p>
+              </a>
+            </div>
+          </div>
+          <div class="nav-inner-item">
+            <a href="">笔记本</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18482" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/b4846501f1e9be04d6d2e859deb0d80e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi Civi 3" width="160" height="110">
+                <div class="title">Xiaomi Civi 3</div>
+                <p class="price">2499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/mi12s-pro" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2874cb04f16cdca6e3f2a542b6bc5e8a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 12S Pro" width="160" height="110">
+                <div class="title">Xiaomi 12S Pro</div>
+                <p class="price">3199元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18363" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3c130b71f2edfafbc61c38f1325cd60e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Ultra" width="160" height="110">
+                <div class="title">Xiaomi 13 Ultra</div>
+                <p class="price">5999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17971" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c758eb7e0dce4307c62c47155519bc80.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13" width="160" height="110">
+                <div class="title">Xiaomi 13</div>
+                <p class="price">3999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17969" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11e28a0a7c6a2ca07f0dc2044d3858c2.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Pro" width="160" height="110">
+                <div class="title">Xiaomi 13 Pro</div>
+                <p class="price">4999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/xiaomimixfold2" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/581f3a690e6803add02e4c9fde98cb78.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi MIX Fold 2" width="160" height="110">
+                <div class="title">Xiaomi MIX Fold 2</div>
+                <p class="price">8999元起</p>
+              </a>
+            </div>
+          </div>
+          <div class="nav-inner-item">
+            <a href="">平板</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18482" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/b4846501f1e9be04d6d2e859deb0d80e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi Civi 3" width="160" height="110">
+                <div class="title">Xiaomi Civi 3</div>
+                <p class="price">2499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/mi12s-pro" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2874cb04f16cdca6e3f2a542b6bc5e8a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 12S Pro" width="160" height="110">
+                <div class="title">Xiaomi 12S Pro</div>
+                <p class="price">3199元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18363" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3c130b71f2edfafbc61c38f1325cd60e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Ultra" width="160" height="110">
+                <div class="title">Xiaomi 13 Ultra</div>
+                <p class="price">5999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17971" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c758eb7e0dce4307c62c47155519bc80.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13" width="160" height="110">
+                <div class="title">Xiaomi 13</div>
+                <p class="price">3999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17969" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11e28a0a7c6a2ca07f0dc2044d3858c2.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Pro" width="160" height="110">
+                <div class="title">Xiaomi 13 Pro</div>
+                <p class="price">4999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/xiaomimixfold2" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/581f3a690e6803add02e4c9fde98cb78.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi MIX Fold 2" width="160" height="110">
+                <div class="title">Xiaomi MIX Fold 2</div>
+                <p class="price">8999元起</p>
+              </a>
+            </div>
+          </div>
+          <div class="nav-inner-item">
+            <a href="">家电</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18482" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/b4846501f1e9be04d6d2e859deb0d80e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi Civi 3" width="160" height="110">
+                <div class="title">Xiaomi Civi 3</div>
+                <p class="price">2499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/mi12s-pro" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2874cb04f16cdca6e3f2a542b6bc5e8a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 12S Pro" width="160" height="110">
+                <div class="title">Xiaomi 12S Pro</div>
+                <p class="price">3199元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18363" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3c130b71f2edfafbc61c38f1325cd60e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Ultra" width="160" height="110">
+                <div class="title">Xiaomi 13 Ultra</div>
+                <p class="price">5999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17971" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c758eb7e0dce4307c62c47155519bc80.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13" width="160" height="110">
+                <div class="title">Xiaomi 13</div>
+                <p class="price">3999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17969" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11e28a0a7c6a2ca07f0dc2044d3858c2.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Pro" width="160" height="110">
+                <div class="title">Xiaomi 13 Pro</div>
+                <p class="price">4999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/xiaomimixfold2" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/581f3a690e6803add02e4c9fde98cb78.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi MIX Fold 2" width="160" height="110">
+                <div class="title">Xiaomi MIX Fold 2</div>
+                <p class="price">8999元起</p>
+              </a>
+            </div>
+          </div>
+          <div class="nav-inner-item">
+            <a href="">路由器</a>
+            <div class="nav-inner-item-submenu">
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18482" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/b4846501f1e9be04d6d2e859deb0d80e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi Civi 3" width="160" height="110">
+                <div class="title">Xiaomi Civi 3</div>
+                <p class="price">2499元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/mi12s-pro" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/2874cb04f16cdca6e3f2a542b6bc5e8a.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 12S Pro" width="160" height="110">
+                <div class="title">Xiaomi 12S Pro</div>
+                <p class="price">3199元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=18363" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/3c130b71f2edfafbc61c38f1325cd60e.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Ultra" width="160" height="110">
+                <div class="title">Xiaomi 13 Ultra</div>
+                <p class="price">5999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17971" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c758eb7e0dce4307c62c47155519bc80.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13" width="160" height="110">
+                <div class="title">Xiaomi 13</div>
+                <p class="price">3999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/shop/buy?product_id=17969" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11e28a0a7c6a2ca07f0dc2044d3858c2.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi 13 Pro" width="160" height="110">
+                <div class="title">Xiaomi 13 Pro</div>
+                <p class="price">4999元起</p>
+              </a>
+              <div class="fline"></div>
+              <a class="link" href="https://www.mi.com/xiaomimixfold2" target="_blank">
+                <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/581f3a690e6803add02e4c9fde98cb78.png?thumb=1&amp;w=200&amp;h=138&amp;f=webp&amp;q=90" alt="Xiaomi MIX Fold 2" width="160" height="110">
+                <div class="title">Xiaomi MIX Fold 2</div>
+                <p class="price">8999元起</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="products-nav-inner">
+          <div class="nav-inner-item">
+            <a href="https://www.mi.com/service/">服务中心</a>
+          </div>
+          <div class="nav-inner-item">
+            <a href="http://www.xiaomi.cn/">社区</a>
+          </div>
+        </div>
+        <form action="#" class="products-nav-search">
+          <div class="search-field">
+            <input type="text" placeholder="请输入商品...">
+            <ul>
+              <li>全部商品</li>
+              <li>空调</li>
+              <li>手机</li>
+              <li>redmi k60e</li>
+              <li>冰箱</li>
+              <li>洗衣机</li>
+              <li>电视</li>
+              <li>耳机</li>
+            </ul>
+          </div>
+          <button>
+            <i class="icon search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="products-slides">
+        <ul class="products-slides-menu">
+          <li>手机
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>电视
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列1</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>家电
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列2</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>笔记本 平板
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列3</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>出行 穿戴
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列4</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>耳机 音箱
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列5</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>健康 儿童
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列6</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>生活 箱包
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列7</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>智能 路由器
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列8</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>电源 配件
+            <ul class="products-slides-submenu">
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomimix%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecfbf9d01c8a2605f0a6938093b23ad8.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi MIX系列9</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/827fae95d0f1d75f1535ef93e357b2af.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=xiaomicivi%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/930ddc941c1e6c81042406440e88ac45.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Xiaomi Civi系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmiK%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/993aff4f7f59dd64011c61a3132f0fd4.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi K系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redminote%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ab5c6d195d2b3dde69683966891d5a9.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi Note系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+              <li>
+                <a href="//www.mi.com/shop/search?keyword=redmi%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97">
+                  <img src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/232c1ede1284125cc4dcee5c7565d8fe.png?thumb=1&amp;w=50&amp;h=50&amp;f=webp&amp;q=90" width="40" height="40" alt="">
+                  <span class="text">Redmi 数字系列</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="photo-sliders">
+        <div class="slider">
+          <label class="pre1" for="s1-4"></label>
+          <label class="pre2" for="s1-1"></label>
+          <label class="pre3" for="s1-2"></label>
+          <label class="pre4" for="s1-3"></label>
+          <input type="radio" name="slider1" id="s1-1" checked>
+          <input type="radio" name="slider1" id="s1-2">
+          <input type="radio" name="slider1" id="s1-3">
+          <input type="radio" name="slider1" id="s1-4">
+          <div class="photo">
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/7f46857e9876f168ae660dbfb0909169.jpeg?w=2452&h=920" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/acc4efe480ef8f3f3d46f2aa1fdd9eb8.jpg?thumb=1&w=1533&h=575&f=webp&q=90" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/0942f8338bc19a2cde9394479fc123c8.jpg?thumb=1&w=1533&h=575&f=webp&q=90" alt=""/>
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/c66eff8e22a48ded4854017b25cbf631.jpeg?thumb=1&w=1533&h=575&f=webp&q=90" alt=""/>
+          </div>
+          <div class="indicators">
+            <label for="s1-1">1</label>
+            <label for="s1-2">2</label>
+            <label for="s1-3">3</label>
+            <label for="s1-4">4</label>
+          </div>
+          <label class="next1" for="s1-2"></label>
+          <label class="next2" for="s1-3"></label>
+          <label class="next3" for="s1-4"></label>
+          <label class="next4" for="s1-1"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad1">
+      <img alt="test" width="1226" height="120" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/864aa0927000c3d717eca08955589d62.jpg?thumb=1&amp;w=1533&amp;h=150&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/864aa0927000c3d717eca08955589d62.jpg?thumb=1&amp;w=1533&amp;h=150&amp;f=webp&amp;q=90" lazy="loaded">
+    </div>
+
+    <main>
+      <div class="main">
+        <div class="phones">
+          <span class="sort-title">手机</span>
+          <span class="tip"><a>查看更多 ></a></span>
+          <ul class="cards">
+            <li class="item">
+              <img alt="加载失败..." data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/a5d3a59f7b53c23feab77434aa1f383b.jpg?thumb=1&amp;w=293&amp;h=768&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/a5d3a59f7b53c23feab77434aa1f383b.jpg?thumb=1&amp;w=293&amp;h=768&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Redmi Note 12T Pro" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202305291422_e96776c7e1e35cebb454457c3344d3cd.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202305291422_e96776c7e1e35cebb454457c3344d3cd.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Xiaomi Civi 3" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202305241112_ecb14876904f09f3cbc605350a02eff0.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202305241112_ecb14876904f09f3cbc605350a02eff0.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Xiaomi 13 Ultra" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/555070388ddc76c4de4b2c42b12c3c1d.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/555070388ddc76c4de4b2c42b12c3c1d.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Redmi Note 12 Turbo" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/8b046feca0a7bb3f7b961a9690babb1b.jpg?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/8b046feca0a7bb3f7b961a9690babb1b.jpg?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Redmi K60" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/a6cec580260ceb20ae6a885c2c65c611.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/a6cec580260ceb20ae6a885c2c65c611.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Redmi K60 Pro" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/f37dd30477e7ba040c7fb69c31ad8bf3.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/f37dd30477e7ba040c7fb69c31ad8bf3.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Redmi Note 12 Pro 极速版" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202212251443_29b17941a7365948446bd193011d9241.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202212251443_29b17941a7365948446bd193011d9241.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+            <li class="item">
+              <img alt="Xiaomi 13 限量定制色" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202211292351_92aba2c69123166a74ba2e2b525b1ae2.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202211292351_92aba2c69123166a74ba2e2b525b1ae2.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+            </li>
+          </ul>
+        </div>
+        <div class="wearable-smart">
+          <span class="sort-title">智能穿戴</span>
+          <span class="tip-title">
+            穿戴
+            <section>
+              <ul class="cards">
+                <li class="item">
+                  <img alt="加载失败..." data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c9550c95ee33a22dc8db677dada00f09.jpg?thumb=1&amp;w=293&amp;h=768&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c9550c95ee33a22dc8db677dada00f09.jpg?thumb=1&amp;w=293&amp;h=768&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Redmi Watch 3 青春版" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202305192235_10c4979f7c2802f89eb80ea2d77b52bd.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202305192235_10c4979f7c2802f89eb80ea2d77b52bd.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="小米手环8 NFC版" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202304181447_fff5c19e16988b91042cfddba800fc19.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202304181447_fff5c19e16988b91042cfddba800fc19.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="小米手环8" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202304181447_fff5c19e16988b91042cfddba800fc19.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202304181447_fff5c19e16988b91042cfddba800fc19.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="小米手环7 Pro" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202207011906_e7f02b803d3da16ec56a611e790243ba.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202207011906_e7f02b803d3da16ec56a611e790243ba.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="小米手环7" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202205240036_9a8fbf274c0d419c5a0a49ef67cdd7c8.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202205240036_9a8fbf274c0d419c5a0a49ef67cdd7c8.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi Watch S1" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202204211417_27356c02de718e88afd3cf36eaba8097.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202204211417_27356c02de718e88afd3cf36eaba8097.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi Watch S1 Pro" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202208102330_fec8af4d5861f2c0a3fea2b8879ae859.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202208102330_fec8af4d5861f2c0a3fea2b8879ae859.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Redmi Watch 3" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202212270226_d6ccc0602cb832e8fa523af78bf824f5.png?thumb=1&amp;w=125&amp;h=125&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202212270226_d6ccc0602cb832e8fa523af78bf824f5.png?thumb=1&amp;w=125&amp;h=125&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <div class="more">
+                    浏览更多<br>
+                    <small>穿戴</small>
+                  </div>
+                  <i class="icon imore"></i>
+                </li>
+              </ul>
+            </section>
+          </span>
+          <span class="tip-title">
+            耳机
+            <section>
+              <ul class="cards">
+                <li class="item">
+                  <img alt="加载失败..." data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c9550c95ee33a22dc8db677dada00f09.jpg?thumb=1&amp;w=293&amp;h=768&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/c9550c95ee33a22dc8db677dada00f09.jpg?thumb=1&amp;w=293&amp;h=768&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi Buds 4 Pro" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202208111200_c1016839eae2c1f5bb79d5afde498e81.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202208111200_c1016839eae2c1f5bb79d5afde498e81.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi Buds 3 Pro" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202204211422_ce41ed00fe7fb79df35101222880121d.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202204211422_ce41ed00fe7fb79df35101222880121d.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi Buds 3" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/0b271a074e087848357aa61ae665b214.jpg?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/0b271a074e087848357aa61ae665b214.jpg?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Redmi Buds 4" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202205241527_fb27e27e6587254da27de5ba9c889512.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202205241527_fb27e27e6587254da27de5ba9c889512.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Redmi Buds 3" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11570d5371f16d2d9b19f504e09d01f0.jpg?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/11570d5371f16d2d9b19f504e09d01f0.jpg?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="小米真无线蓝牙耳机Air2 SE" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202111052007_e8e92e67988ebaff6e075412a54c3c66.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202111052007_e8e92e67988ebaff6e075412a54c3c66.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi骨传导耳机" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202210191430_3ad0e4809ce06a126dea9755adbb2a1b.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202210191430_3ad0e4809ce06a126dea9755adbb2a1b.png?thumb=1&amp;w=250&amp;h=250&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <img alt="Xiaomi降噪蓝牙耳机Necklace" data-src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202209261427_67cd5fddb341f0e0fb0a2295e643b0d8.png?thumb=1&amp;w=125&amp;h=125&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/nr-pub/202209261427_67cd5fddb341f0e0fb0a2295e643b0d8.png?thumb=1&amp;w=125&amp;h=125&amp;f=webp&amp;q=90" lazy="loaded">
+                </li>
+                <li class="item">
+                  <div class="more">
+                    浏览更多<br>
+                    <small>耳机</small>
+                  </div>
+                  <i class="icon imore"></i>
+                </li>
+              </ul>
+            </section>
+          </span>
+        </div>
+      </div>
+      <div class="ad2">
+        <img alt="test" width="1226" height="120" data-src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/88e35cffc82cd98cd53172460067af17.jpg?thumb=1&amp;w=1533&amp;h=150&amp;f=webp&amp;q=90" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/88e35cffc82cd98cd53172460067af17.jpg?thumb=1&amp;w=1533&amp;h=150&amp;f=webp&amp;q=90" lazy="loaded">
+      </div>
+    </main>
+
+    <div class="after-sales">
+      <div class="sure">
+        <a class="sure-item" href="//www.mi.com/service/aftersale/front" target="_blank">
+        <i class="icon tool"></i>
+          预约维修服务
+        </a>
+        <span>|</span>
+        <a class="sure-item" href="//www.mi.com/service/exchange#back" target="_blank">
+          <i class="icon circle7"></i>
+          7天无理由退货
+        </a>
+        <span>|</span>
+        <a class="sure-item" href="//www.mi.com/service/exchange#back" target="_blank">
+          <i class="icon circle15"></i>
+          15天免费换货
+        </a>
+        <span>|</span>
+        <a class="sure-item" href="//www.mi.com/service/exchange#back" target="_blank">
+          <i class="icon gift"></i>
+          满69元包邮
+        </a>
+        <span>|</span>
+        <a class="sure-item" href="//www.mi.com/service/exchange#back" target="_blank">
+          <i class="icon location"></i>
+          1100余家售后网点
+        </a>
+      </div>
+
+      <div class="sure-detail">
+        <h4>选购指南
+          <p>手机</p>
+          <p>电视</p>
+          <p>笔记本</p>
+          <p>平板</p>
+          <p>穿戴</p>
+          <p>耳机</p>
+          <p>家电</p>
+          <p>路由器</p>
+          <p>音箱</p>
+          <p>配件</p>
+        </h4>
+        <h4>服务中心
+          <p>申请售后</p>
+          <p>售后政策</p>
+          <p>维修服务价格</p>
+          <p>订单查询</p>
+          <p>以旧换新</p>
+          <p>保障服务</p>
+          <p>防伪查询</p>
+          <p>F码通道</p>
+        </h4>
+        <h4>线下门店
+          <p>小米之家</p>
+          <p>服务网点</p>
+          <p>授权体验店/专区</p>
+        </h4>
+        <h4>关于小米
+          <p>了解小米</p>
+          <p>加入小米</p>
+          <p>投资者关系</p>
+          <p>可持续发展</p>
+          <p>廉洁举报</p>
+        </h4>
+        <h4>关注我们
+          <p>新浪微博</p>
+          <p>官方微信</p>
+          <p>联系我们</p>
+          <p>公益基金会</p>
+        </h4>
+        <div class="contact-way">
+           <strong>400-100-5678</strong>
+           <p>8:00-18:00（仅收市话费）</p>
+           <div class="artificial">
+            <i class="icon message"></i>
+            人工客服
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tail">
+      <section>
+        <a href="//www.mi.com" class="brand">
+          <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi.com-assets/shop/img/logo-mi2.png" alt="">
+        </a>
+        <p>
+          小米商城 | MIUI | 米家 | 米聊 | 多看 | 游戏 | 音乐 | 政企服务 | 小米天猫店 | 小米集团隐私政策 | 小米公司儿童信息保护规则 | 小米商城隐私政策 | 小米商城用户协议 | 问题反馈 | Select Location
+          北京互联网法院法律服务工作站 | 中国消费者协会 | 北京市消费者协会
+          © mi.com 京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2023]0169-004号
+          （京）网械平台备字（2018）第00005号 互联网药品信息服务资格证 (京)-非经营性-2014-0090 营业执照 医疗器械质量公告
+          增值电信业务许可证 网络食品经营备案 京食药网食备202010048   食品经营许可证
+          违法和不良信息举报电话：171-5104-4404 知识产权侵权投诉 本网站所列数据，除特殊说明，所有数据均出自我司实验室测试
+          <a rel="nofollow" href="//privacy.truste.com/privacy-seal/validation?rid=4fc28a8c-6822-4980-9c4b-9fdc69b94eb8&amp;lang=zh-cn" target="_blank">
+            <img rel="nofollow" src="//i1.mifile.cn/f/i/17/site/truste.png" alt="TRUSTe Privacy Certification">
+          </a><a rel="nofollow" href="//search.szfw.org/cert/l/CX20120926001783002010" target="_blank">
+            <img rel="nofollow" src="//s01.mifile.cn/i/v-logo-2.png" alt="诚信网站">
+          </a><a id="_xinchacharenzheng_cert_vip_kexinweb" rel="nofollow" href="//xyt.xinchacha.com/pcinfo?sn=523009637759455232&amp;certType=6" target="_blank">
+            <img rel="nofollow" src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/icon3.png" alt="可信网站">
+          </a><a rel="nofollow" href="//www.mi.com/service/buy/commitment/" target="_blank">
+            <img rel="nofollow" src="//i8.mifile.cn/b2c-mimall-media/ba10428a4f9495ac310fd0b5e0cf8370.png" alt="诚信经营 放心消费">
+          </a><a rel="nofollow" href="https://webcert.cnmstl.net/cert/grade?sn=3af21034e35011eab3ea00163e068ceb" >
+            <img rel="nofollow" src="https://cnbj1.fds.api.xiaomi.com/b2c-misite-activity/f1ee261b96ae71e845efba398efeca02.png">
+          </a>
+        </p>
+        <div class="conclusion">
+          让全球每个人都能享受科技带来的美好生活
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+</body>
+</html>
