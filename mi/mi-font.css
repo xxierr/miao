@@ -1,0 +1,35 @@
+ @font-face {
+      font-family: Mifont;
+      src: url(./mi-icon-font.ttf);
+    }
+.icon {
+  font-family: MiFont;
+}
+.cart::before {
+  content: "\E60C"
+}
+.search::before {
+  content: "\E616";
+}
+.tool::before {
+  content: "\E634";
+}
+.circle7::before {
+  content: "\E635";
+}
+.circle15::before {
+  content: "\E636";
+}
+.gift::before {
+  content: "\E638";
+}
+.location::before {
+  content: "\E637";
+}
+.message::before {
+  content: "\E600";
+  color: red;
+}
+.imore::before {
+  content: "\E615";
+}
