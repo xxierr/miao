@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background: url(space.gif) no-repeat;
+      background-size: 100% 100%;
+    }
+    #sun {
+      width: 60px;
+      /* margin-top: -30px;
+      margin-left: -30px; */
+      background-color: rgb(232, 93, 25);
+      box-shadow: 0 0 40px 20px gold;
+    }
+    #earth {
+      width: 30px;
+      /* margin-top: -15px;
+      margin-left: -15px; */
+      background-color: blue;
+    }
+    #moon {
+      width: 10px;
+      /* margin-top: -5px;
+      margin-left: -5px; */
+      background-color: gray;
+    }
+
+    section {
+      height: 714px;
+      position: relative;
+    }
+    #sun, #earth, #moon {
+      border-radius: 9999px;
+      display: inline-block;
+      position: fixed;
+      aspect-ratio: 1/1;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div id="sun"></div>
+    <div id="earth"></div>
+    <div id="moon"></div>
+    <script>
+      var sun = document.querySelector('#sun')
+      var earth = document.querySelector('#earth')
+      var moon = document.querySelector('#moon')
+
+      requestAnimationFrame(function animate(time) {
+        var sunangle = time / 2000
+        var sunx = Math.cos(sunangle) * 50 + window.innerWidth / 2 + "px"
+        var suny = Math.sin(sunangle) * 50 + window.innerHeight / 2 + "px"
+        sun.style.left = sunx
+        sun.style.top = suny
+
+        var earthangle = time / 1000
+        var earthx = parseFloat(sunx) + Math.cos(earthangle) * 250 + "px"
+        var earthy = parseFloat(suny) + Math.sin(earthangle) * 250 + "px"
+        earth.style.left = earthx
+        earth.style.top = earthy
+
+        var moonangle = time / 500
+        var moonx = parseFloat(earthx) + Math.cos(moonangle) * 40 + "px"
+        var moony = parseFloat(earthy) + Math.sin(moonangle) * 40 + "px"
+        moon.style.left = moonx
+        moon.style.top = moony
+
+
+        requestAnimationFrame(animate)
+      })
+
+    </script>
+  </section>
+</body>
+</html>
