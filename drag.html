@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .draggable {
+      position: fixed;
+      /* overflow: hidden;
+      resize: both; */
+    }
+    .draggable h1.window-title {
+      margin: 0;
+      font-size: 14px;
+      background-color: rgb(182, 217, 247);
+      cursor: move;
+    }
+    .draggable .resizer {
+      cursor: nwse-resize;
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(to bottom right, transparent 50%,gray);
+    }
+    .draggable h1.window-title .close {
+      cursor: pointer;
+      float: right;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      width: 15px;
+      height: 18px;
+
+      &:hover {
+        background-color: red;
+        color: white;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="draggable" style="width: 100px; height: 80px; left: 0; top: 0; background-color: greenyellow;">
+    <h1 class="window-title">窗口 1
+      <span class="close">x</span>
+    </h1>
+    <span class="resizer"></span>
+  </div>
+  <div class="draggable" style="width: 100px; height: 80px; left: 110px; top: 0; background-color: orange;">
+    <h1 class="window-title">窗口 2
+      <span class="close">x</span>
+    </h1>
+    <span class="resizer"></span>
+  </div>
+  <div class="draggable" style="width: 100px; height: 80px; left: 220px; top: 0; background-color: gainsboro;">
+    <h1 class="window-title">窗口 3
+      <span class="close">x</span>
+    </h1>
+    <span class="resizer"></span>
+  </div>
+
+  <script>
+    //鼠标起始位置
+    var sxmouse = 0
+    var symouse = 0
+    var ele = null
+    //元素起始位置
+    var sx_ele = 0
+    var sy_ele = 0
+    //元素起始宽高
+    var sw_ele = 0
+    var sh_ele = 0
+
+    var z = 10 //元素优先级
+    //var currentaction = 'resize'/'move'  函数合并可以用
+
+    window.addEventListener('mousedown', e => {
+      if(e.target.matches('.draggable, .draggable *')){
+        e.target.closest('.draggable').style.zIndex = z++
+      }
+      if(e.target.matches('.draggable h1.window-title')){
+        e.preventDefault()
+
+        ele = e.target.closest('.draggable') // 获取最近该类名的祖先
+        sxmouse = e.clientX
+        symouse = e.clientY
+        sx_ele = parseFloat(ele.style.left)
+        sy_ele = parseFloat(ele.style.top)
+
+        window.addEventListener('mousemove', onmove)
+      }
+      if(e.target.matches('.draggable .resizer')){
+        e.preventDefault()
+
+        ele = e.target.closest('.draggable')
+        sw_ele = parseFloat(ele.style.width)
+        sh_ele = parseFloat(ele.style.height)
+        sxmouse = e.clientX
+        symouse = e.clientY
+
+        window.addEventListener('mousemove', onresize)
+      }
+    })
+
+    function onmove(e){
+      if(e.which == 0 || e.buttons == 0){    // 鼠标移动事件中，鼠标按键已松开
+        window.removeEventListener('mousemove', onmove)
+      }else {
+        var movex = e.clientX - sxmouse
+        var movey = e.clientY - symouse
+        var left = sx_ele + movex
+        var top = sy_ele + movey
+
+        if(left<25) left = 0
+        if(left>window.innerWidth - ele.offsetWidth - 25) left = window.innerWidth - ele.offsetWidth
+        if(top<25) top = 0
+        if(top>window.innerHeight - ele.offsetHeight - 25) top = window.innerHeight - ele.offsetHeight
+
+        ele.style.left = left + "px"
+        ele.style.top = top + "px"
+      }
+    }
+
+    function onresize(e){
+      if(e.which == 0 || e.buttons == 0){
+        window.removeEventListener('mousemove', onresize)
+      }else {
+        var movex = e.clientX - sxmouse
+        var movey = e.clientY - symouse
+        var mw_ele = sw_ele + movex
+        var mh_ele = sh_ele + movey
+
+        if(mw_ele<100) mw_ele = 100
+        if(mh_ele<80) mh_ele = 80
+
+        ele.style.width = mw_ele + "px"
+        ele.style.height = mh_ele + "px"
+      }
+    }
+  </script>
+</body>
+</html>
