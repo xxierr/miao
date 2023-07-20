@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mouse-shadow</title>
+  <style>
+    .mouse-shadow {
+      background-color: red;
+      width: 10px;
+      height: 10px;
+      position: fixed;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    var mx = 0
+    var my = 0
+
+    var spans = [
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+      document.createElement('span'),
+    ]
+
+    // requestAnimationFrame(function a(time){
+    //   var mouseshadow = spans.pop()
+    //   mouseshadow.className = "mouse-shadow"
+    //   mouseshadow.style.left = mx + "px"
+    //   mouseshadow.style.top = my + "px"
+    //   document.body.append(mouseshadow)
+
+    //   setTimeout(() => {
+    //     document.body.removeChild(mouseshadow)
+    //     spans.push(mouseshadow)
+    //   }, 16* 8)
+
+    //   requestAnimationFrame(a)
+    // })
+
+    var pretime = 0
+
+    window.addEventListener('mousemove', e => {
+      mx =e.clientX
+      my = e.clientY
+
+      if(Date.now() - pretime >=16){
+        pretime = Date.now()
+
+        var mouseshadow = document.createElement('span')
+        mouseshadow.className = "mouse-shadow"
+        mouseshadow.style.left = mx + "px"
+        mouseshadow.style.top = my + "px"
+        document.body.append(mouseshadow)
+
+        setTimeout(() => {
+          document.body.removeChild(mouseshadow)
+        }, 22 * 8)
+      }
+    })
+  </script>
+</body>
+</html>
