@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tabs</title>
+  <style>
+    body {
+      min-width: 300px;
+    }
+    button {
+      border: 1px solid;
+    }
+    button + button {
+      margin-left: -1px;
+    }
+    button.active {
+      position: relative;
+      background-color: aqua;
+      border-bottom: white;
+      padding-top: 3px;
+      padding-bottom: 2px;
+    }
+    .panels-wrap > div {
+      width: 300px;
+      background-color: white;
+      border: 1px solid;
+      margin-top: -1px;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div data-tabname="鼠标">aaaaaaaaaaaabbbbbbbbbb</div>
+    <div data-tabname="指针">cccccccccdddddddddddd</div>
+    <div data-tabname="硬件">eeeeeeeeeeeeeffffffffffffffff</div>
+  </section>
+
+  <script>
+    function transtabs(node){
+      var panelswrap = document.createElement('div')
+      panelswrap.classList.add("panels-wrap")
+      
+      var panels = [...node.children]  //tab对应的div
+      for(var panel of panels){
+        panel.style.display = "none"
+        panelswrap.append(panel)
+      }
+      node.append(panelswrap)
+      
+      var panelsbtnwrap = document.createElement('div')
+      panelsbtnwrap.classList.add('panels-btn-wrap')
+      for(var panel of panels){
+        var btn = document.createElement('button')
+        btn.textContent = panel.dataset.tabname
+        panelsbtnwrap.append(btn)
+      }
+      node.prepend(panelsbtnwrap)
+
+      var btns = [...panelsbtnwrap.children]
+      var curactiveidx = 0
+      panels[curactiveidx].style.display = "block"
+      btns[curactiveidx].classList.add('active')
+
+      panelsbtnwrap.addEventListener('click', e => {
+        if(e.target.matches("button")){
+          var btnidx = btns.indexOf(e.target)
+          if(btnidx == curactiveidx) return
+
+          btns[btnidx].classList.add('active')
+          btns[curactiveidx].classList.remove('active')
+
+          panels[btnidx].style.display = "block"
+          panels[curactiveidx].style.display = "none"
+
+          curactiveidx = btnidx
+        }
+      })
+    }
+
+    var section = document.querySelector('section')
+    transtabs(section)
+  </script>
+</body>
+</html>
