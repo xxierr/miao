@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>snake</title>
+  <style>
+    body {
+      background-color: green;
+    }
+    h1 {
+      float: left;
+    }
+    #stage {
+      width: 950px;
+      margin: auto;
+      border: 10px solid rgb(93, 71, 71);
+    }
+    #stage table {
+      border-collapse: collapse;
+      background-color: rgb(165, 230, 69);
+      box-sizing: border-box;
+      
+      & td {
+        width: 19px;
+        height: 19px;
+        color: red;
+        text-align: center;
+        box-sizing: border-box;
+        
+        &.snake {
+          background-color: black;
+          color: white;
+        }
+      }
+    }
+    
+    .control {
+      width: 970px;
+      height: 50px;
+      margin: auto;
+      margin-top: 30px;
+      text-align: center;
+      line-height: 3;
+      box-sizing: border-box;
+    }
+    .reset {
+      position: relative;
+      height: 80%;
+      margin-top: 5px;
+      font-weight: 600;
+      float: left;
+      cursor: pointer;
+      box-shadow: 0 0 3px 3px rgb(99, 99, 99);
+    }
+    .ispause {
+      width: 40px;
+      height: 40px;
+      margin: auto;
+      border-radius: 9999px;
+      text-align: center;
+      transform: rotate(90deg);
+      font-size: 20px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: aqua;
+      }
+    }
+    div.scoring {
+      float: right;
+      padding-right: 20px;
+      padding-left: 10px;
+      background-color: black;
+      color: white;
+
+      & .score {
+        color: red;
+      }
+    }
+    
+    div.over {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+      background-color: black;
+
+      > .image {
+        display: block;
+        margin: auto;
+        margin-top: 300px;
+        opacity: 1;
+        border-radius: 50px;
+        box-shadow: 0 0 10px 5px gray;
+        transform: scale(1.25);
+        background-image: url(./gameover.jpeg);
+        background-position: -150px -160px;
+        width: 405px;
+        height: 75px;
+        z-index: 5;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>贪吃蛇 v1.0</h1>
+  <pre id="stage"></pre>
+  <div class="control">
+    <button class="reset" onclick="reset()">重置游戏（按方向键开始...）</button>
+    <button class="ispause" onclick="stopORauto()">〓</button>
+    <div class="scoring">score(分数)：
+      <span class="score">0</span>
+    </div>
+  </div>
+  <div class="over">
+    <span class="image"></span>
+  </div>
+
+  <script>
+    class Snake {
+      constructor(width = 50, height = 30) {
+        this.width = width
+        this.height = height
+        this.world = new Array(height).fill(0).map(it => new Array(width).fill(''))
+        this.score = 0
+
+        // 蛇头位置
+        this.head = [width / 3 | 0, height / 3 | 0]
+        // 蛇尾位置，一开始的时候蛇长度只有，所以在同一位置
+        this.tail = this.head
+
+        var [x, y] = this.head
+        this.world[y][x] = '＞' // 放置表示蛇身体的符号,>,<,v,^
+
+        this.placeApple() // 放置第一个苹果
+      }
+
+      placeApple() {
+        while(true) {
+          var x = this.width * Math.random() | 0
+          var y = this.height * Math.random() | 0
+          // 如果位置是空的，则放置苹果
+          if (this.world[y][x] == '') {
+            this.world[y][x] = '★'
+            return
+          }
+        }
+      }
+      judgeGameOver([x, y]) {
+        if (x < 0 || x >= this.width) {
+          return true
+        }
+        if (y < 0 || y >= this.height) {
+          return true
+        }
+        // 上面是撞墙判断
+
+        // 下一个位置即不是空白，也不是苹果，则只能是蛇身
+        if (this.world[y][x] !== '' && this.world[y][x] !== '★') {
+          return true
+        }
+        return false
+      }
+      next() {
+        // h stands for head
+        var [hx, hy] = this.head
+        var headDirection = this.world[hy][hx]
+
+        // 计算蛇头的下一个位置
+        if (headDirection == '∧') {
+          var [x, y] = [hx, hy - 1]
+        }
+        if (headDirection == '∨') {
+          var [x, y] = [hx, hy + 1]
+        }
+        if (headDirection == '＜') {
+          var [x, y] = [hx - 1, hy]
+        }
+        if (headDirection == '＞') {
+          var [x, y] = [hx + 1, hy]
+        }
+
+        if (this.judgeGameOver([x, y])) {
+          over.style.display = "block"
+          return 'GameOver'
+        }
+
+        // 如果蛇头的下一位置是苹果
+        if (this.world[y][x] == '★') {
+          this.score++
+          score.textContent = `${this.score}`
+          this.world[y][x] = headDirection
+          this.head = [x, y]
+          this.placeApple()
+          return
+        }
+
+        this.world[y][x] = headDirection
+        this.head=  [x, y] // 新的蛇头位置赋值给this.head
+
+        // t stands for tail
+        var [tx, ty] = this.tail
+        var tailDirection = this.world[ty][tx]
+
+        if (tailDirection == '∧') {
+          var [x, y] = [tx, ty - 1]
+        }
+        if (tailDirection == '∨') {
+          var [x, y] = [tx, ty + 1]
+        }
+        if (tailDirection == '＜') {
+          var [x, y] = [tx - 1, ty]
+        }
+        if (tailDirection == '＞') {
+          var [x, y] = [tx + 1, ty]
+        }
+        this.tail = [x, y]
+        this.world[ty][tx] = ''
+      }
+      // 设置蛇头的方向
+      // ^ v < > 分别表示上下左右
+      setSnakeDirection(direction) {
+        var [x, y] = this.head
+        var currentDirection = this.world[y][x]
+
+        // 蛇头方向为水平方向时，只能改到垂直
+        if (currentDirection == '＜' || currentDirection == '＞') {
+          if (direction == '∧' || direction == '∨') {
+            this.world[y][x] = direction
+            this.next()
+          }
+        } else {// 否则，只能改到水平
+          if (direction == '＜' || direction == '＞') {
+            this.world[y][x] = direction
+            this.next()
+          }
+        }
+
+        if (direction == currentDirection) {
+          this.next()
+        }
+      }
+      renderToHTMLTable() {
+        return '<table>' + this.world.map(row => {
+          return `
+            <tr>
+              ${row.map(cell => {
+                return cell != "" && cell != "★" ? `<td class="snake">${cell}</td>` : `<td>${cell}</td>`
+              }).join('')}
+            </tr>
+          `
+        }).join('') + '</table>'
+      }
+    }
+
+
+    var score = document.querySelector(".score")
+    var over = document.querySelector("div.over")
+    var game = new Snake()
+    var intervalId
+    var flag = true
+    var pause = false
+
+    show()
+    auto()
+
+    function next() {
+      var result = game.next()
+      show()
+      if (result == 'GameOver') {
+        alert('GameOver!(点击“重置游戏”按钮重新开始游戏...)\nScore: ' + game.score)
+        clearInterval(intervalId)
+        flag = false
+      }
+      over.style.display = "none"
+      if(flag == false) document.body.removeEventListener('keydown', control)
+      else document.body.addEventListener('keydown', control)
+    }
+
+    function show() {
+      stage.innerHTML = game.renderToHTMLTable()
+    }
+
+    function auto() {
+      intervalId = setInterval(() => {
+        next()
+      }, 500)
+    }
+    function stop() {
+      clearInterval(intervalId)
+    }
+    
+    function reset(){
+      game = new Snake()
+      flag = true
+      score.textContent = "0"
+      document.body.addEventListener('keydown', control)
+      show()
+    }
+
+    function stopORauto(){
+      var ispause = document.querySelector(".ispause")
+      if(pause == false){
+        pause = true
+        ispause.textContent = "▲"
+        stop()
+      }else {
+        pause = false
+        ispause.textContent = "〓"
+        auto()
+      }
+    }
+    
+    function control(e){
+      if (e.key == 'ArrowUp') {
+        game.setSnakeDirection('∧')
+        stop()
+        show()
+        auto()
+      } else if (e.key == 'ArrowDown') {
+        game.setSnakeDirection('∨')
+        stop()
+        show()
+        auto()
+      } else if (e.key == 'ArrowLeft') {
+        game.setSnakeDirection('＜')
+        stop()
+        show()
+        auto()
+      } else if (e.key == 'ArrowRight') {
+        game.setSnakeDirection('＞')
+        stop()
+        show()
+        auto()
+      }
+    }
+    </script>
+</body>
+</html>
