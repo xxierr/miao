@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todo-vue</title>
+  <style>
+    body {
+      background-color: gainsboro;
+    }
+    div.container {
+      width: 500px;
+      margin:auto;
+      text-align: center;
+    }
+    div.board {
+      width: 400px;
+      margin: auto;
+    }
+    div.main {
+      background-color: whitesmoke;
+      text-align:initial;
+      box-shadow: 0 10px 15px 0px gray;
+      padding-bottom: 5px;
+    }
+    h1 {
+      font-size: 50px;
+      color: tomato;
+    }
+    div.inputs {
+      display: inline-block;
+      font-size: 0;
+      border-bottom: 3px solid silver;
+      gap:0
+    }
+    input.thingsall {
+      & + label {
+        font-size: 14px;
+        cursor: pointer;
+      }
+      & + label span{
+        margin: 0;
+        opacity: 0.2;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: aliceblue;
+      }
+      &:checked + label span{
+        opacity: 1;
+        background-color: lightskyblue;
+      }
+    }
+    input.addthing {
+      width: 353.45px;
+      height: 45px;
+      border: none;
+      font-size: 20px;
+    }
+    li.completed span{
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    input {
+      outline: none;
+      user-select: none;
+      border: 1px solid;
+    }
+    input:read-only {
+      border-color: white;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      & li {
+        line-height: 3;
+        font-size: larger;
+        border-bottom: 1px solid silver;
+
+        & input.edit {
+          width: 325px;
+          height: 54px;
+          font-size: 22px;
+        }
+
+        & button.deletething {
+          position: relative;
+          float: right;
+          margin-top: 12px;
+          border: none;
+          background-color: transparent;
+          font-size: 30px;
+          color: tomato;
+          opacity: 0.5;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    ul.visible-active li.completed {
+      display: none;
+    }
+    ul.visible-completed li:not(.completed) {
+      display: none;
+    }
+    input.gou {
+      appearance: none;
+
+      &::after {
+        display: inline-block;
+        content: " ";
+        width: 22px;
+        height: 22px;
+        border: 1px solid red;
+        border-radius: 50%;
+        opacity: 0.6;
+      }
+
+      &:checked {
+        &::after {
+          border:2px solid green;
+          color: green;
+          content: "√";
+          font-weight: 900;
+          text-align: center;
+          font-size: 20px;
+        }
+      }
+    }
+    div.tail {
+      margin-left: 5px;
+    }
+    .thingsleft {
+      margin-bottom: 6px;
+    }
+    div.visible-select {
+      display: inline-block;
+      & label {
+        cursor: pointer;
+        margin-right: 10px;
+
+        &:has(> input:checked) {
+          border: 2px solid red;
+        }
+      }
+    }
+    button.clear {
+      float: right;
+      color: brown;
+    }
+    footer {
+      background-color: transparent;
+    }
+    div.p1, .p2, .p3 {
+      margin: auto;
+      height: 2px;
+      border: 1px solid silver;
+      background-color: whitesmoke;
+    }
+    div.p1 {
+      width: 394px;
+    }
+    div.p2 {
+      width: 388px;
+    }
+    div.p3 {
+      width: 382px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>todos</h1>
+    <div class="board">
+      <div class="main">
+        <div class="inputs">
+          <input hidden id="listicon" type="checkbox" class="thingsall" @click="thingsall()" :checked="todos.length && todos.every(it => it.completed)">
+          <label for="listicon">全选<span>∨</span></label>
+          <input class="addthing" type="text" @keyup.enter="addtodos($event)" placeholder="what needs to be done?">
+        </div>
+        <ul id="todo-list" :class="`visible-${visibleTodos}`">
+          <li :class="todo.completed ? 'completed' : 'active'" v-for="(todo, idx) of computedshow(todos)">
+            <input class="gou" data-index="0" type="checkbox" :checked="todo.completed" @change="changeTodoState(idx)">
+            <span v-show="editIdx !== idx" @dblclick="edit(idx)">{{ todo.content }}</span>
+            <input class="edit"
+              @keyup.enter="todo.content = $event.target.value.trim();editIdx = -1"
+              @blur="todo.content = $event.target.value.trim();editIdx = -1"
+              @keyup.escape="editIdx = -1"
+              v-show="editIdx == idx"
+              type="text"
+              :value="todo.content"
+            >
+            <button class="deletething" @click="deletetodo(idx)">×</button>
+          </li>
+        </ul>
+        <div class="tail">
+          <div class="thingsleft"><em>{{ todos.filter(it => !it.completed).length }}</em> items left</div>
+          <div class="visible-select">
+            <label><input hidden type="radio" @click="visibleTodos = $event.target.value" value="all" name="visible-todos" checked> All</label>
+            <label><input hidden type="radio" @click="visibleTodos = $event.target.value" value="active" name="visible-todos" > Active</label>
+            <label><input hidden type="radio" @click="visibleTodos = $event.target.value" value="completed" name="visible-todos" > Completed</label>
+          </div>
+          <button class="clear" @click="clearcompleted()" v-show="todos.some(it => it.completed)">Clear completed</button>
+        </div>
+      </div>
+      <footer>
+        <div class="p1"></div>
+        <div class="p2"></div>
+        <div class="p3"></div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="./vue-2.7.14.js"></script>
+  <script src="./lodash-4.17.5.min.js"></script>
+
+  <script>
+    var todoData = {
+      todos: JSON.parse(localStorage.getItem('todos')) ?? [{
+        content: 'eat',
+        completed: true,
+      }, {
+        content: 'drink',
+        completed: false,
+      }, {
+        content: 'sleep',
+        completed: true,
+      }],
+      visibleTodos: 'all',
+      editIdx: -1,  //和todos下标idx对比来判断双击内容显示输入框
+    }
+
+    var app = new Vue({
+      el: '.container',
+      data: todoData,
+      watch: { // 监控app的todos字段
+        // todos: function() {
+        //   localStorage.setItem('todos', JSON.stringify(this.todos))
+        // },
+        todos: {// 深度监控app的todos字段
+          deep: true,
+          handler: function() {
+            localStorage.setItem('todos', JSON.stringify(this.todos))
+          },
+        }
+      },
+      methods: {
+        edit(idx) {
+          this.editIdx = idx
+        },
+        computedshow() {
+          if (this.visibleTodos == 'completed') {
+            return this.todos.filter(it => it.completed)
+          } else if (this.visibleTodos == 'active') {
+            return this.todos.filter(it => !it.completed)
+          }
+          return this.todos
+        },
+        clearcompleted() {
+          this.todos = this.todos.filter(it => !it.completed)
+        },
+        addtodos(e) {
+          var thing = e.target.value.trim()
+          if(thing) {
+            this.todos.push({
+              content: thing,
+              completed: false,
+            })
+            e.target.value = ''
+          }
+        },
+        deletetodo(idx) {
+          this.todos.splice(idx, 1)
+        },
+        changeTodoState(idx) {
+          this.todos[idx].completed = !this.todos[idx].completed
+        },
+        thingsall() {
+          if (this.todos.every(it => it.completed)) {
+            this.todos.forEach(it => {
+              it.completed = false
+            })
+          } else {
+            this.todos.forEach(it => {
+              it.completed = true
+            })
+          }
+        },
+      }
+    })
+  </script>
+</body>
+</html>
