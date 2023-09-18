@@ -13,27 +13,22 @@
       margin: 8px;
     }
     section {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
       margin: auto;
-    }
-    section div {
-      flex: 1;
+      position: relative;
     }
 
     img {
       display: block;
-      margin-bottom: 8px;
       outline: 1px solid white;
       outline-offset: 1px;
-      position: relative;
+      position: absolute;
       transition: 0.3s;
     }
   </style>
 </head>
 <body>
   <section></section>
+  <script src="https://unpkg.com/lodash"></script>
   <script>
     var cats = [
       {
@@ -355,12 +350,22 @@
         "height": 1170
       }
     ]
-    cats = [...cats, ...cats]
-    cats = [...cats, ...cats]
-    cats = [...cats, ...cats]
+    cats = [..._.cloneDeep(cats), ..._.cloneDeep(cats)]
+    cats = [..._.cloneDeep(cats), ..._.cloneDeep(cats)]
+    cats = [..._.cloneDeep(cats), ..._.cloneDeep(cats)]
+    cats = [..._.cloneDeep(cats), ..._.cloneDeep(cats)]
+    cats = [..._.cloneDeep(cats), ..._.cloneDeep(cats)]
+
+    cats.forEach((it, idx) => {
+      it.idx = idx
+    })
 
     var section = document.querySelector('section')
     var prevwidth = 0
+    var prevcols = 0
+    var 余量 = -100
+    var colwidth = 180
+    var gap = 8
 
     function run() {
       if(window.innerWidth == prevwidth) {
@@ -369,47 +374,155 @@
         prevwidth = window.innerWidth
       }
 
-      var cols = Math.floor(window.innerWidth / 180)  //计算显示列数
-      //section.style.width = cols * 180 + (cols -1) *10 + "px"
-      //根据列数计算section的尺寸
-      section.innerHTML = ""  //清空section元素
-      // 创建每列所需的div元素
-      for(var i=0; i<cols; i++){
-        section.append(document.createElement('div'))
+      var cols = Math.floor( (window.innerWidth - 30) / (colwidth + gap))  //计算显示列数
+
+      if(cols == prevcols){
+        return
+      }else {
+        prevcols = cols
       }
-      var divs = [...section.querySelectorAll('div')]
-      var colwidth = divs[0].offsetWidth   //每个div的宽度
-      var divheights = Array(cols).fill(0)  //每个div的高度
-      var divimgs = Array(cols).fill(0).map(it => [])
+      
+      cats.forEach(it => {// 防止调整页面宽度后重新计算布局后有些图片显示状态不对
+        it.show = false
+      })
+      section.innerHTML = ""  //清空section元素
+
+      //根据列数计算section的尺寸
+      var containerwidth = cols * colwidth + (cols -1) *gap
+      section.style.width = containerwidth + "px"
+  
+      var colheights = Array(cols).fill(0)  //记录每列的高度
 
       for(var cat of cats){
-        var mindivheight = Math.min(...divheights)  //获取最矮的div元素高度
-        var minidx = divheights.indexOf(mindivheight)  //获取最矮div元素的下标
-        var div = divs[minidx]
+        var mincolheight = Math.min(...colheights)  //获取最矮的列高
+        var mincolidx = colheights.indexOf(mincolheight)  //获取最矮列高数组的下标
 
-        var img = document.createElement('img')
-        img.src = cat.fullUrl
-        img.width = colwidth
-        img.height = colwidth * cat.height / cat.width
+        cat.left = mincolidx * (colwidth + gap)
+        cat.top = mincolheight
+        cat.displaywidth = colwidth
+        cat.displayheight = Math.round(colwidth * cat.height / cat.width)
 
-        divheights[minidx] += img.height +8  //计算div对应的实际高度
-        divimgs[minidx].push(img)
+        colheights[mincolidx] += cat.displayheight + gap  //计算每列的实际高度
       }
 
-      divimgs.forEach((imgs, idx) => {
-        divs[idx].append(...imgs)
+      section.style.height = Math.max(...colheights) + 'px'
+
+      cats.filter(cat => {
+        return cat.top + cat.displayheight + gap >= window.pageYOffset - 余量
+          && cat.top + gap <= window.pageYOffset + window.innerHeight + 余量
+      }).forEach(cat => {
+        cat.show = true
+        var img = document.createElement('img')
+        img.dataset.idx = cat.idx
+        img.src = cat.fullUrl
+        img.style.width = cat.displaywidth + 'px'
+        img.style.height = cat.displayheight + 'px'
+        img.style.transform = `translate(${cat.left}px, ${cat.top}px)`
+        img.style.opacity = '0'
+        img.onload = () => {
+          img.style.opacity = '1'
+        }
+        section.append(img)
       })
 
     }
     run()
-    window.onresize =run
+    window.onresize = debounce(run, 300)
+
+    var prevpageYoffset = 0
+    window.onscroll = (e) => {
+      if(Math.abs(window.pageYOffset - prevpageYoffset) < 100){
+        console.log("滚动距离过短，取消")
+        return
+      }
+      // var imgs = section.querySelectorAll('img')
+      // imgs.forEach(img => {  // 把离开屏幕的图片删掉
+      //   var box = img.getBoundingClientRect()
+      //   if(true || window.pageYOffset > prevpageYoffset){
+      //     if(box.bottom < -余量){
+      //       section.removeChild(img)
+      //     }
+      //   }
+      //   if(true || window.pageYOffset < prevpageYoffset){
+      //     if(box.top > window.innerHeight + 余量){
+      //       section.removeChild(img)
+      //     }
+      //   }
+      // })
+
+      // 计算已经显示的图片
+      var showncats = cats.filter(cat => cat.show == true)
+      var tobeshow = cats.filter(cat => { //计算新的滚动位置该显示的图片
+        return cat.top + cat.displayheight + gap >= window.pageYOffset - 余量
+          && cat.top + gap <= window.pageYOffset + window.innerHeight + 余量
+      })
+
+      //计算要离开的图片
+      var leavecats = _.difference(showncats, tobeshow)
+      leavecats.forEach(it => {// 标记为不显示
+        it.show = false
+        var img = section.querySelector(`[data-idx="${it.idx}"]`) //这样就不用上面的删除图片的判断了
+        img.remove()
+        console.log("-")
+      })
+
+      //计算要新增dom的图片
+      var newcats = _.difference(tobeshow, showncats)
+      newcats.forEach(cat => {
+        cat.show = true
+        var img = document.createElement('img')
+        img.dataset.idx = cat.idx
+        img.src = cat.fullUrl
+        img.style.width = cat.displaywidth + 'px'
+        img.style.height = cat.displayheight + 'px'
+        img.style.transform = `translate(${cat.left}px, ${cat.top}px)`
+        img.style.opacity = '0'
+        img.onload = () => {
+          img.style.opacity = '1'
+        }
+        section.append(img)
+        console.log("+")
+      })
+
+      prevpageYoffset = window.pageYOffset
+    }
+ 
+    //防抖
+    function debounce(f, time) {
+      var taskId
+
+      return function(...args) {
+        clearTimeout(taskId)
+        taskId = setTimeout(() => {
+          f.call(this, ...args)
+        }, time)
+      }
+    }
+
+    //节流
+    function throttle(f, time) {
+      var scheduled = false, lastArgs
+      return function(...args) {
+        lastArgs = args
+        if (!scheduled) {
+          scheduled = true
+          setTimeout(() => {
+            scheduled = false
+            f.call(...lastArgs)
+          }, time)
+        }
+      }
+    }
+
     
-    var section =document.querySelector('section')
+    var section = document.querySelector('section')
     var z = 5
-    section.onclick = function(e){
-      if(e.target.matches('img')){
+    section.addEventListener('click', function(e) {
+      if (e.target.matches('section > div > img')) {
         var img = e.target
-        if(img.style.transform == ""){// 如果没放大，则transform为空
+
+        // 如果没放大，那么元素的transform为空
+        if (img.style.transform == '') {
           var box = img.getBoundingClientRect()
           var cx = box.left + box.width / 2
           var cy = box.top + box.height / 2
@@ -417,18 +530,23 @@
           var vy = window.innerHeight / 2
           var movex = vx - cx
           var movey = vy - cy
-          var scalex = window.innerWidth / box.width
-          var scaley = window.innerHeight / box.height
+          var zoomx = window.innerWidth / box.width
+          var zoomy = window.innerHeight / box.height
 
           img.style.zIndex = z++
-          img.style.transform = `translate(${movex}px, ${movey}px) scale(${Math.min(scalex, scaley)})`
+          img.style.transform = `translate(${movex}px, ${movey}px) scale(${Math.min(zoomx, zoomy)})`
           img.style.boxShadow = '0 0 0 10000px black'
-        }else {
-          img.style.transform = ""
-          img.style.boxShadow = ""
+          document.documentElement.style.overflowY = 'hidden'
+          document.documentElement.style.paddingRight = '14px'
+        } else {
+          img.style.transform = ''
+          img.style.boxShadow = ''
+          document.documentElement.style.overflowY = ''
+          document.documentElement.style.paddingRight = ''
         }
+
       }
-    }
+    })
   </script>
 </body>
 </html>
